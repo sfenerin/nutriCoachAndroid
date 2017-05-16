@@ -18,6 +18,8 @@ package project.nutricoach;
  import org.json.JSONException;
  import org.json.JSONObject;
 
+ import java.io.UnsupportedEncodingException;
+
  import cz.msebera.android.httpclient.Header;
 
 
@@ -63,7 +65,13 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View arg0) {
                 sendChatMessage();
-                sendRightMessage();
+                try {
+                    sendRightMessage();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -80,8 +88,8 @@ public class MainActivity extends Activity {
         });
     }
 
-    private boolean sendRightMessage() {
-        String response = nutritionProcess.prcoess(chatText.getText().toString());
+    private boolean sendRightMessage() throws UnsupportedEncodingException, JSONException {
+        String response = nutritionProcess.process(chatText.getText().toString());
         chatArrayAdapter.add(new ChatMessage(right,response));
         chatText.setText("");
         return true;
