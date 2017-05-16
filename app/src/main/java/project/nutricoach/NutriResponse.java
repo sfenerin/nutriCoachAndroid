@@ -18,7 +18,7 @@ public class NutriResponse {
 
     }
 
-    public String prcoess(String input){
+    public String process(String input){
         FatsecretService service = new FatsecretService(key, secret);
         Response<CompactFood> foodResponse = service.searchFoods(input);
         List<CompactFood> foods = foodResponse.getResults();

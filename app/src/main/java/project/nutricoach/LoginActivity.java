@@ -32,6 +32,24 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.login_screen);
         mAuth = FirebaseAuth.getInstance();
 
+        userText= (EditText) findViewById(R.id.userText);
+        passText= (EditText) findViewById(R.id.userPassword);
+
+        userText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                userText.setText("");
+            }
+        });
+
+        passText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                passText.setText("");
+            }
+        });
+
+
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(FirebaseAuth firebaseAuth) {
@@ -81,11 +99,12 @@ public class LoginActivity extends Activity {
 
     private void login(){
 
-        userText= (EditText) findViewById(R.id.userText);
-        passText= (EditText) findViewById(R.id.userPassword);
+
 
         String email = userText.getText().toString();
         String password= passText.getText().toString();
+//        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//        startActivity(intent);
 
 
 
@@ -113,8 +132,6 @@ public class LoginActivity extends Activity {
     }
 
     private void signUp(){
-        userText= (EditText) findViewById(R.id.userText);
-        passText= (EditText) findViewById(R.id.userPassword);
 
         String email = userText.getText().toString();
         String password= passText.getText().toString();
