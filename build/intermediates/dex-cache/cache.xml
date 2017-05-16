@@ -3,57 +3,21 @@
 
     <item
         is-multidex="true"
-        jar="/Users/anacarolinamexia/Dropbox/Junior/Spring/CS294W/nutriCoachFrontEnd/nutriCoachFrontEnd/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jar="/Users/anacarolinamexia/Dropbox/Junior/Spring/CS377U/nutriCoachAndroid/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="aad9ca192636f6adbffe9b85f4c9ce036df4e2a0">
+        <dex dex="/Users/anacarolinamexia/Dropbox/Junior/Spring/CS377U/nutriCoachAndroid/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_4543e8f2c7c891ad7ac8a74657056c894bbaf94f/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/anacarolinamexia/Dropbox/Junior/Spring/CS377U/nutriCoachAndroid/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
         sha1="c82741bc129dd5f99f11a4ab8666ae24262053b6">
-        <dex dex="/Users/anacarolinamexia/Dropbox/Junior/Spring/CS294W/nutriCoachFrontEnd/nutriCoachFrontEnd/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_512d77f915d0906f344de40949830c9a246fba61/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/anacarolinamexia/.gradle/caches/modules-2/files-2.1/com.loopj.android/android-async-http/1.4.9/386a4339ffe52d5d63e80f9bed8d2b1d1a418249/android-async-http-1.4.9.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="386a4339ffe52d5d63e80f9bed8d2b1d1a418249">
-        <dex dex="/Users/anacarolinamexia/Dropbox/Junior/Spring/CS294W/nutriCoachFrontEnd/nutriCoachFrontEnd/app/build/intermediates/transforms/dex/debug/folders/1000/10/android-async-http-1.4.9_d1c17f74a137d8a8a5026708e061e58f805f916d/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/anacarolinamexia/.android/build-cache/15cf0cdbdb461cbc40713cb8a9027a854f686c02/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="8010ae6ed32828a145b25ec97bc07b7a83c6318f">
-        <dex dex="/Users/anacarolinamexia/Dropbox/Junior/Spring/CS294W/nutriCoachFrontEnd/nutriCoachFrontEnd/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_394f3ac4aa160429d268ed58492ece11e103a062/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/anacarolinamexia/.android/build-cache/2ba88ca0583f7497f77fb02b0b23fbd2d0714a2c/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="8f128aeeb7e31271b28a7adb9dac1f3a6ed9f5e7">
-        <dex dex="/Users/anacarolinamexia/Dropbox/Junior/Spring/CS294W/nutriCoachFrontEnd/nutriCoachFrontEnd/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_2f0024a432cb39cf9c7fa492573bd64443257b2e/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/anacarolinamexia/.gradle/caches/modules-2/files-2.1/cz.msebera.android/httpclient/4.3.6/526a9f794eab830eae4f23a62c572878b3f491ab/httpclient-4.3.6.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="526a9f794eab830eae4f23a62c572878b3f491ab">
-        <dex dex="/Users/anacarolinamexia/Dropbox/Junior/Spring/CS294W/nutriCoachFrontEnd/nutriCoachFrontEnd/app/build/intermediates/transforms/dex/debug/folders/1000/10/httpclient-4.3.6_6b3f233f79f2d4e6cfdc903341d21ab3852b2490/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/anacarolinamexia/Dropbox/Junior/Spring/CS294W/nutriCoachFrontEnd/nutriCoachFrontEnd/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="1e29dd12b73e02f95b4ff46fb78d8244bca81fa6">
-        <dex dex="/Users/anacarolinamexia/Dropbox/Junior/Spring/CS294W/nutriCoachFrontEnd/nutriCoachFrontEnd/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_6fea7e2ef0877a00b737a9bd46b68bac8138c08f/classes.dex" />
+        <dex dex="/Users/anacarolinamexia/Dropbox/Junior/Spring/CS377U/nutriCoachAndroid/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_afd130042c8dc6db9330a0eaa3346d122bdebe8f/classes.dex" />
     </item>
 
 </items>

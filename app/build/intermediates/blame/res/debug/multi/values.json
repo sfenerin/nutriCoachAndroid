@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "/Users/anacarolinamexia/Dropbox/Junior/Spring/CS294W/nutriCoachFrontEnd/nutriCoachFrontEnd/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml",
+        "outputFile": "/Users/anacarolinamexia/Dropbox/Junior/Spring/CS377U/nutriCoachAndroid/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml",
         "map": [
             {
                 "to": {
@@ -1396,7 +1396,7 @@
                     "endOffset": 6280
                 },
                 "from": {
-                    "file": "/Users/anacarolinamexia/Dropbox/Junior/Spring/CS294W/nutriCoachFrontEnd/nutriCoachFrontEnd/app/src/main/res/values/colors.xml",
+                    "file": "/Users/anacarolinamexia/Dropbox/Junior/Spring/CS377U/nutriCoachAndroid/app/src/main/res/values/colors.xml",
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,
@@ -1415,7 +1415,7 @@
                     "endOffset": 6327
                 },
                 "from": {
-                    "file": "/Users/anacarolinamexia/Dropbox/Junior/Spring/CS294W/nutriCoachFrontEnd/nutriCoachFrontEnd/app/src/main/res/values/colors.xml",
+                    "file": "/Users/anacarolinamexia/Dropbox/Junior/Spring/CS377U/nutriCoachAndroid/app/src/main/res/values/colors.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
@@ -1434,7 +1434,7 @@
                     "endOffset": 6378
                 },
                 "from": {
-                    "file": "/Users/anacarolinamexia/Dropbox/Junior/Spring/CS294W/nutriCoachFrontEnd/nutriCoachFrontEnd/app/src/main/res/values/colors.xml",
+                    "file": "/Users/anacarolinamexia/Dropbox/Junior/Spring/CS377U/nutriCoachAndroid/app/src/main/res/values/colors.xml",
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
@@ -5139,7 +5139,7 @@
                     "endOffset": 45292
                 },
                 "from": {
-                    "file": "/Users/anacarolinamexia/Dropbox/Junior/Spring/CS294W/nutriCoachFrontEnd/nutriCoachFrontEnd/app/src/main/res/values/strings.xml",
+                    "file": "/Users/anacarolinamexia/Dropbox/Junior/Spring/CS377U/nutriCoachAndroid/app/src/main/res/values/strings.xml",
                     "position": {
                         "startLine": 1,
                         "startColumn": 4,
@@ -5481,7 +5481,7 @@
                     "endOffset": 47653
                 },
                 "from": {
-                    "file": "/Users/anacarolinamexia/Dropbox/Junior/Spring/CS294W/nutriCoachFrontEnd/nutriCoachFrontEnd/app/build/generated/res/google-services/debug/values/values.xml",
+                    "file": "/Users/anacarolinamexia/Dropbox/Junior/Spring/CS377U/nutriCoachAndroid/app/build/generated/res/google-services/debug/values/values.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
@@ -5500,7 +5500,7 @@
                     "endOffset": 47764
                 },
                 "from": {
-                    "file": "/Users/anacarolinamexia/Dropbox/Junior/Spring/CS294W/nutriCoachFrontEnd/nutriCoachFrontEnd/app/build/generated/res/google-services/debug/values/values.xml",
+                    "file": "/Users/anacarolinamexia/Dropbox/Junior/Spring/CS377U/nutriCoachAndroid/app/build/generated/res/google-services/debug/values/values.xml",
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
@@ -5519,7 +5519,7 @@
                     "endOffset": 47846
                 },
                 "from": {
-                    "file": "/Users/anacarolinamexia/Dropbox/Junior/Spring/CS294W/nutriCoachFrontEnd/nutriCoachFrontEnd/app/build/generated/res/google-services/debug/values/values.xml",
+                    "file": "/Users/anacarolinamexia/Dropbox/Junior/Spring/CS377U/nutriCoachAndroid/app/build/generated/res/google-services/debug/values/values.xml",
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,
@@ -5538,7 +5538,7 @@
                     "endOffset": 47950
                 },
                 "from": {
-                    "file": "/Users/anacarolinamexia/Dropbox/Junior/Spring/CS294W/nutriCoachFrontEnd/nutriCoachFrontEnd/app/build/generated/res/google-services/debug/values/values.xml",
+                    "file": "/Users/anacarolinamexia/Dropbox/Junior/Spring/CS377U/nutriCoachAndroid/app/build/generated/res/google-services/debug/values/values.xml",
                     "position": {
                         "startLine": 5,
                         "startColumn": 4,
@@ -5557,7 +5557,7 @@
                     "endOffset": 48053
                 },
                 "from": {
-                    "file": "/Users/anacarolinamexia/Dropbox/Junior/Spring/CS294W/nutriCoachFrontEnd/nutriCoachFrontEnd/app/build/generated/res/google-services/debug/values/values.xml",
+                    "file": "/Users/anacarolinamexia/Dropbox/Junior/Spring/CS377U/nutriCoachAndroid/app/build/generated/res/google-services/debug/values/values.xml",
                     "position": {
                         "startLine": 6,
                         "startColumn": 4,
@@ -5576,7 +5576,7 @@
                     "endOffset": 48173
                 },
                 "from": {
-                    "file": "/Users/anacarolinamexia/Dropbox/Junior/Spring/CS294W/nutriCoachFrontEnd/nutriCoachFrontEnd/app/build/generated/res/google-services/debug/values/values.xml",
+                    "file": "/Users/anacarolinamexia/Dropbox/Junior/Spring/CS377U/nutriCoachAndroid/app/build/generated/res/google-services/debug/values/values.xml",
                     "position": {
                         "startLine": 7,
                         "startColumn": 4,
@@ -5595,7 +5595,7 @@
                     "endOffset": 48273
                 },
                 "from": {
-                    "file": "/Users/anacarolinamexia/Dropbox/Junior/Spring/CS294W/nutriCoachFrontEnd/nutriCoachFrontEnd/app/build/generated/res/google-services/debug/values/values.xml",
+                    "file": "/Users/anacarolinamexia/Dropbox/Junior/Spring/CS377U/nutriCoachAndroid/app/build/generated/res/google-services/debug/values/values.xml",
                     "position": {
                         "startLine": 8,
                         "startColumn": 4,
@@ -5729,7 +5729,7 @@
                     "endOffset": 49068
                 },
                 "from": {
-                    "file": "/Users/anacarolinamexia/Dropbox/Junior/Spring/CS294W/nutriCoachFrontEnd/nutriCoachFrontEnd/app/src/main/res/values/styles.xml",
+                    "file": "/Users/anacarolinamexia/Dropbox/Junior/Spring/CS377U/nutriCoachAndroid/app/src/main/res/values/styles.xml",
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
