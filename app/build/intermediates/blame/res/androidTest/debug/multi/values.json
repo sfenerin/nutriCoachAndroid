@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "/Users/anacarolinamexia/Dropbox/Junior/Spring/CS294W/nutriCoachFrontEnd/nutriCoachFrontEnd/app/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values/values.xml",
+        "outputFile": "C:\\Users\\Shawn\\Desktop\\NutriCoach\\nutriCoachFrontEnd\\app\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
         "map": [
             {
                 "to": {
@@ -11,7 +11,7 @@
                     "endOffset": 96
                 },
                 "from": {
-                    "file": "/Users/anacarolinamexia/.android/build-cache/2b640d08fbc527ad98d4fa96cfc2046e716ba126/output/res/values/values.xml",
+                    "file": "C:\\Users\\Shawn\\.android\\build-cache\\c19aaf8b8365f9cb8de800009b08d3edf827eda7\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,

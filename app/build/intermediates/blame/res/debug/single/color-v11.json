@@ -1,10 +1,10 @@
 [
     {
-        "merged": "/Users/anacarolinamexia/Dropbox/Junior/Spring/CS294W/nutriCoachFrontEnd/nutriCoachFrontEnd/app/build/intermediates/res/merged/debug/color-v11/abc_background_cache_hint_selector_material_light.xml",
-        "source": "/Users/anacarolinamexia/.android/build-cache/34acdf35db8f373bdaddb7699963c95f0a4ed6d8/output/res/color-v11/abc_background_cache_hint_selector_material_light.xml"
+        "merged": "C:\\Users\\Shawn\\Desktop\\NutriCoach\\nutriCoachFrontEnd\\app\\build\\intermediates\\res\\merged\\debug\\color-v11\\abc_background_cache_hint_selector_material_dark.xml",
+        "source": "C:\\Users\\Shawn\\.android\\build-cache\\4aaa2655c249173d87482ecebba21598a46e6996\\output\\res\\color-v11\\abc_background_cache_hint_selector_material_dark.xml"
     },
     {
-        "merged": "/Users/anacarolinamexia/Dropbox/Junior/Spring/CS294W/nutriCoachFrontEnd/nutriCoachFrontEnd/app/build/intermediates/res/merged/debug/color-v11/abc_background_cache_hint_selector_material_dark.xml",
-        "source": "/Users/anacarolinamexia/.android/build-cache/34acdf35db8f373bdaddb7699963c95f0a4ed6d8/output/res/color-v11/abc_background_cache_hint_selector_material_dark.xml"
+        "merged": "C:\\Users\\Shawn\\Desktop\\NutriCoach\\nutriCoachFrontEnd\\app\\build\\intermediates\\res\\merged\\debug\\color-v11\\abc_background_cache_hint_selector_material_light.xml",
+        "source": "C:\\Users\\Shawn\\.android\\build-cache\\4aaa2655c249173d87482ecebba21598a46e6996\\output\\res\\color-v11\\abc_background_cache_hint_selector_material_light.xml"
     }
 ]

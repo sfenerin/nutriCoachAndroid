@@ -1,18 +1,18 @@
 [
     {
-        "merged": "/Users/anacarolinamexia/Dropbox/Junior/Spring/CS294W/nutriCoachFrontEnd/nutriCoachFrontEnd/app/build/intermediates/res/merged/debug/drawable-v21/abc_edit_text_material.xml",
-        "source": "/Users/anacarolinamexia/.android/build-cache/34acdf35db8f373bdaddb7699963c95f0a4ed6d8/output/res/drawable-v21/abc_edit_text_material.xml"
+        "merged": "C:\\Users\\Shawn\\Desktop\\NutriCoach\\nutriCoachFrontEnd\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\notification_action_background.xml",
+        "source": "C:\\Users\\Shawn\\.android\\build-cache\\4aaa2655c249173d87482ecebba21598a46e6996\\output\\res\\drawable-v21\\notification_action_background.xml"
     },
     {
-        "merged": "/Users/anacarolinamexia/Dropbox/Junior/Spring/CS294W/nutriCoachFrontEnd/nutriCoachFrontEnd/app/build/intermediates/res/merged/debug/drawable-v21/abc_action_bar_item_background_material.xml",
-        "source": "/Users/anacarolinamexia/.android/build-cache/34acdf35db8f373bdaddb7699963c95f0a4ed6d8/output/res/drawable-v21/abc_action_bar_item_background_material.xml"
+        "merged": "C:\\Users\\Shawn\\Desktop\\NutriCoach\\nutriCoachFrontEnd\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\abc_btn_colored_material.xml",
+        "source": "C:\\Users\\Shawn\\.android\\build-cache\\4aaa2655c249173d87482ecebba21598a46e6996\\output\\res\\drawable-v21\\abc_btn_colored_material.xml"
     },
     {
-        "merged": "/Users/anacarolinamexia/Dropbox/Junior/Spring/CS294W/nutriCoachFrontEnd/nutriCoachFrontEnd/app/build/intermediates/res/merged/debug/drawable-v21/abc_btn_colored_material.xml",
-        "source": "/Users/anacarolinamexia/.android/build-cache/34acdf35db8f373bdaddb7699963c95f0a4ed6d8/output/res/drawable-v21/abc_btn_colored_material.xml"
+        "merged": "C:\\Users\\Shawn\\Desktop\\NutriCoach\\nutriCoachFrontEnd\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\abc_edit_text_material.xml",
+        "source": "C:\\Users\\Shawn\\.android\\build-cache\\4aaa2655c249173d87482ecebba21598a46e6996\\output\\res\\drawable-v21\\abc_edit_text_material.xml"
     },
     {
-        "merged": "/Users/anacarolinamexia/Dropbox/Junior/Spring/CS294W/nutriCoachFrontEnd/nutriCoachFrontEnd/app/build/intermediates/res/merged/debug/drawable-v21/notification_action_background.xml",
-        "source": "/Users/anacarolinamexia/.android/build-cache/34acdf35db8f373bdaddb7699963c95f0a4ed6d8/output/res/drawable-v21/notification_action_background.xml"
+        "merged": "C:\\Users\\Shawn\\Desktop\\NutriCoach\\nutriCoachFrontEnd\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\abc_action_bar_item_background_material.xml",
+        "source": "C:\\Users\\Shawn\\.android\\build-cache\\4aaa2655c249173d87482ecebba21598a46e6996\\output\\res\\drawable-v21\\abc_action_bar_item_background_material.xml"
     }
 ]
