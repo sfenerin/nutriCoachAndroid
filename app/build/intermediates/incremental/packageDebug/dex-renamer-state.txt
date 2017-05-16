@@ -1,7 +1,0 @@
-#Mon May 15 21:34:53 PDT 2017
-base.0=/Users/anacarolinamexia/Dropbox/Junior/Spring/CS377U/nutriCoachAndroid/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_4543e8f2c7c891ad7ac8a74657056c894bbaf94f
-renamed.1=classes.dex
-renamed.0=classes2.dex
-file.1=/Users/anacarolinamexia/Dropbox/Junior/Spring/CS377U/nutriCoachAndroid/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_afd130042c8dc6db9330a0eaa3346d122bdebe8f/classes.dex
-base.1=/Users/anacarolinamexia/Dropbox/Junior/Spring/CS377U/nutriCoachAndroid/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_afd130042c8dc6db9330a0eaa3346d122bdebe8f
-file.0=/Users/anacarolinamexia/Dropbox/Junior/Spring/CS377U/nutriCoachAndroid/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_4543e8f2c7c891ad7ac8a74657056c894bbaf94f/classes.dex
