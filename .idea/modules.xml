@@ -3,7 +3,11 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/nutriCoachAndroid.iml" filepath="$PROJECT_DIR$/nutriCoachAndroid.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/nutriCoachFrontEnd.iml" filepath="$PROJECT_DIR$/nutriCoachFrontEnd.iml" />
+>>>>>>> origin/master
     </modules>
   </component>
 </project>

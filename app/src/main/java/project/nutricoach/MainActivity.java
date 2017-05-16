@@ -21,6 +21,7 @@ package project.nutricoach;
  import cz.msebera.android.httpclient.Header;
 
 
+
 public class MainActivity extends Activity {
     private static final String TAG = "ChatActivity";
 
@@ -31,15 +32,15 @@ public class MainActivity extends Activity {
     private boolean left = true;
     private boolean right = false;
 
-
+    NutriResponse nutritionProcess;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
-
-
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+        nutritionProcess = new NutriResponse();
 
         buttonSend = (Button) findViewById(R.id.send);
 
@@ -80,7 +81,7 @@ public class MainActivity extends Activity {
     }
 
     private boolean sendRightMessage() {
-        String response= "Sample Response";
+        String response = nutritionProcess.prcoess(chatText.getText().toString());
         chatArrayAdapter.add(new ChatMessage(right,response));
         chatText.setText("");
         return true;
