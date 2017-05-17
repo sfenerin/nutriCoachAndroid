@@ -2,9 +2,10 @@ package project.nutricoach;
 import com.fatsecret.platform.services.FatsecretService;
 import com.fatsecret.platform.model.CompactFood;
 import com.fatsecret.platform.services.Response;
-
+import android.util.Log;
 import org.json.JSONException;
-
+import org.json.JSONObject;
+import org.json.JSONArray;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -16,7 +17,6 @@ import java.util.concurrent.Callable;
 public class NutriResponse implements Callable<String> {
     String key = "8a87c3522c2c4298a57ad80a4a24354c";
     String secret = "6561cc4a8711477fbc696bd1dcfea90f";
-    String url = "http://platform.fatsecret.com/rest/server.api";
     FatSecretAPI api;
     String input;
     public NutriResponse(String input){
@@ -24,15 +24,13 @@ public class NutriResponse implements Callable<String> {
         this.input = input;
     }
 
-    private String process(String input) throws UnsupportedEncodingException, JSONException {
-
-        String response = api.getFoodItems(input).toString(2);
+    public String process(String input) throws UnsupportedEncodingException, JSONException {
+        JSONArray responseArray = api.getFoodItems(input).getJSONObject("result").getJSONObject("foods").getJSONArray("food");
+        Log.d("results:", responseArray.toString(2));
+        String response = responseArray.getJSONObject(0).toString(2);
+//        JSONObject result = api.getFoodItems(input);
+//        String response = api.getFoodItems(input).toString(2);
         return response;
-//        FatsecretService service = new FatsecretService(key, secret);
-//        Response<CompactFood> foodResponse = service.searchFoods(input);
-//        List<CompactFood> foods = foodResponse.getResults();
-//        return foods.get(0).getName() + " " + foods.get(0).getDescription();
-//        return "";
     }
 
     @Override
