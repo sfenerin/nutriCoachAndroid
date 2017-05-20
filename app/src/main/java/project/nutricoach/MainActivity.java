@@ -40,6 +40,7 @@ public class MainActivity extends Activity {
     private boolean left = true;
     private boolean right = false;
     private ExecutorService es;
+    private User currentUser;
 
     NutriResponse nutritionProcess;
 
@@ -48,6 +49,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+        getCurrentUser();
 
         this.es = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
@@ -118,5 +120,8 @@ public class MainActivity extends Activity {
         chatText.setText("");
 
         return true;
+    }
+    private void getCurrentUser(){
+
     }
 }

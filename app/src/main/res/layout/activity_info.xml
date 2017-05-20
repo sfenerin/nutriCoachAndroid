@@ -81,6 +81,7 @@
             android:layout_height="wrap_content"
             android:text="Activity Level"/>
         <RadioGroup
+            android:id="@+id/radioActivity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"

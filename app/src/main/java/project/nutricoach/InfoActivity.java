@@ -34,9 +34,9 @@ public class InfoActivity extends Activity {
     }
     private void getUserDetails(){
 
-        double age= Float.parseFloat(((EditText) findViewById(R.id.ageText)).getText().toString());
-        double height= Float.parseFloat(((EditText) findViewById(R.id.heightText)).getText().toString());
-        double weight= Float.parseFloat(((EditText) findViewById(R.id.weightText)).getText().toString());
+        double age= Float.parseFloat(((EditText) findViewById(R.id.userAge)).getText().toString());
+        double height= Float.parseFloat(((EditText) findViewById(R.id.userHeight)).getText().toString());
+        double weight= Float.parseFloat(((EditText) findViewById(R.id.userWeight)).getText().toString());
         boolean female= ((RadioButton) findViewById(R.id.radioFemale)).isChecked();
         RadioGroup radioButtonGroup = (RadioGroup)findViewById(R.id.radioActivity);
         int radioButtonID = ((RadioGroup)findViewById(R.id.radioActivity)).getCheckedRadioButtonId();
@@ -61,9 +61,6 @@ public class InfoActivity extends Activity {
         DatabaseReference mDatabase;
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("users").child(user.getUid()).setValue(newUser);
-
-
-
 
     }
 }
