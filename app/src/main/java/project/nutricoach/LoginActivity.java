@@ -74,7 +74,7 @@ public class LoginActivity extends Activity {
             }
         });
 
-        signUpButton= (Button) findViewById(R.id.SignInButton);
+        signUpButton= (Button)  findViewById(R.id.SignInButton);
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
@@ -135,6 +135,9 @@ public class LoginActivity extends Activity {
 
         String email = userText.getText().toString();
         String password= passText.getText().toString();
+//        Intent intent = new Intent(LoginActivity.this, InfoActivity.class);
+//        intent.putExtra("USER_EMAIL", email);
+//        startActivity(intent);
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -146,6 +149,10 @@ public class LoginActivity extends Activity {
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                           System.out.println("Failed");
+                        }else{
+                            Intent intent = new Intent(LoginActivity.this, InfoActivity.class);
+                            intent.putExtra("USER_EMAIL", email);
+                            startActivity(intent);
                         }
 
                         // ...

@@ -81,7 +81,7 @@ public class MainActivity extends Activity {
     }
 
     private boolean sendRightMessage() {
-        String response = nutritionProcess.process(chatText.getText().toString());
+        String response = nutritionProcess.prcoess(chatText.getText().toString());
         chatArrayAdapter.add(new ChatMessage(right,response));
         chatText.setText("");
         return true;
