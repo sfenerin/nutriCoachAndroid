@@ -2,23 +2,31 @@ package project.nutricoach;
 
 
 
- import android.app.Activity;
- import android.database.DataSetObserver;
- import android.os.Bundle;
- import android.view.KeyEvent;
- import android.view.View;
- import android.widget.AbsListView;
- import android.widget.Button;
- import android.widget.EditText;
- import android.widget.ListView;
+        import android.app.Activity;
+        import android.database.DataSetObserver;
+        import android.os.Bundle;
+        import android.view.KeyEvent;
+        import android.view.View;
+        import android.widget.AbsListView;
+        import android.widget.Button;
+        import android.widget.EditText;
+        import android.widget.ListView;
 
- import com.loopj.android.http.JsonHttpResponseHandler;
+        import com.loopj.android.http.JsonHttpResponseHandler;
 
- import org.json.JSONArray;
- import org.json.JSONException;
- import org.json.JSONObject;
+        import org.json.JSONArray;
+        import org.json.JSONException;
+        import org.json.JSONObject;
 
- import cz.msebera.android.httpclient.Header;
+        import java.io.UnsupportedEncodingException;
+        import java.util.ArrayList;
+        import java.util.List;
+        import java.util.concurrent.ExecutionException;
+        import java.util.concurrent.ExecutorService;
+        import java.util.concurrent.Executors;
+        import java.util.concurrent.Future;
+
+        import cz.msebera.android.httpclient.Header;
 
 
 
@@ -31,6 +39,7 @@ public class MainActivity extends Activity {
     private Button buttonSend;
     private boolean left = true;
     private boolean right = false;
+    private ExecutorService es;
 
     NutriResponse nutritionProcess;
 
@@ -40,7 +49,7 @@ public class MainActivity extends Activity {
 
         setContentView(R.layout.activity_main);
 
-        nutritionProcess = new NutriResponse();
+        this.es = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
         buttonSend = (Button) findViewById(R.id.send);
 
@@ -63,7 +72,6 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View arg0) {
                 sendChatMessage();
-                sendRightMessage();
             }
         });
 
@@ -80,17 +88,35 @@ public class MainActivity extends Activity {
         });
     }
 
-    private boolean sendRightMessage() {
-        String response = nutritionProcess.prcoess(chatText.getText().toString());
+    private boolean sendRightMessage(String input) throws UnsupportedEncodingException, JSONException {
+        Future<String> future = es.submit(new NutriResponse(input));
+        String response = "";
+        try {
+            response = future.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+//        nutritionProcess = ;
+//        String response = nutritionProcess.call();
         chatArrayAdapter.add(new ChatMessage(right,response));
         chatText.setText("");
         return true;
     }
 
     private boolean sendChatMessage() {
-        chatArrayAdapter.add(new ChatMessage(left, chatText.getText().toString()));
+        String value = chatText.getText().toString();
+        chatArrayAdapter.add(new ChatMessage(left, value));
+        try {
+            sendRightMessage(value) ;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         chatText.setText("");
-        return true;
-     }
 
+        return true;
     }
+}
