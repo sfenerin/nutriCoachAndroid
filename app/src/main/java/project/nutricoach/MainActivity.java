@@ -40,7 +40,7 @@ public class MainActivity extends Activity {
     private boolean left = true;
     private boolean right = false;
     private ExecutorService es;
-    private User currentUser;
+    private String currentUser;
 
     NutriResponse nutritionProcess;
 

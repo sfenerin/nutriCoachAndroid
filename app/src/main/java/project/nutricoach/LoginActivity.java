@@ -114,8 +114,7 @@ public class LoginActivity extends Activity {
                     @Override
                     public void onComplete(Task<AuthResult> task) {
 
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
+
 //                        Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
 
                         // If sign in fails, display a message to the user. If sign in succeeds
@@ -126,6 +125,10 @@ public class LoginActivity extends Activity {
 //                            Toast.makeText(EmailPasswordActivity.this, R.string.auth_failed,
 //                                    Toast.LENGTH_SHORT).show();
                         }
+                        else{
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        }
 
                         // ...
                     }
@@ -133,6 +136,8 @@ public class LoginActivity extends Activity {
     }
 
     private void signUp(){
+
+        System.out.println("IN HERE ");
 
         String email = userText.getText().toString();
         String password= passText.getText().toString();
@@ -152,6 +157,7 @@ public class LoginActivity extends Activity {
                             FirebaseUser user = mAuth.getCurrentUser();
 //                            updateUI(user);
                         } else {
+                            System.out.println("PROBLEM");
                             System.out.println(task.getException());
                             // If sign in fails, display a message to the user.
 //                            Log.w(TAG, "createUserWithEmail:failure", task.getException());

@@ -19,7 +19,7 @@ public class User {
     private int activity;
     private boolean female;
     private String email;
-    private String uid;
+    private String id;
 
     public User (){
 
@@ -113,17 +113,17 @@ public class User {
         this.email = email;
     }
 
-//    public String getUid() {
-//        return uid;
-//    }
-//
-//    public void setUid(String uid) {
-//        this.uid = uid;
-//    }
+    public String getId() {
+        return id;
+    }
 
-    public User (String email, String uid, double age, boolean female, double height, double weight, double bmr, double calories, double protein, double fat, double carbs, int activity){
-         this.email=email;
-        this.uid =uid;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public User (String email, String id, double age, boolean female, double height, double weight, double bmr, double calories, double protein, double fat, double carbs, int activity){
+        this.email=email;
+        this.id =id;
         this.age=age;
         this.female=female;
         this.height= height;
