@@ -135,4 +135,9 @@ public class User {
         this.fat=fat;
         this.activity= activity;
     }
+
+    @Override
+    public String toString(){
+        return "User " +  email + ", " + age + ", " + height;
+    }
 }

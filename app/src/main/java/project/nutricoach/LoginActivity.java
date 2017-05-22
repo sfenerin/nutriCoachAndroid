@@ -108,7 +108,6 @@ public class LoginActivity extends Activity {
 //        startActivity(intent);
 
 
-
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override

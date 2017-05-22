@@ -1,6 +1,7 @@
 package project.nutricoach;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -61,6 +62,9 @@ public class InfoActivity extends Activity {
         DatabaseReference mDatabase;
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("users").child(user.getUid()).setValue(newUser);
+
+        Intent intent = new Intent(InfoActivity.this, MainActivity.class);
+        startActivity(intent);
 
     }
 }
