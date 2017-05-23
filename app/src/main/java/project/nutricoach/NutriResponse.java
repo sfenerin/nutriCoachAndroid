@@ -34,10 +34,11 @@ public class NutriResponse implements Callable<String> {
 
         if(foodFinder.foundFoodItem(input)){
             String foodQuery = foodFinder.getFoodItem();
+            String servingSize = foodFinder.getServingSize();
             JSONObject foodInfo = null;
             try {
                 foodInfo = getFoodInfo(foodQuery);
-                updateAndStoreInfo(foodInfo);
+                updateAndStoreInfo(foodInfo, servingSize);
                 response = foodInfo.toString(2);
             } catch (JSONException e) {
                 response = "Sorry, I didn't quite get that. Could you try rephrasing or being more specific?";
@@ -48,11 +49,31 @@ public class NutriResponse implements Callable<String> {
         return response;
     }
 
-    private boolean updateAndStoreInfo(JSONObject foodInfo) throws JSONException {
-        JSONObject parsedFoodInfo = foodInfo.getJSONObject("result").getJSONObject("food");
-//        Log.v("parsed food: ", parsedFoodInfo.toString(2));
-        Log.v("parsed food: ", parsedFoodInfo.toString(2));
-        return true;
+    private Food getGenericFoodServing(JSONObject foodInfo) throws JSONException {
+        JSONObject parsedFood = foodInfo.getJSONObject("result").getJSONObject("food");
+        JSONObject parsedServing;
+        if(parsedFood.getJSONObject("servings").get("serving") instanceof JSONObject){
+            parsedServing = parsedFood.getJSONObject("servings").getJSONObject("serving");
+        } else {
+            JSONArray servingsArray = parsedFood.getJSONObject("servings").getJSONArray("serving");
+            parsedServing = servingsArray.getJSONObject(0);
+        }
+
+        double calories = Double.parseDouble((String)parsedServing.get("calories"));
+        double protein = Double.parseDouble((String)parsedServing.get("protein"));
+        double carbs = Double.parseDouble((String)parsedServing.get("carbohydrate"));
+        double fat = Double.parseDouble((String)parsedServing.get("fat"));
+
+        Food food = new Food((String)parsedFood.get("food_id"), (String)parsedFood.get("food_name"),calories, protein, carbs, fat);
+        return food;
+    }
+
+    private boolean updateAndStoreInfo(JSONObject foodInfo, String serving) throws JSONException {
+        Food food;
+        if (serving.equals("")) {
+            food = getGenericFoodServing(foodInfo);
+       }
+       return true;
     }
 
     private JSONObject getFoodInfo(String foodQuery) throws UnsupportedEncodingException, JSONException {

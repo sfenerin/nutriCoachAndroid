@@ -5,7 +5,7 @@ package project.nutricoach;
  */
 
 public class Food {
-    int ID;
+    String ID;
     String name;
     double calories;
     double protein;
@@ -13,14 +13,15 @@ public class Food {
     double fat;
 
 
-    public Food(int ID, String name, double calories, double protein, double carbs, double fat ) {
+    public Food(String ID, String name, double calories, double protein, double carbs, double fat ) {
         this.ID = ID;
         this.name = name;
-        this.calories = protein;
+        this.protein = protein;
+        this.calories = calories;
         this.carbs = carbs;
         this.fat = fat;
     }
-    public int getID() { return ID;}
+    public String getID() { return ID;}
 
     public String getName() { return name; }
 
@@ -40,4 +41,8 @@ public class Food {
         return carbs;
     }
 
+    @Override
+    public String toString() {
+        return "Food ID: " + getID() + " name: " + getName() + " calories: " + getCalories();
+    }
 }
