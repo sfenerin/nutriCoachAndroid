@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "863509352291",
+    "firebase_url": "https://nutricoach-cec45.firebaseio.com",
+    "project_id": "nutricoach-cec45",
+    "storage_bucket": "nutricoach-cec45.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:863509352291:android:f556b51d955b2a41",
+        "android_client_info": {
+          "package_name": "project.nutricoach"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "863509352291-1topi77rgo8jcgam6a7oieiihvsta7k8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "project.nutricoach",
+            "certificate_hash": "46cd4cfd1952ac49303e3af3dd036bb467570a19"
+          }
+        },
+        {
+          "client_id": "863509352291-jn1hliktkcl2j4bvp4vd2vcg4bt0lnfr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "project.nutricoach",
+            "certificate_hash": "0955d1e381eaefdb8d76815e16c60198da8983c6"
+          }
+        },
+        {
+          "client_id": "863509352291-ugg9h3em9q2qvgv4u4mn3ot5n4a1m1sf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2c9H3aJHgmpRh_udOQCHZAhMrge-PUyE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "863509352291-ugg9h3em9q2qvgv4u4mn3ot5n4a1m1sf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
