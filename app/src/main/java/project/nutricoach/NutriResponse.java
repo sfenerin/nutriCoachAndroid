@@ -42,11 +42,11 @@ public class NutriResponse implements Callable<String> {
 
         if(foodFinder.foundFoodItem(input)){
             String foodQuery = foodFinder.getFoodItem();
-            String servingSize = foodFinder.getServingSize();
+            String servingSize = foodFinder.getServingSize(); //need actual serving size
             JSONObject foodInfo = null;
             foodInfo = getFoodInfo(foodQuery);
             Food food = updateAndStoreInfo(foodInfo, servingSize);
-            response = "You ate " + input +". It contains " + food.getCalories() + " calories and " + food.getProtein() + "g of protein.";
+            response = "You ate " + food.getServingDescription() + " of " + input +". It contains " + food.getCalories() + " calories and " + food.getProtein() + "g of protein.";
             response += "\n You have " + user.getCaloriesToday() + " calories left to eat today.";
             return response;
 
@@ -61,8 +61,6 @@ public class NutriResponse implements Callable<String> {
         JSONObject parsedFood = foodInfo.getJSONObject("result").getJSONObject("food");
         Food food = new Food((String)parsedFood.get("food_id"), api);
         user.logFood(food);
-
-        System.out.println(user.toString());
         return food;
     }
 

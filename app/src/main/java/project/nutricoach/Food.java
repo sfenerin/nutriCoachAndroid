@@ -16,7 +16,7 @@ public class Food {
     double protein;
     double carbs;
     double fat;
-
+    String servingDescription;
 
     public Food(String ID, String name, double calories, double protein, double carbs, double fat ) {
         this.ID = ID;
@@ -40,7 +40,7 @@ public class Food {
             JSONArray servingsArray = foodObj.getJSONObject("servings").getJSONArray("serving");
             nutritionInfo = servingsArray.getJSONObject(0);
         }
-
+        this.servingDescription = nutritionInfo.getString("serving_description");
         this.calories = nutritionInfo.getDouble("calories");
         this.carbs = nutritionInfo.getDouble("carbohydrate");
         this.protein = nutritionInfo.getDouble("protein");
@@ -67,6 +67,10 @@ public class Food {
 
     public double getCarbs() {
         return carbs;
+    }
+
+    public String getServingDescription() {
+        return servingDescription;
     }
 
     @Override
