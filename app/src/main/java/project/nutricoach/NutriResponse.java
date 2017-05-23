@@ -28,32 +28,47 @@ public class NutriResponse implements Callable<String> {
         this.input = input;
     }
 
-    private String process(String input) throws UnsupportedEncodingException, JSONException {
+    private String process(String input) throws UnsupportedEncodingException {
         String response = "";
-
         FoodItemExtractor foodFinder = new FoodItemExtractor();
+
         if(foodFinder.foundFoodItem(input)){
             String foodQuery = foodFinder.getFoodItem();
-            JSONObject foodInfo = getFoodInfo(foodQuery);
-            storeInfo(foodInfo);
-            response = foodInfo.toString(2);
+            JSONObject foodInfo = null;
+            try {
+                foodInfo = getFoodInfo(foodQuery);
+                updateAndStoreInfo(foodInfo);
+                response = foodInfo.toString(2);
+            } catch (JSONException e) {
+                response = "Sorry, I didn't quite get that. Could you try rephrasing or being more specific?";
+            }
         } else {
             response = "Sorry, I didn't quite get that. Could you try rephrasing or being more specific?";
         }
         return response;
     }
 
-    private boolean storeInfo(JSONObject foodInfo){
+    private boolean updateAndStoreInfo(JSONObject foodInfo) throws JSONException {
+        JSONObject parsedFoodInfo = foodInfo.getJSONObject("results").getJSONObject("food");
+        Log.v("parsed food: ", parsedFoodInfo.toString(2));
         return true;
     }
 
     private JSONObject getFoodInfo(String foodQuery) throws UnsupportedEncodingException, JSONException {
-        JSONObject foodList = api.getFoodItems(foodQuery);
-        JSONArray responseArray = api.getFoodItems(input).getJSONObject("result").getJSONObject("foods").getJSONArray("food");
-        Log.d("results", responseArray.toString(2));
+        JSONArray responseArray = api.getFoodItems(foodQuery).getJSONObject("result").getJSONObject("foods").getJSONArray("food");
+        for(int i = 0; i < responseArray.length(); i ++){
+            String foodType = responseArray.getJSONObject(i).get("food_type").toString();
+            if(notGeneric(foodType)){
+                Log.d("results", responseArray.toString(2));
+                String food_id = responseArray.getJSONObject(i).get("food_id").toString().replaceAll("\\s","");
+                return api.getFoodItem(Long.parseLong(food_id));
+            }
+        }
         String food_id = responseArray.getJSONObject(0).get("food_id").toString().replaceAll("\\s","");
         return api.getFoodItem(Long.parseLong(food_id));
     }
+
+    private boolean notGeneric(String foodType){return !foodType.equals("Generic");}
 
     private boolean updateFoodInfo(){
         return true;
@@ -66,8 +81,6 @@ public class NutriResponse implements Callable<String> {
             String response = process(input);
             return response;
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
             e.printStackTrace();
         }
         return "";

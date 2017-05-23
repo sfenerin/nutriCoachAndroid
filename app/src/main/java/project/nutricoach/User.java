@@ -1,6 +1,9 @@
 package project.nutricoach;
 
+import android.text.format.DateUtils;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by anacarolinamexia on 5/20/17.
@@ -18,6 +21,15 @@ public class User {
     private double carbs;
     private int activity;
     private boolean female;
+
+    private double caloriesToday;
+    private double proteinToday;
+    private double fatToday;
+    private double carbsToday;
+
+    private long lastUpdate;
+    private HashMap<Integer, ArrayList<Object>> foodLog;
+
     private String email;
     private String id;
 
@@ -121,6 +133,21 @@ public class User {
         this.id = id;
     }
 
+
+    public void logFood(Food food) {
+        if(!DateUtils.isToday(lastUpdate)) { //reset nutrient counts for the day if it is a new day
+            caloriesToday = getCalories();
+            fatToday = getFat();
+            carbsToday = getCarbs();
+            proteinToday = getProtein();
+        }
+        carbsToday -= food.getCarbs();
+        fatToday -= food.getFat();
+        proteinToday -= food.getProtein();
+        caloriesToday -= food.getCalories();
+
+    }
+
     public User (String email, String id, double age, boolean female, double height, double weight, double bmr, double calories, double protein, double fat, double carbs, int activity){
         this.email=email;
         this.id =id;
@@ -134,6 +161,13 @@ public class User {
         this.carbs= carbs;
         this.fat=fat;
         this.activity= activity;
+        this.lastUpdate = System.currentTimeMillis();
+        this.caloriesToday=calories;
+        this.proteinToday = protein;
+        this.carbsToday = carbs;
+
+        this.foodLog = new HashMap<Integer, ArrayList<Object>>();
+
     }
 
     @Override
