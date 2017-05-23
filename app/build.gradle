@@ -45,6 +45,4 @@ dependencies {
     compile files('libs/fatsecret-platform-2.0.jar')
 }
 
-
-
 apply plugin: 'com.google.gms.google-services'
