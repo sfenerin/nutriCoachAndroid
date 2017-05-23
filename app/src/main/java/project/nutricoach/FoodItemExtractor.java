@@ -2,6 +2,7 @@ package project.nutricoach;
 
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,13 +33,17 @@ public class FoodItemExtractor {
     public boolean foundFoodItem(String input) throws IOException, JSONException {
 
         JSONObject responseObject = getResponse("I had " + input); // here is the JSON object with the values
-        Log.d("Response from wit.ai: ", responseObject.toString(2));
+//        Log.d("Response from wit.ai: ", responseObject.toString(2));
 
-
-        foodItem = input;
+        JSONObject entities = responseObject.getJSONObject("entities");
+        String item_type = (String) ((JSONObject) ((JSONArray) entities.get("item_type")).get(0)).get("value");
+        int item_count = Integer.parseInt((String) ((JSONObject) ((JSONArray) entities.get("item_count")).get(0)).get("value"));
+        String item_size = (String) ((JSONObject) ((JSONArray) entities.get("item_size")).get(0)).get("value");
+        
+        foodItem = item_type;
 //        getResponse("I had "+ input);
-        servingCount = 1;//placeholder
-        servingSize = ""; //placeholder
+        servingCount = item_count;//placeholder
+        servingSize = item_size; //placeholder
 
         return true;
     }
