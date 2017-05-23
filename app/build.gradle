@@ -5,6 +5,10 @@ repositories {
 }
 
 android {
+    packagingOptions {
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/notice.txt'
+    }
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {

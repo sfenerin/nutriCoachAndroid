@@ -1,5 +1,8 @@
 package project.nutricoach;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -24,16 +27,21 @@ public class FoodItemExtractor {
     // then if we are doing this from that example, servingCount should be set to 2
     // and servingSize should be "slice"
 
-    public boolean foundFoodItem(String input) throws IOException {
+    public boolean foundFoodItem(String input) throws IOException, JSONException {
+
+        JSONObject responseObject = getResponse("I had " + input); // here is the JSON object with the values
+
+
+
         foodItem = input;
-        getResponse("I had "+ input);
+//        getResponse("I had "+ input);
         servingCount = 1;//placeholder
         servingSize = ""; //placeholder
-        System.out.println(getResponse("I had "+ input));
+
         return true;
     }
 
-    public String getResponse(String input) throws IOException {
+    public JSONObject getResponse(String input) throws IOException, JSONException {
         String modInput = input.replace(" ","%20");
         URL url = new URL("https://api.wit.ai/message?v=20170523&q=" + modInput);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -49,14 +57,22 @@ public class FoodItemExtractor {
         BufferedReader br = new BufferedReader(new InputStreamReader(
                 (conn.getInputStream())));
 
-        String output;
-        System.out.println("Output from Server .... \n");
-        while ((output = br.readLine()) != null) {
-            System.out.println(output);
-        }
+        String output = null;
 
+        System.out.println("Output from Server .... \n");
+        output = br.readLine();
+        JSONObject json = new JSONObject(output);
         conn.disconnect();
-        return "";
+        return json;
+//        while ((output = br.readLine()) != null) {
+//            System.out.println(output);
+//            JSONObject json = new JSONObject(output);
+//            System.out.println(json.toString(2));
+//        }
+
+
+
+//        return "";
     }
 
 
