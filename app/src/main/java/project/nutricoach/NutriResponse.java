@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -36,7 +37,7 @@ public class NutriResponse implements Callable<String> {
         this.user=user;
     }
 
-    private String process(String input) throws UnsupportedEncodingException, JSONException {
+    private String process(String input) throws IOException, JSONException {
         String response = "";
         FoodItemExtractor foodFinder = new FoodItemExtractor();
 
@@ -92,7 +93,7 @@ public class NutriResponse implements Callable<String> {
     private boolean notGeneric(String foodType){return !foodType.equals("Generic");}
 
     @Override
-    public String call() throws JSONException {
+    public String call() throws JSONException, IOException {
         try {
             String response = process(input);
             return response;
