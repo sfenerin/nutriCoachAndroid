@@ -46,7 +46,10 @@ public class NutriResponse implements Callable<String> {
             JSONObject foodInfo = null;
             foodInfo = getFoodInfo(foodQuery);
             Food food = updateAndStoreInfo(foodInfo, servingSize);
-            response = food.toString();
+            response = "You ate " + input +". It contains " + food.getCalories() + " calories and " + food.getProtein() + "g of protein.";
+            response += "\n You have " + user.getCaloriesToday() + " calories left to eat today.";
+            return response;
+
 
         } else {
             response = "Sorry, I didn't quite get that. Could you try rephrasing or being more specific?";

@@ -143,6 +143,22 @@ public class User {
         return dateFormatted;
     }
 
+    public double getCaloriesToday() {
+        return caloriesToday;
+    }
+
+    public double getProteinToday() {
+        return proteinToday;
+    }
+
+    public double getFatToday() {
+        return fatToday;
+    }
+
+    public double getCarbsToday() {
+        return carbsToday;
+    }
+
 
     public void logFood(Food food) {
         if(!DateUtils.isToday(lastUpdate)) { //reset nutrient counts for the day if it is a new day
