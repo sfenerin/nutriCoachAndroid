@@ -2,11 +2,15 @@ package project.nutricoach;
 
 import android.text.format.DateUtils;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Date;
 import 	java.text.DateFormat;
+import java.util.Map;
 
 /**
  * Created by anacarolinamexia on 5/20/17.
@@ -24,6 +28,7 @@ public class User {
     private double carbs;
     private int activity;
     private boolean female;
+    private DatabaseReference mDatabase;
 
     private double caloriesToday;
     private double proteinToday;
@@ -172,6 +177,7 @@ public class User {
         proteinToday -= food.getProtein();
         caloriesToday -= food.getCalories();
         lastUpdate = System.currentTimeMillis();
+        updateDatabase();
 
     }
 
@@ -192,7 +198,6 @@ public class User {
         this.caloriesToday=calories;
         this.proteinToday = protein;
         this.carbsToday = carbs;
-
         this.foodLog = new HashMap<Integer, ArrayList<Object>>();
 
     }
@@ -200,5 +205,24 @@ public class User {
     @Override
     public String toString(){
         return "User: " +  email + ", age: " + age + ", height: " + height + ", calories left: " + caloriesToday + ", last update: " + getLastUpdateFormatted();
+    }
+
+    private void updateDatabase(){
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        Map<String, Object> userValues = toMap();
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put("/users/" + id, userValues);
+        mDatabase.updateChildren(childUpdates);
+    }
+
+    private Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("id", id);
+        result.put("carbsToday", carbsToday);
+        result.put("fatToday", fatToday);
+        result.put("proteinToday", proteinToday);
+        result.put("caloriesToday",caloriesToday);
+        result.put("lastUpdate",lastUpdate) ;
+        return result;
     }
 }
