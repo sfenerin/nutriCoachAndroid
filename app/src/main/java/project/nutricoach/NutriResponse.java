@@ -49,7 +49,8 @@ public class NutriResponse implements Callable<String> {
     }
 
     private boolean updateAndStoreInfo(JSONObject foodInfo) throws JSONException {
-        JSONObject parsedFoodInfo = foodInfo.getJSONObject("results").getJSONObject("food");
+        JSONObject parsedFoodInfo = foodInfo.getJSONObject("result").getJSONObject("food");
+//        Log.v("parsed food: ", parsedFoodInfo.toString(2));
         Log.v("parsed food: ", parsedFoodInfo.toString(2));
         return true;
     }
@@ -59,8 +60,9 @@ public class NutriResponse implements Callable<String> {
         for(int i = 0; i < responseArray.length(); i ++){
             String foodType = responseArray.getJSONObject(i).get("food_type").toString();
             if(notGeneric(foodType)){
-                Log.d("results", responseArray.toString(2));
+
                 String food_id = responseArray.getJSONObject(i).get("food_id").toString().replaceAll("\\s","");
+                Log.d("result", api.getFoodItem(Long.parseLong(food_id)).toString(2));
                 return api.getFoodItem(Long.parseLong(food_id));
             }
         }
