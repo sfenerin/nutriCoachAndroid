@@ -2,8 +2,11 @@ package project.nutricoach;
 
 import android.text.format.DateUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Date;
+import 	java.text.DateFormat;
 
 /**
  * Created by anacarolinamexia on 5/20/17.
@@ -133,6 +136,13 @@ public class User {
         this.id = id;
     }
 
+    public String getLastUpdateFormatted() {
+        Date date = new Date(lastUpdate);
+        DateFormat formatter = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
+        String dateFormatted = formatter.format(date);
+        return dateFormatted;
+    }
+
 
     public void logFood(Food food) {
         if(!DateUtils.isToday(lastUpdate)) { //reset nutrient counts for the day if it is a new day
@@ -145,6 +155,7 @@ public class User {
         fatToday -= food.getFat();
         proteinToday -= food.getProtein();
         caloriesToday -= food.getCalories();
+        lastUpdate = System.currentTimeMillis();
 
     }
 
@@ -172,6 +183,6 @@ public class User {
 
     @Override
     public String toString(){
-        return "User " +  email + ", " + age + ", " + height;
+        return "User: " +  email + ", age: " + age + ", height: " + height + ", calories left: " + caloriesToday + ", last update: " + getLastUpdateFormatted();
     }
 }

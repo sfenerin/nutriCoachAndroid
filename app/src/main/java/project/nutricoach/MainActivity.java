@@ -48,9 +48,6 @@ public class MainActivity extends Activity {
     private boolean right = false;
     private ExecutorService es;
     private User currentUser;
-
-    NutriResponse nutritionProcess;
-
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -71,7 +68,17 @@ public class MainActivity extends Activity {
         chatText.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                    return sendChatMessage();
+                    try {
+                        return sendChatMessage();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
                 }
                 return false;
             }
@@ -80,7 +87,17 @@ public class MainActivity extends Activity {
         buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                sendChatMessage();
+                try {
+                    sendChatMessage();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -97,33 +114,24 @@ public class MainActivity extends Activity {
         });
     }
 
-    private boolean sendRightMessage(String input) throws UnsupportedEncodingException, JSONException {
-        Future<String> future = es.submit(new NutriResponse(input));
+    private boolean sendRightMessage(String input) throws UnsupportedEncodingException, JSONException, ExecutionException, InterruptedException {
+        Future<String> future = es.submit(new NutriResponse(input, currentUser));
         String response = "";
-        try {
-            response = future.get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-//        nutritionProcess = ;
-//        String response = nutritionProcess.call();
+
+
+        response = future.get();
+
         chatArrayAdapter.add(new ChatMessage(right,response));
+
         chatText.setText("");
         return true;
     }
 
-    private boolean sendChatMessage() {
+    private boolean sendChatMessage() throws InterruptedException, ExecutionException, JSONException, UnsupportedEncodingException {
         String value = chatText.getText().toString();
         chatArrayAdapter.add(new ChatMessage(left, value));
-        try {
-            sendRightMessage(value) ;
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        sendRightMessage(value) ;
+
         chatText.setText("");
 
         return true;
