@@ -35,7 +35,8 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.google.firebase:firebase-core:9.2.0';
+    compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
+    compile 'com.google.firebase:firebase-core:9.2.0'
     compile 'com.android.support:appcompat-v7:25.3.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.google.firebase:firebase-database:10.0.1'
@@ -43,6 +44,8 @@ dependencies {
     compile 'com.google.firebase:firebase-auth:10.0.1'
     testCompile 'junit:junit:4.12'
     compile files('libs/fatsecret-platform-2.0.jar')
+    compile files('libs/myjarfile.jar')
+    compile files('libs/wit-ai.jar')
 }
 
 apply plugin: 'com.google.gms.google-services'

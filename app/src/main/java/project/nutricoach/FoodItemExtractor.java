@@ -29,6 +29,7 @@ public class FoodItemExtractor {
         getResponse("I had "+ input);
         servingCount = 1;//placeholder
         servingSize = ""; //placeholder
+        System.out.println(getResponse("I had "+ input));
         return true;
     }
 
