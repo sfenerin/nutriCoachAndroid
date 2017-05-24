@@ -2,6 +2,7 @@ package project.nutricoach;
 
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,18 +31,29 @@ public class FoodItemExtractor {
     // and servingSize should be "slice"
 
     public boolean foundFoodItem(String input) throws IOException, JSONException {
-
-        JSONObject responseObject = getResponse("I had " + input); // here is the JSON object with the values
+        JSONObject responseObject = getResponse(input); // here is the JSON object with the values
         Log.d("Response from wit.ai: ", responseObject.toString(2));
+        JSONObject entities = responseObject.getJSONObject("entities");
 
+//        TODO: Check for non-food inputs and return false
+        String item_type = entities.getJSONArray("item_type").getJSONObject(0).getString("value");
 
-        foodItem = input;
-//        getResponse("I had "+ input);
-        servingCount = 1;//placeholder
-        servingSize = ""; //placeholder
+        int item_count = 1;
+        if (entities.has("item_count"))
+            entities.getJSONArray("item_count").getJSONObject(0).getInt("value");
+//        TODO: handle numbers as word, like "two" instead of "2"
+
+        String item_size = "";
+        if (entities.has("item_size"))
+            item_size = entities.getJSONArray("item_size").getJSONObject(0).getString("value");
+
+        foodItem = item_type;
+        servingCount = item_count;
+        servingSize = item_size;
 
         return true;
     }
+
 
     public JSONObject getResponse(String input) throws IOException, JSONException {
         String modInput = input.replace(" ","%20");
@@ -59,22 +71,10 @@ public class FoodItemExtractor {
         BufferedReader br = new BufferedReader(new InputStreamReader(
                 (conn.getInputStream())));
 
-        String output = null;
-
-        System.out.println("Output from Server .... \n");
-        output = br.readLine();
+        String output = br.readLine();
         JSONObject json = new JSONObject(output);
         conn.disconnect();
         return json;
-//        while ((output = br.readLine()) != null) {
-//            System.out.println(output);
-//            JSONObject json = new JSONObject(output);
-//            System.out.println(json.toString(2));
-//        }
-
-
-
-//        return "";
     }
 
 
