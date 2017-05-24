@@ -19,7 +19,6 @@ package project.nutricoach;
         import com.google.firebase.database.DatabaseReference;
         import com.google.firebase.database.FirebaseDatabase;
         import com.google.firebase.database.ValueEventListener;
-        import com.loopj.android.http.JsonHttpResponseHandler;
 
         import org.json.JSONArray;
         import org.json.JSONException;
@@ -33,7 +32,6 @@ package project.nutricoach;
         import java.util.concurrent.Executors;
         import java.util.concurrent.Future;
 
-        import cz.msebera.android.httpclient.Header;
 
 
 

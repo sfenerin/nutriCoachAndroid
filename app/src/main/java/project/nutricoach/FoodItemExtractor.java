@@ -20,7 +20,7 @@ import java.net.URL;
 public class FoodItemExtractor {
     String foodItem;
     String servingSize;
-    int servingCount;
+    double servingCount;
 
     public FoodItemExtractor(){
 
@@ -38,9 +38,9 @@ public class FoodItemExtractor {
 //        TODO: Check for non-food inputs and return false
         String item_type = entities.getJSONArray("item_type").getJSONObject(0).getString("value");
 
-        int item_count = 1;
+        double item_count = 1.0;
         if (entities.has("item_count"))
-            entities.getJSONArray("item_count").getJSONObject(0).getInt("value");
+            item_count = entities.getJSONArray("item_count").getJSONObject(0).getDouble("value");
 //        TODO: handle numbers as word, like "two" instead of "2"
 
         String item_size = "";
@@ -84,5 +84,5 @@ public class FoodItemExtractor {
 
     public String getServingSize() {return servingSize; }
 
-    public int getServingCount(){ return servingCount; }
+    public double getServingCount(){ return servingCount; }
 }
