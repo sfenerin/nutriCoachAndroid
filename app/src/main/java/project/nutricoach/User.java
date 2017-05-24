@@ -7,6 +7,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Date;
 import 	java.text.DateFormat;
@@ -164,9 +165,22 @@ public class User {
         return carbsToday;
     }
 
+    public static boolean isYesterday(long date) {
+        Calendar now = Calendar.getInstance();
+        Calendar cdate = Calendar.getInstance();
+        cdate.setTimeInMillis(date);
+
+        now.add(Calendar.DATE,-1);
+
+        return now.get(Calendar.YEAR) == cdate.get(Calendar.YEAR)
+                && now.get(Calendar.MONTH) == cdate.get(Calendar.MONTH)
+                && now.get(Calendar.DATE) == cdate.get(Calendar.DATE);
+    }
+
 
     public void logFood(Food food) {
-        if(!DateUtils.isToday(lastUpdate)) { //reset nutrient counts for the day if it is a new day
+        if(isYesterday(lastUpdate)) { //reset nutrient counts for the day if it is a new day
+            System.out.println("Not today");
             caloriesToday = getCalories();
             fatToday = getFat();
             carbsToday = getCarbs();
@@ -195,6 +209,7 @@ public class User {
         this.fat=fat;
         this.activity= activity;
         this.lastUpdate = System.currentTimeMillis();
+        this.fatToday= fat;
         this.caloriesToday=calories;
         this.proteinToday = protein;
         this.carbsToday = carbs;
@@ -217,12 +232,23 @@ public class User {
 
     private Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
+        result.put("email",email);
         result.put("id", id);
+        result.put("age", age);
+        result.put("female", female);
+        result.put("height", height);
+        result.put("weight", weight);
+        result.put("bmr", bmr);
+        result.put("calories", calories);
+        result.put("protein", protein);
+        result.put("carbs", carbs);
+        result.put("fat",fat);
+        result.put("activity", activity);
         result.put("carbsToday", carbsToday);
         result.put("fatToday", fatToday);
         result.put("proteinToday", proteinToday);
         result.put("caloriesToday",caloriesToday);
-        result.put("lastUpdate",lastUpdate) ;
+        result.put("lastUpdate",lastUpdate);
         return result;
     }
 }
