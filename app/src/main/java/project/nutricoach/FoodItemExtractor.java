@@ -12,15 +12,21 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 /**
  * Created by Shawn on 5/18/2017.
  */
 
 public class FoodItemExtractor {
+
     String foodItem;
     String servingSize;
     int servingCount;
+
+    ArrayList<String> item_types = new ArrayList<String>();
+    ArrayList<Integer> item_counts = new ArrayList<Integer>();
+    ArrayList<String> item_sizes = new ArrayList<String>();
 
     public FoodItemExtractor(){
 
@@ -31,22 +37,47 @@ public class FoodItemExtractor {
     // and servingSize should be "slice"
 
     public boolean foundFoodItem(String input) throws IOException, JSONException {
-
-        JSONObject responseObject = getResponse("I had " + input); // here is the JSON object with the values
-//        Log.d("Response from wit.ai: ", responseObject.toString(2));
-
+        JSONObject responseObject = getResponse(input); // here is the JSON object with the values
+        Log.d("Response from wit.ai: ", responseObject.toString(2));
         JSONObject entities = responseObject.getJSONObject("entities");
-        String item_type = (String) ((JSONObject) ((JSONArray) entities.get("item_type")).get(0)).get("value");
-        int item_count = Integer.parseInt((String) ((JSONObject) ((JSONArray) entities.get("item_count")).get(0)).get("value"));
-        String item_size = (String) ((JSONObject) ((JSONArray) entities.get("item_size")).get(0)).get("value");
-        
-        foodItem = item_type;
-//        getResponse("I had "+ input);
-        servingCount = item_count;//placeholder
-        servingSize = item_size; //placeholder
+
+//        TODO: Check for non-food inputs and return false
+        String item_type = "";
+        for (int i = 0; i < entities.getJSONArray("item_type").length(); i++) {
+            item_type = entities.getJSONArray("item_type").getJSONObject(i).getString("value");
+            item_types.add(item_type);
+        }
+
+        System.out.println(item_types);
+
+        int item_count = 1;
+        if (entities.has("item_count")) {
+            for (int i = 0; i < entities.getJSONArray("item_count").length(); i++) {
+                item_count = entities.getJSONArray("item_count").getJSONObject(i).getInt("value");
+                item_counts.add(item_count);
+            }
+        }
+
+        System.out.println(item_counts);
+//        TODO: handle numbers as word, like "two" instead of "2"
+
+        String item_size = "";
+        if (entities.has("item_size")) {
+            for (int i = 0; i < entities.getJSONArray("item_size").length(); i++) {
+                item_size = entities.getJSONArray("item_size").getJSONObject(i).getString("value");
+                item_sizes.add(item_size);
+            }
+        }
+
+        System.out.println(item_sizes);
+
+        foodItem = "";
+        servingSize = "";
+        servingCount = 1;
 
         return true;
     }
+
 
     public JSONObject getResponse(String input) throws IOException, JSONException {
         String modInput = input.replace(" ","%20");
@@ -64,30 +95,24 @@ public class FoodItemExtractor {
         BufferedReader br = new BufferedReader(new InputStreamReader(
                 (conn.getInputStream())));
 
-        String output = null;
-
-        System.out.println("Output from Server .... \n");
-        output = br.readLine();
+        String output = br.readLine();
         JSONObject json = new JSONObject(output);
         conn.disconnect();
         return json;
-//        while ((output = br.readLine()) != null) {
-//            System.out.println(output);
-//            JSONObject json = new JSONObject(output);
-//            System.out.println(json.toString(2));
-//        }
-
-
-
-//        return "";
     }
 
-
-    public String getFoodItem(){
-        return foodItem;
-    }
+    public String getFoodItem() {return foodItem; }
 
     public String getServingSize() {return servingSize; }
 
     public int getServingCount(){ return servingCount; }
+
+    public ArrayList<String> getTypes() {return item_types; }
+
+    public ArrayList<Integer> getCounts() {return item_counts; }
+
+    public ArrayList<String> getSizes() {return item_sizes; }
+
+
+
 }
