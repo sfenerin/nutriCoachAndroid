@@ -43,11 +43,12 @@ public class NutriResponse implements Callable<String> {
 
         if(foodFinder.foundFoodItem(input)){
             String foodQuery = foodFinder.getFoodItem();
+
+            Log.d("FoodQuery", foodQuery);
             String servingSize = foodFinder.getServingSize(); //need actual serving size
-            JSONObject foodInfo = null;
-            foodInfo = getFoodInfo(foodQuery);
-            Food food = updateAndStoreInfo(foodInfo, servingSize);
-            response = "You ate " + food.getServingDescription() + " of " + input +". It contains " + food.getCalories() + " calories and " + food.getProtein() + "g of protein.";
+            double servingCount = foodFinder.getServingCount();
+            Food food = updateAndStoreInfo(foodQuery, servingSize, servingCount);
+            response = "You ate " + food.getServingDescription() + " of " + foodQuery +". It contains " + food.getCalories() + " calories and " + food.getProtein() + "g of protein.";
             response += "\n You have " + user.getCaloriesToday() + " calories left to eat today.";
             return response;
 
@@ -58,31 +59,34 @@ public class NutriResponse implements Callable<String> {
         return response;
     }
 
-    private Food getGenericFoodServing(JSONObject foodInfo) throws JSONException, UnsupportedEncodingException {
+
+    private Food updateAndStoreInfo(String foodQuery, String serving, double servingCount) throws JSONException, UnsupportedEncodingException {
+        Food food = null;
+        if (serving.equals("")) { //currently always true
+            JSONObject foodInfo = getGenericFoodInfo(foodQuery);
+            food = logFoodServing(foodInfo, 1);
+        } else {
+            JSONObject foodInfo = getGenericFoodInfo(foodQuery);
+            food = logFoodServing(foodInfo, 1);
+        }
+
+        return food;
+    }
+
+
+    private Food logFoodServing(JSONObject foodInfo, int servings) throws JSONException, UnsupportedEncodingException {
         JSONObject parsedFood = foodInfo.getJSONObject("result").getJSONObject("food");
         Food food = new Food((String)parsedFood.get("food_id"), api);
         user.logFood(food);
         return food;
     }
 
-    private Food updateAndStoreInfo(JSONObject foodInfo, String serving) throws JSONException, UnsupportedEncodingException {
-        Food food = null;
-        if (serving.equals("")) { //currently always true
-            food = getGenericFoodServing(foodInfo);
-        }
-
-        return food;
-    }
-
-    private JSONObject getFoodInfo(String foodQuery) throws UnsupportedEncodingException, JSONException {
-        System.out.println(api.getFoodItems(foodQuery).toString(2));
+    private JSONObject getGenericFoodInfo(String foodQuery) throws UnsupportedEncodingException, JSONException {
         JSONArray responseArray = api.getFoodItems(foodQuery).getJSONObject("result").getJSONObject("foods").getJSONArray("food");
         for(int i = 0; i < responseArray.length(); i ++){
             String foodType = responseArray.getJSONObject(i).get("food_type").toString();
             if(notGeneric(foodType)){
-
                 String food_id = responseArray.getJSONObject(i).get("food_id").toString().replaceAll("\\s","");
-//                Log.d("result", api.getFoodItem(Long.parseLong(food_id)).toString(2));
                 return api.getFoodItem(Long.parseLong(food_id));
             }
         }

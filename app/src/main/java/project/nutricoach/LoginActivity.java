@@ -120,6 +120,7 @@ public class LoginActivity extends Activity {
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
+                            System.out.println("PRoblem" + task.getException());
 //                            Log.w(TAG, "signInWithEmail:failed", task.getException());
 //                            Toast.makeText(EmailPasswordActivity.this, R.string.auth_failed,
 //                                    Toast.LENGTH_SHORT).show();

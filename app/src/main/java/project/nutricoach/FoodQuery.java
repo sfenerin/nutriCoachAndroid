@@ -7,7 +7,7 @@ package project.nutricoach;
 public class FoodQuery {
     String foodItem;
     String servingSize;
-    int servingCount;
+    double servingCount;
 
     public FoodQuery() {
         foodItem = "";
@@ -22,8 +22,8 @@ public class FoodQuery {
     }
 
     public String getFoodItem() {return foodItem; }
-
+g
     public String getServingSize() {return servingSize; }
 
-    public int getServingCount(){ return servingCount; }
+    public double getServingCount(){ return servingCount; }
 }

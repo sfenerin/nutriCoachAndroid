@@ -22,7 +22,7 @@ public class FoodItemExtractor {
 
     String foodItem;
     String servingSize;
-    int servingCount;
+    double servingCount;
 
     ArrayList<String> item_types = new ArrayList<String>();
     ArrayList<Integer> item_counts = new ArrayList<Integer>();
@@ -42,6 +42,7 @@ public class FoodItemExtractor {
         JSONObject entities = responseObject.getJSONObject("entities");
 
 //        TODO: Check for non-food inputs and return false
+
         String item_type = "";
         for (int i = 0; i < entities.getJSONArray("item_type").length(); i++) {
             item_type = entities.getJSONArray("item_type").getJSONObject(i).getString("value");
@@ -50,11 +51,11 @@ public class FoodItemExtractor {
 
         System.out.println(item_types);
 
-        int item_count = 1;
+        double item_count = 1.0;
         if (entities.has("item_count")) {
             for (int i = 0; i < entities.getJSONArray("item_count").length(); i++) {
                 item_count = entities.getJSONArray("item_count").getJSONObject(i).getInt("value");
-                item_counts.add(item_count);
+                item_counts.add((int)item_count);
             }
         }
 
@@ -101,18 +102,17 @@ public class FoodItemExtractor {
         return json;
     }
 
+
     public String getFoodItem() {return foodItem; }
 
     public String getServingSize() {return servingSize; }
 
-    public int getServingCount(){ return servingCount; }
+    public double getServingCount(){ return servingCount; }
 
     public ArrayList<String> getTypes() {return item_types; }
 
     public ArrayList<Integer> getCounts() {return item_counts; }
 
     public ArrayList<String> getSizes() {return item_sizes; }
-
-
 
 }
