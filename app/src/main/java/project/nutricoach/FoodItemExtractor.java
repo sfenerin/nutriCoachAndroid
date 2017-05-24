@@ -23,10 +23,13 @@ public class FoodItemExtractor {
     String foodItem;
     String servingSize;
     double servingCount;
+    String sentiment;
 
     ArrayList<String> item_types = new ArrayList<String>();
     ArrayList<Integer> item_counts = new ArrayList<Integer>();
     ArrayList<String> item_sizes = new ArrayList<String>();
+    ArrayList<String> sentiments = new ArrayList<String>();
+
 
     public FoodItemExtractor(){
 
@@ -38,7 +41,7 @@ public class FoodItemExtractor {
 
     public boolean foundFoodItem(String input) throws IOException, JSONException {
         JSONObject responseObject = getResponse(input); // here is the JSON object with the values
-        Log.d("Response from wit.ai: ", responseObject.toString(2));
+//        Log.d("Response from wit.ai: ", responseObject.toString(2));
         JSONObject entities = responseObject.getJSONObject("entities");
 
 //        TODO: Check for non-food inputs and return false
@@ -49,7 +52,6 @@ public class FoodItemExtractor {
             item_types.add(item_type);
         }
 
-        System.out.println(item_types);
 
         double item_count = 1.0;
         if (entities.has("item_count")) {
@@ -59,7 +61,6 @@ public class FoodItemExtractor {
             }
         }
 
-        System.out.println(item_counts);
 //        TODO: handle numbers as word, like "two" instead of "2"
 
         String item_size = "";
@@ -70,11 +71,25 @@ public class FoodItemExtractor {
             }
         }
 
-        System.out.println(item_sizes);
+        if (entities.has("positive")) {
+            for (int i = 0; i < entities.getJSONArray("positive").length(); i++) {
+                sentiment = entities.getJSONArray("positive").getJSONObject(i).getString("value");
+                sentiments.add(sentiment);
+            }
+        }
 
+        if (entities.has("negative")) {
+            for (int i = 0; i < entities.getJSONArray("negative").length(); i++) {
+                sentiment = entities.getJSONArray("negative").getJSONObject(i).getString("value");
+                sentiments.add(sentiment);
+            }
+        }
+
+        System.out.println(sentiments);
         foodItem = "";
         servingSize = "";
         servingCount = 1;
+
 
         return true;
     }
