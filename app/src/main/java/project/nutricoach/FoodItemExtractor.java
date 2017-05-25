@@ -40,6 +40,22 @@ public class FoodItemExtractor {
         JSONObject entities = responseObject.getJSONObject("entities");
 
 //        TODO: Check for non-food inputs and return false
+// <<<<<<< HEAD
+//         String item_type = entities.getJSONArray("item_type").getJSONObject(0).getString("value");
+
+//         int item_count = 1;
+//         if (entities.has("item_count"))
+//             entities.getJSONArray("item_count").getJSONObject(0).getInt("value");
+// //        TODO: handle numbers as word, like "two" instead of "2"
+
+//         String item_size = "";
+//         if (entities.has("item_size"))
+//             item_size = entities.getJSONArray("item_size").getJSONObject(0).getString("value");
+
+//         foodItem = item_type;
+//         servingCount = item_count;
+//         servingSize = item_size;
+// =======
 
         String item_type = "";
         for (int i = 0; i < entities.getJSONArray("item_type").length(); i++) {
@@ -73,6 +89,7 @@ public class FoodItemExtractor {
         foodItem = "";
         servingSize = "";
         servingCount = 1;
+// >>>>>>> 3e8f0fd5e399709b46cef507fb853e23ad1c3e45
 
         return true;
     }
@@ -99,11 +116,14 @@ public class FoodItemExtractor {
         conn.disconnect();
         return json;
     }
+<<<<<<< HEAD
+=======
 
 
     public String getFoodItem() {return foodItem; }
 
     public String getServingSize() {return servingSize; }
+>>>>>>> 3e8f0fd5e399709b46cef507fb853e23ad1c3e45
 
     public double getServingCount(){ return servingCount; }
 
