@@ -116,14 +116,12 @@ public class FoodItemExtractor {
         conn.disconnect();
         return json;
     }
-<<<<<<< HEAD
-=======
+
 
 
     public String getFoodItem() {return foodItem; }
 
     public String getServingSize() {return servingSize; }
->>>>>>> 3e8f0fd5e399709b46cef507fb853e23ad1c3e45
 
     public double getServingCount(){ return servingCount; }
 
