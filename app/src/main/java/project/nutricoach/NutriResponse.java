@@ -88,6 +88,7 @@ public class NutriResponse implements Callable<String> {
     }
 
     private JSONObject getGenericFoodInfo(String foodQuery) throws UnsupportedEncodingException, JSONException {
+        Log.d("response Array:", api.getFoodItems(foodQuery).toString(2));
         JSONArray responseArray = api.getFoodItems(foodQuery).getJSONObject("result").getJSONObject("foods").getJSONArray("food");
         for(int i = 0; i < responseArray.length(); i ++){
             String foodType = responseArray.getJSONObject(i).get("food_type").toString();
