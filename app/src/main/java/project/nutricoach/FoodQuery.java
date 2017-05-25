@@ -22,7 +22,7 @@ public class FoodQuery {
     }
 
     public String getFoodItem() {return foodItem; }
-g
+
     public String getServingSize() {return servingSize; }
 
     public double getServingCount(){ return servingCount; }

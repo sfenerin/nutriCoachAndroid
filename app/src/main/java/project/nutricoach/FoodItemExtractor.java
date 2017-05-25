@@ -2,7 +2,6 @@ package project.nutricoach;
 
 import android.util.Log;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -10,7 +9,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -37,7 +35,7 @@ public class FoodItemExtractor {
     // and servingSize should be "slice"
 
     public boolean foundFoodItem(String input) throws IOException, JSONException {
-        JSONObject responseObject = getResponse(input); // here is the JSON object with the values
+        JSONObject responseObject = getResponse(input);
         Log.d("Response from wit.ai: ", responseObject.toString(2));
         JSONObject entities = responseObject.getJSONObject("entities");
 
