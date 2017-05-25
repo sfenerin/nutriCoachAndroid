@@ -42,6 +42,7 @@ public class FoodItemExtractor {
     public boolean foundFoodItem(String input) throws IOException, JSONException {
         JSONObject responseObject = getResponse(input); // here is the JSON object with the values
 //        Log.d("Response from wit.ai: ", responseObject.toString(2));
+        System.out.println("input: " + input);
         JSONObject entities = responseObject.getJSONObject("entities");
 
 //        TODO: Check for non-food inputs and return false
@@ -52,7 +53,6 @@ public class FoodItemExtractor {
             item_types.add(item_type);
         }
 
-
         double item_count = 1.0;
         if (entities.has("item_count")) {
             for (int i = 0; i < entities.getJSONArray("item_count").length(); i++) {
@@ -62,7 +62,6 @@ public class FoodItemExtractor {
         }
 
 //        TODO: handle numbers as word, like "two" instead of "2"
-
         String item_size = "";
         if (entities.has("item_size")) {
             for (int i = 0; i < entities.getJSONArray("item_size").length(); i++) {
@@ -85,15 +84,16 @@ public class FoodItemExtractor {
             }
         }
 
-        System.out.println(sentiments);
         foodItem = "";
         servingSize = "";
         servingCount = 1;
 
-
         return true;
     }
 
+    public void formatFood(String input) {
+
+    }
 
     public JSONObject getResponse(String input) throws IOException, JSONException {
         String modInput = input.replace(" ","%20");
