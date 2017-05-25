@@ -178,7 +178,7 @@ public class User {
     }
 
 
-    public void logFood(Food food) {
+    public void logFood(Food food, boolean sentiment) { //sentiment is true if positive, false if negative
         if(isYesterday(lastUpdate)) { //reset nutrient counts for the day if it is a new day
             System.out.println("Not today");
             caloriesToday = getCalories();

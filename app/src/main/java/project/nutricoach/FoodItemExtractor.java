@@ -57,19 +57,21 @@ public class FoodItemExtractor {
 //         servingSize = item_size;
 // =======
 
-        String item_type = "";
+        String item_type = entities.getJSONArray("item_type").getJSONObject(0).getString("value");
+
         for (int i = 0; i < entities.getJSONArray("item_type").length(); i++) {
-            item_type = entities.getJSONArray("item_type").getJSONObject(i).getString("value");
-            item_types.add(item_type);
+            String type = entities.getJSONArray("item_type").getJSONObject(i).getString("value");
+            item_types.add(type);
         }
 
         System.out.println(item_types);
 
         double item_count = 1.0;
         if (entities.has("item_count")) {
+            item_count = entities.getJSONArray("item_count").getJSONObject(0).getInt("value");
             for (int i = 0; i < entities.getJSONArray("item_count").length(); i++) {
-                item_count = entities.getJSONArray("item_count").getJSONObject(i).getInt("value");
-                item_counts.add((int)item_count);
+                int count = entities.getJSONArray("item_count").getJSONObject(i).getInt("value");
+                item_counts.add(count);
             }
         }
 
@@ -78,18 +80,18 @@ public class FoodItemExtractor {
 
         String item_size = "";
         if (entities.has("item_size")) {
+            item_size = entities.getJSONArray("item_size").getJSONObject(0).getString("value");
             for (int i = 0; i < entities.getJSONArray("item_size").length(); i++) {
-                item_size = entities.getJSONArray("item_size").getJSONObject(i).getString("value");
-                item_sizes.add(item_size);
+                String size = entities.getJSONArray("item_size").getJSONObject(i).getString("value");
+                item_sizes.add(size);
             }
         }
 
         System.out.println(item_sizes);
 
-        foodItem = "";
-        servingSize = "";
-        servingCount = 1;
-// >>>>>>> 3e8f0fd5e399709b46cef507fb853e23ad1c3e45
+         foodItem = item_type;
+         servingCount = item_count;
+         servingSize = item_size;
 
         return true;
     }
@@ -116,9 +118,12 @@ public class FoodItemExtractor {
         conn.disconnect();
         return json;
     }
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 72d7d08c39e1f4831569b1076ee043e9fc7dbbc8
     public String getFoodItem() {return foodItem; }
 
     public String getServingSize() {return servingSize; }
