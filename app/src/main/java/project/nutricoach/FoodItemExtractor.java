@@ -1,9 +1,9 @@
 package project.nutricoach;
 
 import android.util.Log;
-
 import org.json.JSONException;
 import org.json.JSONObject;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,7 +11,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-
+import java.util.StringTokenizer;
+import java.util.Arrays;
 /**
  * Created by Shawn on 5/18/2017.
  */
@@ -28,6 +29,7 @@ public class FoodItemExtractor {
     ArrayList<String> item_sizes = new ArrayList<String>();
     ArrayList<String> sentiments = new ArrayList<String>();
 
+    ArrayList<FoodQuery> foodQueries = new ArrayList<FoodQuery>();
 
     public FoodItemExtractor(){
 
@@ -40,27 +42,12 @@ public class FoodItemExtractor {
     public boolean foundFoodItem(String input) throws IOException, JSONException {
 
         JSONObject responseObject = getResponse(input);
-        Log.d("Response from wit.ai: ", responseObject.toString(2));
+//        Log.d("Response from wit.ai: ", responseObject.toString(2));
 
         JSONObject entities = responseObject.getJSONObject("entities");
 
 //        TODO: Check for non-food inputs and return false
-// <<<<<<< HEAD
-//         String item_type = entities.getJSONArray("item_type").getJSONObject(0).getString("value");
-
-//         int item_count = 1;
-//         if (entities.has("item_count"))
-//             entities.getJSONArray("item_count").getJSONObject(0).getInt("value");
-// //        TODO: handle numbers as word, like "two" instead of "2"
-
-//         String item_size = "";
-//         if (entities.has("item_size"))
-//             item_size = entities.getJSONArray("item_size").getJSONObject(0).getString("value");
-
-//         foodItem = item_type;
-//         servingCount = item_count;
-//         servingSize = item_size;
-// =======
+//        TODO: handle numbers as word, like "two" instead of "2"
 
         String item_type = entities.getJSONArray("item_type").getJSONObject(0).getString("value");
 
@@ -101,7 +88,7 @@ public class FoodItemExtractor {
                 sentiments.add(sentiment);
             }
         }
-
+        formatFood(input);
          foodItem = item_type;
          servingCount = item_count;
          servingSize = item_size;
@@ -109,7 +96,38 @@ public class FoodItemExtractor {
         return true;
     }
 
+    //Formats array lists of multiple food properties into FoodQuery object(s)
     public void formatFood(String input) {
+        StringTokenizer st = new StringTokenizer(input, ",");
+
+        while (st.hasMoreTokens()) {
+            String food = st.nextToken();
+            FoodQuery foodQuery = new FoodQuery();
+
+            for (String item_type: item_types) {
+                if (food.contains(item_type)) {
+                    foodQuery.setItemType(item_type);
+                    break;
+                }
+            }
+
+            for (int item_count: item_counts) {
+                if (food.contains(Integer.toString(item_count))) {
+                    foodQuery.setServingCount(item_count);
+                    break;
+                }
+            }
+
+            for (String item_size: item_sizes) {
+                if (food.contains(item_size)) {
+                    foodQuery.setServingSize(item_size);
+                    break;
+                }
+            }
+            System.out.println("foodquery__");
+            foodQuery.printFoodQueryInfo();
+            foodQueries.add(foodQuery);
+        }
 
     }
 
@@ -145,5 +163,7 @@ public class FoodItemExtractor {
     public ArrayList<Integer> getCounts() {return item_counts; }
 
     public ArrayList<String> getSizes() {return item_sizes; }
+
+    public ArrayList<FoodQuery> getFoodQueries() { return foodQueries; }
 
 }
