@@ -29,7 +29,6 @@ public class NutriResponse implements Callable<String> {
     public NutriResponse(String input){
         api = new FatSecretAPI(key, secret);
         this.input = input;
-//        this.user=user;
     }
     public NutriResponse(String input, User user){
         api = new FatSecretAPI(key, secret);
@@ -49,7 +48,7 @@ public class NutriResponse implements Callable<String> {
             double servingCount = foodFinder.getServingCount();
             Food food = updateAndStoreInfo(foodQuery, servingSize, servingCount);
             response = "You ate " + food.getServingDescription() + " of " + foodQuery +". It contains " + food.getCalories() + " calories and " + food.getProtein() + "g of protein.";
-            response += "\n You have " + user.getCaloriesToday() + " calories left to eat today.";
+            response += "\nYou have " + user.getCaloriesToday() + " calories left to eat today.";
             return response;
 
 
@@ -62,15 +61,22 @@ public class NutriResponse implements Callable<String> {
 
     private Food updateAndStoreInfo(String foodQuery, String serving, double servingCount) throws JSONException, UnsupportedEncodingException {
         Food food = null;
-        if (serving.equals("")) { //currently always true
+        if (serving.equals("")) {
+//            gets generic food info if there is no serving size specified
             JSONObject foodInfo = getGenericFoodInfo(foodQuery);
             food = logFoodServing(foodInfo, 1);
         } else {
-            JSONObject foodInfo = getGenericFoodInfo(foodQuery);
+//            gets specific food info, with serving size
+            JSONObject foodInfo = getSpecificFoodInfo(foodQuery, serving, servingCount);
             food = logFoodServing(foodInfo, 1);
         }
 
         return food;
+    }
+
+    private JSONObject getSpecificFoodInfo(String foodQuery, String servingSize, double servingCount) throws UnsupportedEncodingException, JSONException {
+        JSONArray responseArray = api.getFoodItems(foodQuery).getJSONObject("result").getJSONObject("foods").getJSONArray("food");
+        return null;
     }
 
 
