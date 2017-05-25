@@ -2,7 +2,6 @@ package project.nutricoach;
 
 import android.util.Log;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -10,7 +9,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -40,33 +38,53 @@ public class FoodItemExtractor {
     // and servingSize should be "slice"
 
     public boolean foundFoodItem(String input) throws IOException, JSONException {
-        JSONObject responseObject = getResponse(input); // here is the JSON object with the values
-//        Log.d("Response from wit.ai: ", responseObject.toString(2));
-        System.out.println("input: " + input);
+
+        JSONObject responseObject = getResponse(input);
+        Log.d("Response from wit.ai: ", responseObject.toString(2));
+
         JSONObject entities = responseObject.getJSONObject("entities");
 
 //        TODO: Check for non-food inputs and return false
+// <<<<<<< HEAD
+//         String item_type = entities.getJSONArray("item_type").getJSONObject(0).getString("value");
 
-        String item_type = "";
+//         int item_count = 1;
+//         if (entities.has("item_count"))
+//             entities.getJSONArray("item_count").getJSONObject(0).getInt("value");
+// //        TODO: handle numbers as word, like "two" instead of "2"
+
+//         String item_size = "";
+//         if (entities.has("item_size"))
+//             item_size = entities.getJSONArray("item_size").getJSONObject(0).getString("value");
+
+//         foodItem = item_type;
+//         servingCount = item_count;
+//         servingSize = item_size;
+// =======
+
+        String item_type = entities.getJSONArray("item_type").getJSONObject(0).getString("value");
+
         for (int i = 0; i < entities.getJSONArray("item_type").length(); i++) {
-            item_type = entities.getJSONArray("item_type").getJSONObject(i).getString("value");
-            item_types.add(item_type);
+            String type = entities.getJSONArray("item_type").getJSONObject(i).getString("value");
+            item_types.add(type);
         }
 
         double item_count = 1.0;
         if (entities.has("item_count")) {
+            item_count = entities.getJSONArray("item_count").getJSONObject(0).getInt("value");
             for (int i = 0; i < entities.getJSONArray("item_count").length(); i++) {
-                item_count = entities.getJSONArray("item_count").getJSONObject(i).getInt("value");
-                item_counts.add((int)item_count);
+                int count = entities.getJSONArray("item_count").getJSONObject(i).getInt("value");
+                item_counts.add(count);
             }
         }
 
 //        TODO: handle numbers as word, like "two" instead of "2"
         String item_size = "";
         if (entities.has("item_size")) {
+            item_size = entities.getJSONArray("item_size").getJSONObject(0).getString("value");
             for (int i = 0; i < entities.getJSONArray("item_size").length(); i++) {
-                item_size = entities.getJSONArray("item_size").getJSONObject(i).getString("value");
-                item_sizes.add(item_size);
+                String size = entities.getJSONArray("item_size").getJSONObject(i).getString("value");
+                item_sizes.add(size);
             }
         }
 
@@ -84,9 +102,9 @@ public class FoodItemExtractor {
             }
         }
 
-        foodItem = "";
-        servingSize = "";
-        servingCount = 1;
+         foodItem = item_type;
+         servingCount = item_count;
+         servingSize = item_size;
 
         return true;
     }
@@ -116,8 +134,6 @@ public class FoodItemExtractor {
         conn.disconnect();
         return json;
     }
-
-
     public String getFoodItem() {return foodItem; }
 
     public String getServingSize() {return servingSize; }

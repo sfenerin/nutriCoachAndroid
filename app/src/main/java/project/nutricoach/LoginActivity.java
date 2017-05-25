@@ -122,8 +122,8 @@ public class LoginActivity extends Activity {
                         if (!task.isSuccessful()) {
                             System.out.println("PRoblem" + task.getException());
 //                            Log.w(TAG, "signInWithEmail:failed", task.getException());
-//                            Toast.makeText(EmailPasswordActivity.this, R.string.auth_failed,
-//                                    Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Authentication failed."+ task.getException(),
+                                    Toast.LENGTH_SHORT).show();
                         }
                         else{
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -141,9 +141,7 @@ public class LoginActivity extends Activity {
 
         String email = userText.getText().toString();
         String password= passText.getText().toString();
-//        Intent intent = new Intent(LoginActivity.this, InfoActivity.class);
-//        intent.putExtra("USER_EMAIL", email);
-//        startActivity(intent);
+
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -152,18 +150,12 @@ public class LoginActivity extends Activity {
                             Intent intent = new Intent(LoginActivity.this, InfoActivity.class);
                             intent.putExtra("USER_EMAIL", email);
                             startActivity(intent);
-                            // Sign in success, update UI with the signed-in user's information
-//                            Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-//                            updateUI(user);
                         } else {
-                            System.out.println("PROBLEM");
+
                             System.out.println(task.getException());
-                            // If sign in fails, display a message to the user.
-//                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-//                            Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
-//                                    Toast.LENGTH_SHORT).show();
-//                            updateUI(null);
+                            Toast.makeText(LoginActivity.this, "Authentication failed."+ task.getException(),
+                                    Toast.LENGTH_SHORT).show();
                         }
 
                         // ...
