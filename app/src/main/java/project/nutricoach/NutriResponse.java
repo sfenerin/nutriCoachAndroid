@@ -43,9 +43,10 @@ public class NutriResponse implements Callable<String> {
 
         if(foodFinder.foundFoodItem(input)){
             String foodQuery = foodFinder.getFoodItem();
+
+            Log.d("FoodQuery", foodQuery);
             String servingSize = foodFinder.getServingSize(); //need actual serving size
-            JSONObject foodInfo = null;
-            foodInfo = getFoodInfo(foodQuery);
+            JSONObject foodInfo = getFoodInfo(foodQuery);
             Food food = updateAndStoreInfo(foodInfo, servingSize);
             response = "You ate " + food.getServingDescription() + " of " + input +". It contains " + food.getCalories() + " calories and " + food.getProtein() + "g of protein.";
             response += "\n You have " + user.getCaloriesToday() + " calories left to eat today.";
@@ -68,6 +69,8 @@ public class NutriResponse implements Callable<String> {
     private Food updateAndStoreInfo(JSONObject foodInfo, String serving) throws JSONException, UnsupportedEncodingException {
         Food food = null;
         if (serving.equals("")) { //currently always true
+            food = getGenericFoodServing(foodInfo);
+        } else {
             food = getGenericFoodServing(foodInfo);
         }
 

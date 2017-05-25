@@ -3,6 +3,7 @@ package project.nutricoach;
 
 
         import android.app.Activity;
+        import android.content.Intent;
         import android.database.DataSetObserver;
         import android.os.Bundle;
         import android.view.KeyEvent;
@@ -44,6 +45,7 @@ public class MainActivity extends Activity {
     private ListView listView;
     private EditText chatText;
     private Button buttonSend;
+    private Button  buttonLogout;
     private boolean left = true;
     private boolean right = false;
     private ExecutorService es;
@@ -58,6 +60,7 @@ public class MainActivity extends Activity {
         this.es = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
         buttonSend = (Button) findViewById(R.id.send);
+        buttonLogout = (Button) findViewById(R.id.logout);
 
         listView = (ListView) findViewById(R.id.msgview);
 
@@ -101,6 +104,13 @@ public class MainActivity extends Activity {
             }
         });
 
+        buttonLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                logout();
+            }
+        });
+
         listView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
         listView.setAdapter(chatArrayAdapter);
 
@@ -135,6 +145,11 @@ public class MainActivity extends Activity {
         chatText.setText("");
 
         return true;
+    }
+    private void logout(){
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
     }
     private void getCurrentUser(){
         System.out.println("get Current USer");
