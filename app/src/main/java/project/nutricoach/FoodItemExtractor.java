@@ -89,9 +89,9 @@ public class FoodItemExtractor {
             }
         }
         formatFood(input);
-         foodItem = item_type;
-         servingCount = item_count;
-         servingSize = item_size;
+        foodItem = item_type;
+        servingCount = item_count;
+        servingSize = item_size;
 
         return true;
     }
@@ -152,7 +152,6 @@ public class FoodItemExtractor {
         conn.disconnect();
         return json;
     }
-
     public String getFoodItem() {return foodItem; }
 
     public String getServingSize() {return servingSize; }
