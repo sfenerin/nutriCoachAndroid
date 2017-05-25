@@ -83,7 +83,7 @@ public class NutriResponse implements Callable<String> {
     private Food logFoodServing(JSONObject foodInfo, int servings) throws JSONException, UnsupportedEncodingException {
         JSONObject parsedFood = foodInfo.getJSONObject("result").getJSONObject("food");
         Food food = new Food((String)parsedFood.get("food_id"), api);
-        user.logFood(food);
+        user.logFood(food, true);
         return food;
     }
 
