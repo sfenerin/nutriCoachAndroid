@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Date;
 import 	java.text.DateFormat;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by anacarolinamexia on 5/20/17.
@@ -178,7 +179,8 @@ public class User {
     }
 
 
-    public void logFood(Food food, boolean sentiment) { //sentiment is true if positive, false if negative
+    public void logFood(Food food, boolean sentiment) {
+        mDatabase = FirebaseDatabase.getInstance().getReference();//sentiment is true if positive, false if negative
         if(isYesterday(lastUpdate)) { //reset nutrient counts for the day if it is a new day
             System.out.println("Not today");
             caloriesToday = getCalories();
@@ -186,12 +188,13 @@ public class User {
             carbsToday = getCarbs();
             proteinToday = getProtein();
         }
+
         carbsToday -= food.getCarbs();
         fatToday -= food.getFat();
         proteinToday -= food.getProtein();
         caloriesToday -= food.getCalories();
         lastUpdate = System.currentTimeMillis();
-        updateDatabase();
+        updateDatabase(food, sentiment);
 
     }
 
@@ -222,11 +225,19 @@ public class User {
         return "User: " +  email + ", age: " + age + ", height: " + height + ", calories left: " + caloriesToday + ", last update: " + getLastUpdateFormatted();
     }
 
-    private void updateDatabase(){
+    private void updateDatabase(Food food, boolean sentiment){
         mDatabase = FirebaseDatabase.getInstance().getReference();
         Map<String, Object> userValues = toMap();
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/users/" + id, userValues);
+
+        // If has never eaten it before
+        ArrayList<Object> timeStamps = new  ArrayList<Object>();
+        timeStamps.add(System.currentTimeMillis());
+        FoodDatabase fdb= new FoodDatabase(food.getID(),sentiment, 1,timeStamps);
+        childUpdates.put("/users/" + id + "/foodList/" + food.getID(), fdb);
+
+        // If has eaten it before
         mDatabase.updateChildren(childUpdates);
     }
 
