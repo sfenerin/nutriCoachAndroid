@@ -21,10 +21,13 @@ public class FoodItemExtractor {
     String foodItem;
     String servingSize;
     double servingCount;
+    String sentiment;
 
     ArrayList<String> item_types = new ArrayList<String>();
     ArrayList<Integer> item_counts = new ArrayList<Integer>();
     ArrayList<String> item_sizes = new ArrayList<String>();
+    ArrayList<String> sentiments = new ArrayList<String>();
+
 
     public FoodItemExtractor(){
 
@@ -35,8 +38,10 @@ public class FoodItemExtractor {
     // and servingSize should be "slice"
 
     public boolean foundFoodItem(String input) throws IOException, JSONException {
+
         JSONObject responseObject = getResponse(input);
         Log.d("Response from wit.ai: ", responseObject.toString(2));
+
         JSONObject entities = responseObject.getJSONObject("entities");
 
 //        TODO: Check for non-food inputs and return false
@@ -64,8 +69,6 @@ public class FoodItemExtractor {
             item_types.add(type);
         }
 
-        System.out.println(item_types);
-
         double item_count = 1.0;
         if (entities.has("item_count")) {
             item_count = entities.getJSONArray("item_count").getJSONObject(0).getInt("value");
@@ -75,9 +78,7 @@ public class FoodItemExtractor {
             }
         }
 
-        System.out.println(item_counts);
 //        TODO: handle numbers as word, like "two" instead of "2"
-
         String item_size = "";
         if (entities.has("item_size")) {
             item_size = entities.getJSONArray("item_size").getJSONObject(0).getString("value");
@@ -87,7 +88,19 @@ public class FoodItemExtractor {
             }
         }
 
-        System.out.println(item_sizes);
+        if (entities.has("positive")) {
+            for (int i = 0; i < entities.getJSONArray("positive").length(); i++) {
+                sentiment = entities.getJSONArray("positive").getJSONObject(i).getString("value");
+                sentiments.add(sentiment);
+            }
+        }
+
+        if (entities.has("negative")) {
+            for (int i = 0; i < entities.getJSONArray("negative").length(); i++) {
+                sentiment = entities.getJSONArray("negative").getJSONObject(i).getString("value");
+                sentiments.add(sentiment);
+            }
+        }
 
          foodItem = item_type;
          servingCount = item_count;
@@ -96,6 +109,9 @@ public class FoodItemExtractor {
         return true;
     }
 
+    public void formatFood(String input) {
+
+    }
 
     public JSONObject getResponse(String input) throws IOException, JSONException {
         String modInput = input.replace(" ","%20");
