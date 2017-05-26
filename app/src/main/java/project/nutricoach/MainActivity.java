@@ -164,11 +164,13 @@ public class MainActivity extends Activity {
                 System.out.println("here");
 
                 currentUser = dataSnapshot.getValue(User.class);
-                currentUser.setCaloriesToday(Double.parseDouble(dataSnapshot.child("dataToday").child("caloriesToday").getValue().toString()));
-                currentUser.setProteinToday(Double.parseDouble(dataSnapshot.child("dataToday").child("proteinToday").getValue().toString()));
-                currentUser.setFatToday(Double.parseDouble(dataSnapshot.child("dataToday").child("fatToday").getValue().toString()));
-                currentUser.setCarbsToday(Double.parseDouble(dataSnapshot.child("dataToday").child("carbsToday").getValue().toString()));
-                currentUser.setLastUpdate(Long.parseLong(dataSnapshot.child("dataToday").child("lastUpdate").getValue().toString()));
+                if(dataSnapshot.child("dataToday").child("caloriesToday").getValue()!= null) {
+                    currentUser.setCaloriesToday(Double.parseDouble(dataSnapshot.child("dataToday").child("caloriesToday").getValue().toString()));
+                    currentUser.setProteinToday(Double.parseDouble(dataSnapshot.child("dataToday").child("proteinToday").getValue().toString()));
+                    currentUser.setFatToday(Double.parseDouble(dataSnapshot.child("dataToday").child("fatToday").getValue().toString()));
+                    currentUser.setCarbsToday(Double.parseDouble(dataSnapshot.child("dataToday").child("carbsToday").getValue().toString()));
+                    currentUser.setLastUpdate(Long.parseLong(dataSnapshot.child("dataToday").child("lastUpdate").getValue().toString()));
+                }
 
             }
 
