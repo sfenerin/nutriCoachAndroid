@@ -19,6 +19,8 @@ import java.util.Arrays;
 
 public class FoodItemExtractor {
 
+    public static final int MIN_FOOD_QUERY_COUNT = 2;
+
     String foodItem;
     String servingSize;
     double servingCount;
@@ -88,18 +90,38 @@ public class FoodItemExtractor {
                 sentiments.add(sentiment);
             }
         }
-        formatFood(input);
-         foodItem = item_type;
-         servingCount = item_count;
-         servingSize = item_size;
+        //generate response asking user to formate input better if false
 
+        foodItem = item_type;
+        servingCount = item_count;
+        servingSize = item_size;
         return true;
+//        return formatFood(input) ;
+//        return true;
     }
 
     //Formats array lists of multiple food properties into FoodQuery object(s)
-    public void formatFood(String input) {
+    public boolean formatFood(String input) {
         StringTokenizer st = new StringTokenizer(input, ",");
 
+        if (st.countTokens() == 0) {
+            //if multiple items and not comma-separated, ask user to re-format input
+            if (item_types.size() > MIN_FOOD_QUERY_COUNT) return false;
+                //if two items and no commas, create food query objects with no other properties but type
+            else {
+                for (String item_type : item_types) {
+                    foodQueries.add(new FoodQuery(item_type));
+                }
+                return true;
+            }
+        } else {
+            handleMultFood(st);
+            return true;
+        }
+    }
+
+    //handle multiple food  separated by comma
+    public void handleMultFood(StringTokenizer st) {
         while (st.hasMoreTokens()) {
             String food = st.nextToken();
             FoodQuery foodQuery = new FoodQuery();
@@ -124,11 +146,9 @@ public class FoodItemExtractor {
                     break;
                 }
             }
-            System.out.println("foodquery__");
             foodQuery.printFoodQueryInfo();
             foodQueries.add(foodQuery);
         }
-
     }
 
     public JSONObject getResponse(String input) throws IOException, JSONException {
@@ -152,6 +172,7 @@ public class FoodItemExtractor {
         conn.disconnect();
         return json;
     }
+
     public String getFoodItem() {return foodItem; }
 
     public String getServingSize() {return servingSize; }

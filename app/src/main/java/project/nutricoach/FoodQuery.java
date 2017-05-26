@@ -17,18 +17,19 @@ public class FoodQuery {
         sentiment = "";
     }
 
-    public FoodQuery(String item_type, String item_size, double item_count, String sentiment_value) {
+    public FoodQuery(String item_type) {
         foodItem = item_type;
-        servingSize = item_size;
-        servingCount = (int) item_count;
-        sentiment = sentiment_value;
+        servingSize = "";
+        servingCount = 1;
+        sentiment = "";
     }
+
 
     public void printFoodQueryInfo() {
         System.out.println("Item type: " + this.foodItem +
-                            "\n Serving Size: " + this.servingSize +
-                            "\n Serving Count: " + this.servingCount +
-                            "\n Sentiment: " + this.sentiment);
+                "\n Serving Size: " + this.servingSize +
+                "\n Serving Count: " + this.servingCount +
+                "\n Sentiment: " + this.sentiment);
     }
 
     public void setItemType(String item_type) { this.foodItem = item_type; }
