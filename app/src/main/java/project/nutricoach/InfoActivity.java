@@ -14,11 +14,19 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by anacarolinamexia on 5/20/17.
  */
 
 public class InfoActivity extends Activity {
+
+    private double calories ;
+    private double protein;
+    private double fat;
+    private double carbs;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,10 +60,10 @@ public class InfoActivity extends Activity {
             bmr = 10 * .453592 * weight + 6.25 * 2.54 * height - 5 * age - 161;
         }
 
-        double calories = bmr* activityMultiplier[activity];
-        double protein = .453592 * weight * (.8 + activity - 1) * .23;
-        double fat =  .25*calories / 9;
-        double carbs = .55*calories / 4;
+         calories = bmr* activityMultiplier[activity];
+         protein = .453592 * weight * (.8 + activity - 1) * .23;
+         fat =  .25*calories / 9;
+         carbs = .55*calories / 4;
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         User newUser = new User(getIntent().getStringExtra("USER_EMAIL"), user.getUid(), age,  female, height, weight, bmr, calories,  protein, fat,  carbs, activity);
@@ -63,9 +71,23 @@ public class InfoActivity extends Activity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("users").child(user.getUid()).setValue(newUser);
 
+        Map<String, Object> childUpdates = new HashMap<>();
+        Map<String, Object> userValues = toMap();
+        childUpdates.put("/users/" + user.getUid() + "/dataToday/", userValues);
+        mDatabase.updateChildren(childUpdates);
         Intent intent = new Intent(InfoActivity.this, MainActivity.class);
         startActivity(intent);
 
+    }
+
+    private Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("carbsToday", carbs);
+        result.put("fatToday", fat);
+        result.put("proteinToday", protein);
+        result.put("caloriesToday", calories);
+        result.put("lastUpdate", System.currentTimeMillis());
+        return result;
     }
 }
 
