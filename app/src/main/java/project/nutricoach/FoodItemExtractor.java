@@ -112,7 +112,6 @@ public class FoodItemExtractor {
             else {
                 for (String item_type : item_types) {
                   Log.d("Item type: ", item_type);
-
                     foodQueries.add(new FoodQuery(item_type));
                 }
                 return true;
