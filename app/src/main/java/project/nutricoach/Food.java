@@ -46,7 +46,6 @@ public class Food {
         this.protein = nutritionInfo.getDouble("protein");
         this.fat = nutritionInfo.getDouble("fat");
 
-        //UPDATE DATABASE
     }
 
     public String getID() { return ID;}

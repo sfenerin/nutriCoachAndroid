@@ -163,17 +163,19 @@ public class MainActivity extends Activity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 System.out.println("here");
 
-                // Get Post object and use the values to update the UI
                 currentUser = dataSnapshot.getValue(User.class);
+                currentUser.setCaloriesToday(Double.parseDouble(dataSnapshot.child("dataToday").child("caloriesToday").getValue().toString()));
+                currentUser.setProteinToday(Double.parseDouble(dataSnapshot.child("dataToday").child("proteinToday").getValue().toString()));
+                currentUser.setFatToday(Double.parseDouble(dataSnapshot.child("dataToday").child("fatToday").getValue().toString()));
+                currentUser.setCarbsToday(Double.parseDouble(dataSnapshot.child("dataToday").child("carbsToday").getValue().toString()));
+                currentUser.setLastUpdate(Long.parseLong(dataSnapshot.child("dataToday").child("lastUpdate").getValue().toString()));
 
-                // ...
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
-//                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-                // ...
+
+
             }
         };
         cDatabase.addValueEventListener(userListener);

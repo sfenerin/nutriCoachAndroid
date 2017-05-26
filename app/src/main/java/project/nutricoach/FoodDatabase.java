@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class FoodDatabase {
 
     private String id;
+    private String name;
     private boolean sentiment;
     private int frequency;
     private ArrayList<Object> timeStamps;
@@ -41,7 +42,8 @@ public class FoodDatabase {
         this.frequency = frequency;
     }
 
-    public FoodDatabase(String id, boolean sentiment, int frequency, ArrayList<Object>timeStamps){
+    public FoodDatabase(String name, String id, boolean sentiment, int frequency, ArrayList<Object>timeStamps){
+        this.name= name;
         this.id= id;
         this.sentiment= sentiment;
         this.frequency = frequency;
