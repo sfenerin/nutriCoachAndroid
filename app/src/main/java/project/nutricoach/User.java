@@ -2,8 +2,12 @@ package project.nutricoach;
 
 import android.text.format.DateUtils;
 
+import com.google.firebase.auth.ActionCodeResult;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -12,6 +16,7 @@ import java.util.HashMap;
 import java.util.Date;
 import 	java.text.DateFormat;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by anacarolinamexia on 5/20/17.
@@ -39,11 +44,16 @@ public class User {
     private long lastUpdate;
     private HashMap<Integer, ArrayList<Object>> foodLog;
 
-    private String email;
+    private  String email;
     private String id;
 
-    public User (){
+    public User() {
 
+    }
+
+    public void setCaloriesToday(double caloriesToday){
+        System.out.println("Setting Calories" + caloriesToday);
+        this.caloriesToday= caloriesToday;
     }
 
     public double getAge() {
@@ -149,6 +159,14 @@ public class User {
         return dateFormatted;
     }
 
+    public long getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(long lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
     public double getCaloriesToday() {
         return caloriesToday;
     }
@@ -170,85 +188,122 @@ public class User {
         Calendar cdate = Calendar.getInstance();
         cdate.setTimeInMillis(date);
 
-        now.add(Calendar.DATE,-1);
+        now.add(Calendar.DATE, -1);
 
         return now.get(Calendar.YEAR) == cdate.get(Calendar.YEAR)
                 && now.get(Calendar.MONTH) == cdate.get(Calendar.MONTH)
                 && now.get(Calendar.DATE) == cdate.get(Calendar.DATE);
     }
 
+    private void initialize(){
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
-    public void logFood(Food food, boolean sentiment) { //sentiment is true if positive, false if negative
-        if(isYesterday(lastUpdate)) { //reset nutrient counts for the day if it is a new day
-            System.out.println("Not today");
-            caloriesToday = getCalories();
-            fatToday = getFat();
-            carbsToday = getCarbs();
-            proteinToday = getProtein();
-        }
+        mDatabase.child("users").child(id).child("dataToday").child("caloriesToday").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                caloriesToday= (double) Double.parseDouble(snapshot.getValue().toString());
+                System.out.println("calories today" + snapshot.getValue());  //prints "Do you have data? You'll love Firebase."
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
+
+
+    public void logFood(Food food, boolean sentiment) {
+        initialize();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         carbsToday -= food.getCarbs();
         fatToday -= food.getFat();
         proteinToday -= food.getProtein();
         caloriesToday -= food.getCalories();
+        System.out.println("calories in log food"+ caloriesToday);
         lastUpdate = System.currentTimeMillis();
-        updateDatabase();
+        updateDatabase(food, sentiment);
+
 
     }
 
-    public User (String email, String id, double age, boolean female, double height, double weight, double bmr, double calories, double protein, double fat, double carbs, int activity){
-        this.email=email;
-        this.id =id;
-        this.age=age;
-        this.female=female;
-        this.height= height;
-        this.weight=weight;
-        this.bmr=bmr;
-        this.calories=calories;
-        this.protein= protein;
-        this.carbs= carbs;
-        this.fat=fat;
-        this.activity= activity;
-        this.lastUpdate = System.currentTimeMillis();
-        this.fatToday= fat;
-        this.caloriesToday=calories;
-        this.proteinToday = protein;
-        this.carbsToday = carbs;
-        this.foodLog = new HashMap<Integer, ArrayList<Object>>();
+    public void setProteinToday(double proteinToday) {
+        this.proteinToday = proteinToday;
+    }
+
+    public void setFatToday(double fatToday) {
+        this.fatToday = fatToday;
+    }
+
+    public void setCarbsToday(double carbsToday) {
+        this.carbsToday = carbsToday;
+    }
+
+    public User(String email, String id, double age, boolean female, double height, double weight, double bmr, double calories, double protein, double fat, double carbs, int activity) {
+        this.email = email;
+        this.id = id;
+        this.age = age;
+        this.female = female;
+        this.height = height;
+        this.weight = weight;
+        this.bmr = bmr;
+        this.calories = calories;
+        this.protein = protein;
+        this.carbs = carbs;
+        this.fat = fat;
+        this.activity = activity;
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
 
     }
 
     @Override
-    public String toString(){
-        return "User: " +  email + ", age: " + age + ", height: " + height + ", calories left: " + caloriesToday + ", last update: " + getLastUpdateFormatted();
+    public String toString() {
+        return "User: " + email + ", age: " + age + ", height: " + height + ", calories left: " + caloriesToday + ", last update: " + getLastUpdateFormatted();
     }
 
-    private void updateDatabase(){
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        Map<String, Object> userValues = toMap();
+    private void updateDatabase(Food food, boolean sentiment) {
+
         Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/users/" + id, userValues);
-        mDatabase.updateChildren(childUpdates);
+        ArrayList<Object> timeStamps = new ArrayList<Object>();
+        timeStamps.add(System.currentTimeMillis());
+        FoodDatabase fdb = new FoodDatabase(food.getName(),food.getID(), sentiment, 1, timeStamps);
+        getFoodList(food);
+        mDatabase.child("users").child(id).child("dataToday").child("caloriesToday").setValue(caloriesToday);
+        mDatabase.child("users").child(id).child("dataToday").child("fatToday").setValue(fatToday);
+        mDatabase.child("users").child(id).child("dataToday").child("proteinToday").setValue(proteinToday);
+        mDatabase.child("users").child(id).child("dataToday").child("carbsToday").setValue(carbsToday);
+        mDatabase.child("users").child(id).child("dataToday").child("lastUpdate").setValue(System.currentTimeMillis());
+        mDatabase.child("users").child(id).child("foodList").child(food.getID()).setValue(fdb);
+
     }
 
-    private Map<String, Object> toMap() {
-        HashMap<String, Object> result = new HashMap<>();
-        result.put("email",email);
-        result.put("id", id);
-        result.put("age", age);
-        result.put("female", female);
-        result.put("height", height);
-        result.put("weight", weight);
-        result.put("bmr", bmr);
-        result.put("calories", calories);
-        result.put("protein", protein);
-        result.put("carbs", carbs);
-        result.put("fat",fat);
-        result.put("activity", activity);
-        result.put("carbsToday", carbsToday);
-        result.put("fatToday", fatToday);
-        result.put("proteinToday", proteinToday);
-        result.put("caloriesToday",caloriesToday);
-        result.put("lastUpdate",lastUpdate);
-        return result;
+
+
+    private ArrayList<FoodDatabase> getFoodList(Food food) {
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+
+        DatabaseReference mFoodReference= mDatabase.child("users/"+ id + "/foodList");
+        ValueEventListener foodListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Get Post object and use the values to update the UI
+                FoodDatabase food = dataSnapshot.getValue(FoodDatabase.class);
+                System.out.println("Added Food" + dataSnapshot.getValue());
+                // ...
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+//                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                // ...
+            }
+        };
+
+        mFoodReference.addValueEventListener(foodListener);
+//
+        return null;
+
     }
 }

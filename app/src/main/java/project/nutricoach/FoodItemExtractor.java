@@ -90,7 +90,6 @@ public class FoodItemExtractor {
                 sentiments.add(sentiment);
             }
         }
-        //generate response asking user to formate input better if false
 
         formatFood(input);
         foodItem = item_type;
