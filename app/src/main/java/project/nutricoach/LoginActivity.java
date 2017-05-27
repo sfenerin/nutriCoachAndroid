@@ -108,19 +108,31 @@ public class LoginActivity extends Activity {
 
 
     private void setUpNotifications(){
-        Intent notifyIntent = new Intent(this,Reminders.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
         AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
 
+        initNotification(ReminderLunch.class,alarmManager, 13,0);
+
+        initNotification(ReminderDinner.class,alarmManager, 17,0);
+
+        initNotification(ReminderNight.class,alarmManager, 20,0);
+
+        Log.d("NotifcationManager","set each notification");
+    }
+
+    public void initNotification(Class reminder,AlarmManager alarmManager,int hour, int minute){
+        Intent notifyIntent = new Intent(this,reminder);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Calendar calendar = initCalendar(hour,0);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,  calendar.getTimeInMillis(),  AlarmManager.INTERVAL_DAY, pendingIntent);
+    }
+
+    private Calendar initCalendar(int hour, int minute){
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 14);
-        calendar.set(Calendar.MINUTE, 17);
-        calendar.set(Calendar.SECOND, 1);
-
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,  calendar.getTimeInMillis(),  AlarmManager.INTERVAL_DAY, pendingIntent);
-        Log.d("NotifcationManager","set time");
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, 0);
+        return calendar;
     }
 
     private void login(){

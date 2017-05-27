@@ -14,11 +14,11 @@ import static project.nutricoach.R.drawable.nutrilogo;
  * Created by Shawn on 5/26/2017.
  */
 
-public class DinnerRecReminderIntentService extends IntentService {
-    private static final int NOTIFICATION_ID = 2;
+public class ReminderNightIS extends IntentService {
+    private static final int NOTIFICATION_ID = 3;
 
-    public DinnerRecReminderIntentService() {
-        super("DinnerRecReminderIntentService");
+    public ReminderNightIS() {
+        super("ReminderNightIS");
     }
 
     @Override
@@ -27,8 +27,8 @@ public class DinnerRecReminderIntentService extends IntentService {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification.Builder builder = new Notification.Builder(this);
-        builder.setContentTitle("Don't forget to tell us about Dinner");
-        builder.setContentText("If you haven't eaten yet, try asking us for a recommendation!");
+        builder.setContentTitle("Don't forget to tell us about the food you had today");
+        builder.setContentText("You don't want to lose your streak! You've been doing so well");
         builder.setSmallIcon(nutrilogo);
         builder.setContentIntent(pendingIntent);
 

@@ -33,11 +33,11 @@
             </intent-filter>
         </activity>
         <receiver
-            android:name=".Reminders"
+            android:name=".ReminderLunch"
             android:enabled="true" >
         </receiver>
         <service
-            android:name=".ReminderIntentService"
+            android:name=".ReminderLunchIS"
             android:exported="false" >
         </service>
     </application>
