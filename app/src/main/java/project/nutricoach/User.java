@@ -261,19 +261,25 @@ public class User {
     }
 
     private void updateDatabase(Food food, boolean sentiment) {
-
-        Map<String, Object> childUpdates = new HashMap<>();
-        ArrayList<Object> timeStamps = new ArrayList<Object>();
-        timeStamps.add(System.currentTimeMillis());
-        FoodDatabase fdb = new FoodDatabase(food.getName(),food.getID(), sentiment, 1, timeStamps);
-        getFoodList(food);
-        mDatabase.child("users").child(id).child("dataToday").child("caloriesToday").setValue(caloriesToday);
-        mDatabase.child("users").child(id).child("dataToday").child("fatToday").setValue(fatToday);
-        mDatabase.child("users").child(id).child("dataToday").child("proteinToday").setValue(proteinToday);
-        mDatabase.child("users").child(id).child("dataToday").child("carbsToday").setValue(carbsToday);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+//        ArrayList<Object> timeStamps = new ArrayList<Object>();
+//        timeStamps.add(System.currentTimeMillis());
+//        FoodDatabase fdb = new FoodDatabase(food.getName(),food.getID(), sentiment, 1, timeStamps);
+//        getFoodList(food);
+        mDatabase.child("users").child(id).child("dataToday").child("caloriesToday").setValue(caloriesToday - food.getCalories());
+        mDatabase.child("users").child(id).child("dataToday").child("fatToday").setValue(fatToday - food.getFat());
+        mDatabase.child("users").child(id).child("dataToday").child("proteinToday").setValue(proteinToday- food.getProtein());
+        mDatabase.child("users").child(id).child("dataToday").child("carbsToday").setValue(carbsToday-food.getCarbs());
         mDatabase.child("users").child(id).child("dataToday").child("lastUpdate").setValue(System.currentTimeMillis());
-        mDatabase.child("users").child(id).child("foodList").child(food.getID()).setValue(fdb);
+    }
 
+    public void resetTodayValues(){
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("users").child(id).child("dataToday").child("caloriesToday").setValue(calories);
+        mDatabase.child("users").child(id).child("dataToday").child("fatToday").setValue(fat);
+        mDatabase.child("users").child(id).child("dataToday").child("proteinToday").setValue(protein);
+        mDatabase.child("users").child(id).child("dataToday").child("carbsToday").setValue(carbs);
+        mDatabase.child("users").child(id).child("dataToday").child("lastUpdate").setValue(System.currentTimeMillis());
     }
 
 
