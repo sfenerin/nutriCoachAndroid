@@ -91,10 +91,11 @@ public class FoodItemExtractor {
             }
         }
 
-
+        formatFood(input);
         foodItem = item_type;
         servingCount = item_count;
         servingSize = item_size;
+        System.out.println("VARIABLES: " + foodItem + servingCount + servingSize);
         return true;
 //        return formatFood(input) ;
 //        return true;
@@ -110,6 +111,7 @@ public class FoodItemExtractor {
                 //if two items and no commas, create food query objects with no other properties but type
             else {
                 for (String item_type : item_types) {
+                  Log.d("Item type: ", item_type);
                     foodQueries.add(new FoodQuery(item_type));
                 }
                 return true;
