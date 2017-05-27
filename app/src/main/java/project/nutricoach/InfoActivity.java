@@ -51,7 +51,8 @@ public class InfoActivity extends Activity {
         int radioButtonID = ((RadioGroup)findViewById(R.id.radioActivity)).getCheckedRadioButtonId();
         View radioButton = radioButtonGroup.findViewById(radioButtonID);
         int activity = radioButtonGroup.indexOfChild(radioButton);
-        double [] activityMultiplier = {0, 1, 1.2, 1.375, 1.55, 1.95};
+        System.out.println("Activity: " + activity);
+        double [] activityMultiplier = {1, 1.2, 1.375, 1.55, 1.95};
         double bmr;
 
         if(!female){
@@ -61,7 +62,7 @@ public class InfoActivity extends Activity {
         }
 
          calories = bmr* activityMultiplier[activity];
-         protein = .453592 * weight * (.8 + activity - 1) * .23;
+         protein = .453592 * weight * (.8 + (activity * .25));
          fat =  .25*calories / 9;
          carbs = .55*calories / 4;
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
