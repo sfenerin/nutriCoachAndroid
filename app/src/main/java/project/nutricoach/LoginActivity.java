@@ -1,9 +1,14 @@
 package project.nutricoach;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,6 +36,9 @@ public class LoginActivity extends Activity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_screen);
+
+        setUpNotifications();
+
         mAuth = FirebaseAuth.getInstance();
 
         userText= (EditText) findViewById(R.id.userText);
@@ -96,6 +104,23 @@ public class LoginActivity extends Activity {
         if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
         }
+    }
+
+
+    private void setUpNotifications(){
+        Intent notifyIntent = new Intent(this,Reminders.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 14);
+        calendar.set(Calendar.MINUTE, 17);
+        calendar.set(Calendar.SECOND, 1);
+
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,  calendar.getTimeInMillis(),  AlarmManager.INTERVAL_DAY, pendingIntent);
+        Log.d("NotifcationManager","set time");
     }
 
     private void login(){
