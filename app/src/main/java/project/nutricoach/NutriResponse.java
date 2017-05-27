@@ -48,7 +48,12 @@ public class NutriResponse implements Callable<String> {
             double servingCount = foodFinder.getServingCount();
             Food food = updateAndStoreInfo(foodQuery, servingSize, servingCount);
             response = "You ate " + food.getServingDescription() + " of " + foodQuery +". It contains " + food.getCalories() + " calories and " + food.getProtein() + "g of protein.";
-            response += "\nYou have " + user.getCaloriesToday() + " calories left to eat today.";
+            if (user.getCaloriesToday() >= 0) {
+                response += "\nYou have " + user.getCaloriesToday() + " calories left to eat today.";
+            } else {
+                response += "\nYou are " + Math.abs(user.getCaloriesToday()) + " calories over your daily goal.";
+
+            }
 
             return response;
 
