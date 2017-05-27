@@ -171,6 +171,10 @@ public class MainActivity extends Activity {
                     currentUser.setCarbsToday(Double.parseDouble(dataSnapshot.child("dataToday").child("carbsToday").getValue().toString()));
                     currentUser.setLastUpdate(Long.parseLong(dataSnapshot.child("dataToday").child("lastUpdate").getValue().toString()));
                 }
+//                if(dataSnapshot.child("foodList").getValue()!=null){
+//
+//                    System.out.println("foodList" + dataSnapshot.child("foodList").getValue());
+//                }
 
             }
 

@@ -18,6 +18,22 @@ public class FoodDatabase {
 
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public ArrayList<Object> getTimeStamps() {
+        return timeStamps;
+    }
+
+    public void setTimeStamps(ArrayList<Object> timeStamps) {
+        this.timeStamps = timeStamps;
+    }
+
     public String getId() {
         return id;
     }
@@ -47,7 +63,7 @@ public class FoodDatabase {
         this.id= id;
         this.sentiment= sentiment;
         this.frequency = frequency;
-        this.timeStamps= new ArrayList<Object>();
+        this.timeStamps= timeStamps;
     }
 
 }
