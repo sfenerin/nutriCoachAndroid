@@ -3,8 +3,12 @@ package project.nutricoach;
 
 
         import android.app.Activity;
+        import android.app.AlarmManager;
+        import android.app.PendingIntent;
+        import android.content.Context;
         import android.content.Intent;
         import android.database.DataSetObserver;
+        import android.icu.text.SimpleDateFormat;
         import android.os.Bundle;
         import android.view.KeyEvent;
         import android.view.View;
@@ -26,7 +30,10 @@ package project.nutricoach;
         import org.json.JSONObject;
 
         import java.io.UnsupportedEncodingException;
+        import java.text.ParseException;
         import java.util.ArrayList;
+        import java.util.Calendar;
+        import java.util.Date;
         import java.util.List;
         import java.util.concurrent.ExecutionException;
         import java.util.concurrent.ExecutorService;
@@ -124,15 +131,62 @@ public class MainActivity extends Activity {
 
     private boolean sendRightMessage(String input) throws UnsupportedEncodingException, JSONException, ExecutionException, InterruptedException {
         Future<String> future = es.submit(new NutriResponse(input, currentUser));
-        String response = "";
+        String response = future.get();
 
-
-        response = future.get();
+        updateAlarms();
 
         chatArrayAdapter.add(new ChatMessage(right,response));
-
         chatText.setText("");
+
         return true;
+    }
+
+    private void updateAlarms(){
+        Date cur = new Date(System.currentTimeMillis());
+        Calendar curCal = Calendar.getInstance();
+        curCal.setTime(cur);
+
+        updateAlarm(cur,"20:00:00",ReminderNight.class);
+        updateAlarm(cur,"17:00:00",ReminderDinner.class);
+        updateAlarm(cur,"13:00:00",ReminderLunch.class);
+
+    }
+
+    private void updateAlarm(Date cur,String alarmTime,Class reminder) {
+        AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+        Date time1 = null;
+        try {
+            time1 = new SimpleDateFormat("HH:mm:ss").parse(alarmTime);
+        } catch (ParseException e) {e.printStackTrace();}
+        if(cur.before(time1)){
+            cancelNotification(reminder,alarmManager);
+        } else{
+            int hour = time1.getHours();
+            initNotification(reminder,alarmManager,hour);
+        }
+    }
+
+
+    private void cancelNotification(Class reminder, AlarmManager alarmManager){
+        Intent intent = new Intent(this, reminder);
+        PendingIntent sender = PendingIntent.getBroadcast(this, 0, intent, 0);
+        alarmManager.cancel(sender);
+    }
+
+    private void initNotification(Class reminder,AlarmManager alarmManager,int hour){
+        Intent notifyIntent = new Intent(this,reminder);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        android.icu.util.Calendar calendar = initCalendar(hour,0);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,  calendar.getTimeInMillis(),  AlarmManager.INTERVAL_DAY, pendingIntent);
+    }
+
+    private android.icu.util.Calendar initCalendar(int hour, int minute){
+        android.icu.util.Calendar calendar = android.icu.util.Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(android.icu.util.Calendar.HOUR_OF_DAY, hour);
+        calendar.set(android.icu.util.Calendar.MINUTE, minute);
+        calendar.set(android.icu.util.Calendar.SECOND, 0);
+        return calendar;
     }
 
     private boolean sendChatMessage() throws InterruptedException, ExecutionException, JSONException, UnsupportedEncodingException {
@@ -171,6 +225,10 @@ public class MainActivity extends Activity {
                     currentUser.setCarbsToday(Double.parseDouble(dataSnapshot.child("dataToday").child("carbsToday").getValue().toString()));
                     currentUser.setLastUpdate(Long.parseLong(dataSnapshot.child("dataToday").child("lastUpdate").getValue().toString()));
                 }
+//                if(dataSnapshot.child("foodList").getValue()!=null){
+//
+//                    System.out.println("foodList" + dataSnapshot.child("foodList").getValue());
+//                }
 
             }
 
