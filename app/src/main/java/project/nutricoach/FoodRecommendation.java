@@ -45,7 +45,7 @@ public class FoodRecommendation {
         while ((inputStr = streamReader.readLine()) != null)
             responseStrBuilder.append(inputStr);
         JSONObject response = new JSONObject(responseStrBuilder.toString());
-        Log.d("FoodRecommendationList", response.toString(2));
+//        Log.d("FoodRecommendationList", response.toString(2));
 
         //randomly grab from array of foods.. sort out alcohol
         JSONArray foods = response.getJSONObject("report").getJSONArray("foods");
