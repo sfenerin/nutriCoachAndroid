@@ -26,6 +26,7 @@ public class FoodItemExtractor {
     String servingSize;
     double servingCount;
     String sentiment;
+    String recommendationRequest = null;
 
     ArrayList<String> item_types = new ArrayList<String>();
     ArrayList<Integer> item_counts = new ArrayList<Integer>();
@@ -46,12 +47,16 @@ public class FoodItemExtractor {
 
         JSONObject entities = responseObject.getJSONObject("entities");
 
+        if (entities.has("recommendation")) {
+            recommendationRequest = entities.getJSONArray("recommendation").getJSONObject(0).getString("value");
+            return false;
+        }
+
         if (!entities.has("item_type")) return false;
 
         //format foodquery objects for inputs that are comma-separated
         while (st.hasMoreTokens()) {
             String food = st.nextToken();
-            Log.d("food: ", food);
             FoodQuery foodQuery = new FoodQuery();
 
             //set foodquery's item type
@@ -85,7 +90,7 @@ public class FoodItemExtractor {
                 }
             }
 
-
+            //set foodquery's sentiment -- positive or negative
             if (entities.has("positive")) {
                 for (int i = 0; i < entities.getJSONArray("positive").length(); i++) {
                     String sentiment = entities.getJSONArray("positive").getJSONObject(i).getString("value");
@@ -105,6 +110,7 @@ public class FoodItemExtractor {
             }
 
             foodQuery.printFoodQueryInfo();
+            //add foodquery object to arraylist
             foodQueries.add(foodQuery);
         }
 
@@ -161,4 +167,7 @@ public class FoodItemExtractor {
         return foodQueries;
     }
 
+    public String getRecommendationRequest() {
+        return recommendationRequest;
+    }
 }

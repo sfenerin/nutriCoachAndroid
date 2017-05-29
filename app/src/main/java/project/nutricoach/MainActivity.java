@@ -246,7 +246,7 @@ public class MainActivity extends Activity {
 
             }
         };
-        cDatabase.addValueEventListener(userListener);
+        cDatabase.addListenerForSingleValueEvent(userListener);
     }
 
 
