@@ -307,9 +307,7 @@ public class User {
 
     private void addFoodToList(Food food, boolean sentiment){
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        ArrayList<Object> timeStamps= new ArrayList<>();
-        timeStamps.add(System.currentTimeMillis());
+
 
         DatabaseReference highFoodReference= mDatabase.child("users/"+ id + "/foodList/");
 
@@ -322,10 +320,12 @@ public class User {
                    System.out.println("Item already exists update frequency");
                    int frequency = Integer.parseInt(dataSnapshot.child(food.getID()).child("frequency").getValue().toString());
                    mDatabase.child("users").child(id).child("foodList").child(food.getID()).child("frequency").setValue(frequency + 1);
+                   DatabaseReference newKey= mDatabase.child("users").child(id).child("foodList").child(food.getID()).child("timeStamps").push();
+                   newKey.setValue(System.currentTimeMillis());
                    updated= true;
                }else if(!dataSnapshot.hasChild(food.getID())){
                    System.out.println("Need to add item");
-                   FoodDatabase fdb = new FoodDatabase(food.getName(), food.getID(), sentiment, 1, timeStamps);
+                   FoodDatabase fdb = new FoodDatabase(food.getName(), food.getID(), sentiment, 1, null);
                    mDatabase.child("users").child(id).child("foodList").child(food.getID()).setValue(fdb);
 //                   DatabaseReference singleFoodReference= mDatabase.child("users/"+ id + "/foodList/" + food.getID());
                    // To Do: add action listener to specific values to update frequency
