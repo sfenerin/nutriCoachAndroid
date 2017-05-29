@@ -25,6 +25,7 @@ import java.util.Objects;
 public class User {
 
     private ArrayList<FoodDatabase> foodHistory;
+    private HashMap<String,ChatMessage> messages;
     private double age;
     private double height;
     private double weight;
@@ -290,6 +291,14 @@ public class User {
 
     }
 
+    public HashMap<String, ChatMessage> getMessages() {
+        return messages;
+    }
+
+    public void setMessages( HashMap<String,ChatMessage> messages) {
+        this.messages = messages;
+    }
+
     @Override
     public String toString() {
         return "User: " + email + ", age: " + age + ", height: " + height + ", calories left: " + caloriesToday + ", last update: " + getLastUpdateFormatted();
@@ -342,6 +351,11 @@ public class User {
         highFoodReference.addValueEventListener(foodListener);
     }
 
+    public void addMessage(ChatMessage message){
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference messageKey =  mDatabase.child("users").child(id).child("messages").push();
+        messageKey.setValue(message);
+    }
 
     public ArrayList<FoodDatabase> getFoodHistory() {
 

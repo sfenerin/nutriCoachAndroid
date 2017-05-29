@@ -60,6 +60,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+        chatArrayAdapter = new ChatArrayAdapter(getApplicationContext(), R.layout.right);
         getCurrentUser();
 
         this.es = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
@@ -69,8 +70,8 @@ public class MainActivity extends Activity {
 
         listView = (ListView) findViewById(R.id.msgview);
 
-        chatArrayAdapter = new ChatArrayAdapter(getApplicationContext(), R.layout.right);
         listView.setAdapter(chatArrayAdapter);
+
 
         chatText = (EditText) findViewById(R.id.msg);
         chatText.setOnKeyListener(new View.OnKeyListener() {
@@ -134,7 +135,7 @@ public class MainActivity extends Activity {
         String response = future.get();
 
         updateAlarms();
-
+        currentUser.addMessage(new ChatMessage(right,response));
         chatArrayAdapter.add(new ChatMessage(right,response));
         chatText.setText("");
 
@@ -191,6 +192,7 @@ public class MainActivity extends Activity {
 
     private boolean sendChatMessage() throws InterruptedException, ExecutionException, JSONException, UnsupportedEncodingException {
         String value = chatText.getText().toString();
+        currentUser.addMessage(new ChatMessage(left,value));
         chatArrayAdapter.add(new ChatMessage(left, value));
         sendRightMessage(value) ;
 
@@ -231,6 +233,10 @@ public class MainActivity extends Activity {
                    foodHistory.add(data.getValue(FoodDatabase.class));
                 }
                 currentUser.setFoodHistory(foodHistory);
+                for(DataSnapshot data: dataSnapshot.child("messages").getChildren()){
+                        chatArrayAdapter.add(data.getValue(ChatMessage.class));
+                }
+
             }
 
             @Override
@@ -241,4 +247,6 @@ public class MainActivity extends Activity {
         };
         cDatabase.addValueEventListener(userListener);
     }
+
+
 }
