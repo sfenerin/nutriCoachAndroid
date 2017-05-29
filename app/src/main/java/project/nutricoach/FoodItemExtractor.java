@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.StringTokenizer;
 /**
  * Created by Shawn on 5/18/2017.
@@ -36,120 +37,72 @@ public class FoodItemExtractor {
 
     }
 
-    //parse the input string, which would be something like "I had 2 slices of bacon".
-    // then if we are doing this from that example, servingCount should be set to 2
-    // and servingSize should be "slice"
-
     public boolean foundFoodItem(String input) throws IOException, JSONException {
 
+        StringTokenizer st = new StringTokenizer(input, ",");
         JSONObject responseObject = getResponse(input);
 //        Log.d("Response from wit.ai: ", responseObject.toString(2));
 
         JSONObject entities = responseObject.getJSONObject("entities");
 
-//        TODO: handle numbers as word, like "two" instead of "2"
         if (!entities.has("item_type")) return false;
 
-        String item_type = entities.getJSONArray("item_type").getJSONObject(0).getString("value");
-
-        for (int i = 0; i < entities.getJSONArray("item_type").length(); i++) {
-            String type = entities.getJSONArray("item_type").getJSONObject(i).getString("value");
-            item_types.add(type);
-        }
-
-        double item_count = 1.0;
-        if (entities.has("item_count")) {
-            item_count = entities.getJSONArray("item_count").getJSONObject(0).getInt("value");
-            for (int i = 0; i < entities.getJSONArray("item_count").length(); i++) {
-                int count = entities.getJSONArray("item_count").getJSONObject(i).getInt("value");
-                item_counts.add(count);
-            }
-        }
-
-//        TODO: handle numbers as word, like "two" instead of "2"
-        String item_size = "";
-        if (entities.has("item_size")) {
-            item_size = entities.getJSONArray("item_size").getJSONObject(0).getString("value");
-            for (int i = 0; i < entities.getJSONArray("item_size").length(); i++) {
-                String size = entities.getJSONArray("item_size").getJSONObject(i).getString("value");
-                item_sizes.add(size);
-            }
-        }
-
-        if (entities.has("positive")) {
-            for (int i = 0; i < entities.getJSONArray("positive").length(); i++) {
-                sentiment = entities.getJSONArray("positive").getJSONObject(i).getString("value");
-                sentiments.add(sentiment);
-            }
-        }
-
-        if (entities.has("negative")) {
-            for (int i = 0; i < entities.getJSONArray("negative").length(); i++) {
-                sentiment = entities.getJSONArray("negative").getJSONObject(i).getString("value");
-                sentiments.add(sentiment);
-            }
-        }
-
-        formatFood(input);
-        foodItem = item_type;
-        servingCount = item_count;
-        servingSize = item_size;
-        System.out.println("VARIABLES: " + foodItem + servingCount + servingSize);
-        return true;
-//        return formatFood(input) ;
-//        return true;
-    }
-
-    //Formats array lists of multiple food properties into FoodQuery object(s)
-    public boolean formatFood(String input) {
-        StringTokenizer st = new StringTokenizer(input, ",");
-
-        if (st.countTokens() == 0) {
-            //if multiple items and not comma-separated, ask user to re-format input
-            if (item_types.size() > MIN_FOOD_QUERY_COUNT) return false;
-                //if two items and no commas, create food query objects with no other properties but type
-            else {
-                for (String item_type : item_types) {
-                  Log.d("Item type: ", item_type);
-                    foodQueries.add(new FoodQuery(item_type));
-                }
-                return true;
-            }
-        } else {
-            handleMultFood(st);
-            return true;
-        }
-    }
-
-    //handle multiple food  separated by comma
-    public void handleMultFood(StringTokenizer st) {
+        //format foodquery objects for inputs that are comma-separated
         while (st.hasMoreTokens()) {
             String food = st.nextToken();
+            Log.d("food: ", food);
             FoodQuery foodQuery = new FoodQuery();
 
-            for (String item_type: item_types) {
+            //set foodquery's item type
+            for (int i = 0; i < entities.getJSONArray("item_type").length(); i++) {
+                String item_type = entities.getJSONArray("item_type").getJSONObject(i).getString("value");
                 if (food.contains(item_type)) {
                     foodQuery.setItemType(item_type);
                     break;
                 }
             }
 
-            for (int item_count: item_counts) {
-                if (food.contains(Integer.toString(item_count))) {
-                    foodQuery.setServingCount(item_count);
-                    break;
+            //set foodquery's serving count
+            if (entities.has("item_count")) {
+                for (int i = 0; i < entities.getJSONArray("item_count").length(); i++) {
+                    double count = entities.getJSONArray("item_count").getJSONObject(i).getDouble("value");
+                    if (food.contains(Double.toString(count))) {
+                        foodQuery.setServingCount(count);
+                        break;
+                    }
                 }
             }
 
-            for (String item_size: item_sizes) {
-                if (food.contains(item_size)) {
-                    foodQuery.setServingSize(item_size);
-                    break;
+            //set foodquery's serving size
+            if (entities.has("item_size")) {
+                for (int i = 0; i < entities.getJSONArray("item_size").length(); i++) {
+                    String item_size = entities.getJSONArray("item_size").getJSONObject(i).getString("value");
+                    if (food.contains(item_size)) {
+                        foodQuery.setServingSize(item_size);
+                        break;
+                    }
                 }
             }
             foodQuery.printFoodQueryInfo();
             foodQueries.add(foodQuery);
         }
+
+
+//        if (entities.has("positive")) {
+//            for (int i = 0; i < entities.getJSONArray("positive").length(); i++) {
+//                sentiment = entities.getJSONArray("positive").getJSONObject(i).getString("value");
+//                sentiments.add(sentiment);
+//            }
+//        }
+//
+//        if (entities.has("negative")) {
+//            for (int i = 0; i < entities.getJSONArray("negative").length(); i++) {
+//                sentiment = entities.getJSONArray("negative").getJSONObject(i).getString("value");
+//                sentiments.add(sentiment);
+//            }
+//        }
+
+        return true;
     }
 
     public JSONObject getResponse(String input) throws IOException, JSONException {
