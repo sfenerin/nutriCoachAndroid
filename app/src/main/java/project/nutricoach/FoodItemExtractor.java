@@ -1,6 +1,7 @@
 package project.nutricoach;
 
 import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.StringTokenizer;
 import java.util.Arrays;
+
 /**
  * Created by Shawn on 5/18/2017.
  */
@@ -34,7 +36,7 @@ public class FoodItemExtractor {
 
     ArrayList<FoodQuery> foodQueries = new ArrayList<FoodQuery>();
 
-    public FoodItemExtractor(){
+    public FoodItemExtractor() {
 
     }
 
@@ -84,30 +86,35 @@ public class FoodItemExtractor {
                     }
                 }
             }
+
+
+            if (entities.has("positive")) {
+                for (int i = 0; i < entities.getJSONArray("positive").length(); i++) {
+                    String sentiment = entities.getJSONArray("positive").getJSONObject(i).getString("value");
+                    if (food.contains(sentiment)) {
+                        foodQuery.setSentiment(sentiment);
+                    }
+                }
+            }
+
+            if (entities.has("negative")) {
+                for (int i = 0; i < entities.getJSONArray("negative").length(); i++) {
+                    String sentiment = entities.getJSONArray("negative").getJSONObject(i).getString("value");
+                    if (food.contains(sentiment)) {
+                        foodQuery.setSentiment(sentiment);
+                    }
+                }
+            }
+
             foodQuery.printFoodQueryInfo();
             foodQueries.add(foodQuery);
         }
-
-
-//        if (entities.has("positive")) {
-//            for (int i = 0; i < entities.getJSONArray("positive").length(); i++) {
-//                sentiment = entities.getJSONArray("positive").getJSONObject(i).getString("value");
-//                sentiments.add(sentiment);
-//            }
-//        }
-//
-//        if (entities.has("negative")) {
-//            for (int i = 0; i < entities.getJSONArray("negative").length(); i++) {
-//                sentiment = entities.getJSONArray("negative").getJSONObject(i).getString("value");
-//                sentiments.add(sentiment);
-//            }
-//        }
 
         return true;
     }
 
     public JSONObject getResponse(String input) throws IOException, JSONException {
-        String modInput = input.replace(" ","%20");
+        String modInput = input.replace(" ", "%20");
         URL url = new URL("https://api.wit.ai/message?v=20170523&q=" + modInput);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
@@ -128,18 +135,32 @@ public class FoodItemExtractor {
         return json;
     }
 
-    public String getFoodItem() {return foodItem; }
+    public String getFoodItem() {
+        return foodItem;
+    }
 
-    public String getServingSize() {return servingSize; }
+    public String getServingSize() {
+        return servingSize;
+    }
 
-    public double getServingCount(){ return servingCount; }
+    public double getServingCount() {
+        return servingCount;
+    }
 
-    public ArrayList<String> getTypes() {return item_types; }
+    public ArrayList<String> getTypes() {
+        return item_types;
+    }
 
-    public ArrayList<Integer> getCounts() {return item_counts; }
+    public ArrayList<Integer> getCounts() {
+        return item_counts;
+    }
 
-    public ArrayList<String> getSizes() {return item_sizes; }
+    public ArrayList<String> getSizes() {
+        return item_sizes;
+    }
 
-    public ArrayList<FoodQuery> getFoodQueries() { return foodQueries; }
+    public ArrayList<FoodQuery> getFoodQueries() {
+        return foodQueries;
+    }
 
 }
