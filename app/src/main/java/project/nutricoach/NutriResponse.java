@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -41,13 +42,13 @@ public class NutriResponse implements Callable<String> {
         FoodItemExtractor foodFinder = new FoodItemExtractor();
 
         if(foodFinder.foundFoodItem(input)){
-            String foodQuery = foodFinder.getFoodItem();
-
-            Log.d("FoodQuery", foodQuery);
-            String servingSize = foodFinder.getServingSize(); //need actual serving size
-            double servingCount = foodFinder.getServingCount();
-            Food food = updateAndStoreInfo(foodQuery, servingSize, servingCount);
-            response = "You ate " + food.getServingDescription() + " of " + foodQuery +". It contains " + food.getCalories() + " calories and " + food.getProtein() + "g of protein.";
+            ArrayList<FoodQuery> foodQueries = foodFinder.getFoodQueries();
+            for (FoodQuery foodQuery: foodQueries) {
+                String servingSize = foodQuery.getServingSize(); //need actual serving size
+                double servingCount = foodQuery.getServingCount();
+                Food food = updateAndStoreInfo(foodQuery.getFoodItem(), servingSize, servingCount);
+                response += "You ate " + food.getServingDescription() + " of " + foodQuery.getFoodItem() +". It contains " + food.getCalories() + " calories and " + food.getProtein() + "g of protein.\n";
+            }
             if (user.getCaloriesToday() >= 0) {
                 response += "\nYou have " + user.getCaloriesToday() + " calories left to eat today.";
             } else {
