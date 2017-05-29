@@ -58,9 +58,12 @@ public class NutriResponse implements Callable<String> {
 
             return response;
 
-
+        //handles recommendation requests
+        } else if (foodFinder.getRecommendationRequest() != null){
+            response = "Wants recommendation: " + foodFinder.getRecommendationRequest();
         } else {
             response = "Sorry, I didn't quite get that. Could you try rephrasing or being more specific?";
+
         }
         return response;
     }
