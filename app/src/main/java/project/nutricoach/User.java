@@ -19,6 +19,8 @@ import 	java.text.DateFormat;
 
 public class User {
 
+    private ArrayList<FoodDatabase> foodHistory;
+    private HashMap<String,ChatMessage> messages;
     private double age;
     private double height;
     private double weight;
@@ -284,6 +286,14 @@ public class User {
 
     }
 
+    public HashMap<String, ChatMessage> getMessages() {
+        return messages;
+    }
+
+    public void setMessages( HashMap<String,ChatMessage> messages) {
+        this.messages = messages;
+    }
+
     @Override
     public String toString() {
         return "User: " + email + ", age: " + age + ", height: " + height + ", calories left: " + caloriesToday + ", last update: " + getLastUpdateFormatted();
@@ -300,32 +310,29 @@ public class User {
 
 
 
-    private void addFoodToList(Food food, boolean sentiment){
+    private void addFoodToList(Food food, boolean sentiment) {
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        ArrayList<Object> timeStamps= new ArrayList<>();
-        timeStamps.add(System.currentTimeMillis());
 
-        DatabaseReference highFoodReference= mDatabase.child("users/"+ id + "/foodList/");
+        DatabaseReference highFoodReference = mDatabase.child("users/" + id + "/foodList/");
 
         ValueEventListener foodListener = new ValueEventListener() {
-             boolean updated = false;
+            boolean updated = false;
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-               if(dataSnapshot.hasChild(food.getID()) && !updated){
+                if (dataSnapshot.hasChild(food.getID()) && !updated) {
+                    System.out.println("Item already exists update frequency");
+                    int frequency = Integer.parseInt(dataSnapshot.child(food.getID()).child("frequency").getValue().toString());
+                    mDatabase.child("users").child(id).child("foodList").child(food.getID()).child("frequency").setValue(frequency + 1);
+                    DatabaseReference newKey = mDatabase.child("users").child(id).child("foodList").child(food.getID()).child("timeStamps").push();
+                    newKey.setValue(System.currentTimeMillis());
+                    updated = true;
 
-                   System.out.println("Item already exists update frequency");
-                   int frequency = Integer.parseInt(dataSnapshot.child(food.getID()).child("frequency").getValue().toString());
-                   mDatabase.child("users").child(id).child("foodList").child(food.getID()).child("frequency").setValue(frequency + 1);
-                   updated= true;
-               }else if(!dataSnapshot.hasChild(food.getID())){
-                   System.out.println("Need to add item");
-                   FoodDatabase fdb = new FoodDatabase(food.getName(), food.getID(), sentiment, 1, timeStamps);
-                   mDatabase.child("users").child(id).child("foodList").child(food.getID()).setValue(fdb);
-//                   DatabaseReference singleFoodReference= mDatabase.child("users/"+ id + "/foodList/" + food.getID());
-                   // To Do: add action listener to specific values to update frequency
-
-               }
+                } else if (!dataSnapshot.hasChild(food.getID())) {
+                    System.out.println("Need to add item");
+                    FoodDatabase fdb = new FoodDatabase(food.getName(), food.getID(), sentiment, 0, null);
+                    mDatabase.child("users").child(id).child("foodList").child(food.getID()).setValue(fdb);
+                }
                 // ...
             }
 
@@ -336,18 +343,24 @@ public class User {
                 // ...
             }
         };
-
         highFoodReference.addValueEventListener(foodListener);
+    }
 
+    public void addMessage(ChatMessage message){
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference messageKey =  mDatabase.child("users").child(id).child("messages").push();
+        messageKey.setValue(message);
+    }
 
+    public ArrayList<FoodDatabase> getFoodHistory() {
 
-//
-//
-//
-//            mFoodReference.addListenerForSingleValueEvent(foodListener);
-        }
+        System.out.println("returning food history");
+        return foodHistory;
+    }
 
-
+    public void setFoodHistory(ArrayList<FoodDatabase> foodHistory) {
+        this.foodHistory = foodHistory;
+    }
 
     public void resetTodayValues(){
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -360,32 +373,4 @@ public class User {
 
 
 
-    private ArrayList<FoodDatabase> getFoodList(Food food) {
-
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-
-
-        DatabaseReference mFoodReference= mDatabase.child("users/"+ id + "/foodList");
-        ValueEventListener foodListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get Post object and use the values to update the UI
-                FoodDatabase food = dataSnapshot.getValue(FoodDatabase.class);
-                System.out.println("Added Food" + dataSnapshot.getValue());
-                // ...
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
-//                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-                // ...
-            }
-        };
-
-        mFoodReference.addValueEventListener(foodListener);
-//
-        return null;
-
-    }
 }
