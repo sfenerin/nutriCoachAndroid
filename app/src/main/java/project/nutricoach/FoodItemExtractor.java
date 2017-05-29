@@ -48,8 +48,8 @@ public class FoodItemExtractor {
 
         JSONObject entities = responseObject.getJSONObject("entities");
 
-//        TODO: Check for non-food inputs and return false
 //        TODO: handle numbers as word, like "two" instead of "2"
+        if (!entities.has("item_type")) return false;
 
         String item_type = entities.getJSONArray("item_type").getJSONObject(0).getString("value");
 

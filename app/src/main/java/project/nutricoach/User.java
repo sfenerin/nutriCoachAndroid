@@ -208,6 +208,40 @@ public class User {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+
+        mDatabase.child("users").child(id).child("dataToday").child("proteinToday").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                proteinToday= (double) Double.parseDouble(snapshot.getValue().toString());
+                System.out.println("protein today" + snapshot.getValue());  //prints "Do you have data? You'll love Firebase."
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+        mDatabase.child("users").child(id).child("dataToday").child("fatToday").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                fatToday= (double) Double.parseDouble(snapshot.getValue().toString());
+                System.out.println("fat today" + snapshot.getValue());  //prints "Do you have data? You'll love Firebase."
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+        mDatabase.child("users").child(id).child("dataToday").child("carbsToday").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                caloriesToday= (double) Double.parseDouble(snapshot.getValue().toString());
+                System.out.println("carbs today" + snapshot.getValue());  //prints "Do you have data? You'll love Firebase."
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
     }
 
 
@@ -220,8 +254,8 @@ public class User {
         caloriesToday -= food.getCalories();
         System.out.println("calories in log food"+ caloriesToday);
         lastUpdate = System.currentTimeMillis();
-        updateDatabase(food, sentiment);
-
+        updateTodayValues(food);
+        addFoodToList(food, sentiment);
 
     }
 
@@ -260,20 +294,73 @@ public class User {
         return "User: " + email + ", age: " + age + ", height: " + height + ", calories left: " + caloriesToday + ", last update: " + getLastUpdateFormatted();
     }
 
-    private void updateDatabase(Food food, boolean sentiment) {
-
-        Map<String, Object> childUpdates = new HashMap<>();
-        ArrayList<Object> timeStamps = new ArrayList<Object>();
-        timeStamps.add(System.currentTimeMillis());
-        FoodDatabase fdb = new FoodDatabase(food.getName(),food.getID(), sentiment, 1, timeStamps);
-        getFoodList(food);
-        mDatabase.child("users").child(id).child("dataToday").child("caloriesToday").setValue(caloriesToday);
-        mDatabase.child("users").child(id).child("dataToday").child("fatToday").setValue(fatToday);
-        mDatabase.child("users").child(id).child("dataToday").child("proteinToday").setValue(proteinToday);
-        mDatabase.child("users").child(id).child("dataToday").child("carbsToday").setValue(carbsToday);
+    private void updateTodayValues(Food food) {
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("users").child(id).child("dataToday").child("caloriesToday").setValue(caloriesToday - food.getCalories());
+        mDatabase.child("users").child(id).child("dataToday").child("fatToday").setValue(fatToday - food.getFat());
+        mDatabase.child("users").child(id).child("dataToday").child("proteinToday").setValue(proteinToday- food.getProtein());
+        mDatabase.child("users").child(id).child("dataToday").child("carbsToday").setValue(carbsToday-food.getCarbs());
         mDatabase.child("users").child(id).child("dataToday").child("lastUpdate").setValue(System.currentTimeMillis());
-        mDatabase.child("users").child(id).child("foodList").child(food.getID()).setValue(fdb);
+    }
 
+
+
+    private void addFoodToList(Food food, boolean sentiment){
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        ArrayList<Object> timeStamps= new ArrayList<>();
+        timeStamps.add(System.currentTimeMillis());
+
+        DatabaseReference highFoodReference= mDatabase.child("users/"+ id + "/foodList/");
+
+        ValueEventListener foodListener = new ValueEventListener() {
+             boolean updated = false;
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+               if(dataSnapshot.hasChild(food.getID()) && !updated){
+
+                   System.out.println("Item already exists update frequency");
+                   int frequency = Integer.parseInt(dataSnapshot.child(food.getID()).child("frequency").getValue().toString());
+                   mDatabase.child("users").child(id).child("foodList").child(food.getID()).child("frequency").setValue(frequency + 1);
+                   updated= true;
+               }else if(!dataSnapshot.hasChild(food.getID())){
+                   System.out.println("Need to add item");
+                   FoodDatabase fdb = new FoodDatabase(food.getName(), food.getID(), sentiment, 1, timeStamps);
+                   mDatabase.child("users").child(id).child("foodList").child(food.getID()).setValue(fdb);
+//                   DatabaseReference singleFoodReference= mDatabase.child("users/"+ id + "/foodList/" + food.getID());
+                   // To Do: add action listener to specific values to update frequency
+
+               }
+                // ...
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+//                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                // ...
+            }
+        };
+
+        highFoodReference.addValueEventListener(foodListener);
+
+
+
+//
+//
+//
+//            mFoodReference.addListenerForSingleValueEvent(foodListener);
+        }
+
+
+
+    public void resetTodayValues(){
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("users").child(id).child("dataToday").child("caloriesToday").setValue(calories);
+        mDatabase.child("users").child(id).child("dataToday").child("fatToday").setValue(fat);
+        mDatabase.child("users").child(id).child("dataToday").child("proteinToday").setValue(protein);
+        mDatabase.child("users").child(id).child("dataToday").child("carbsToday").setValue(carbs);
+        mDatabase.child("users").child(id).child("dataToday").child("lastUpdate").setValue(System.currentTimeMillis());
     }
 
 
