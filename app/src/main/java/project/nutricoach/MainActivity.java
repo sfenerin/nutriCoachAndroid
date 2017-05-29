@@ -32,6 +32,7 @@ package project.nutricoach;
         import java.io.UnsupportedEncodingException;
         import java.text.ParseException;
 //        import java.util.ArrayList;
+        import java.util.ArrayList;
         import java.util.Calendar;
         import java.util.Date;
 //        import java.util.List;
