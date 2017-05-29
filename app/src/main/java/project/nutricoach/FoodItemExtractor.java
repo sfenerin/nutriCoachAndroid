@@ -96,8 +96,8 @@ public class FoodItemExtractor {
         servingCount = item_count;
         servingSize = item_size;
         System.out.println("VARIABLES: " + foodItem + servingCount + servingSize);
-        return true;
-//        return formatFood(input) ;
+//        return true;
+        return formatFood(input) ;
 //        return true;
     }
 
