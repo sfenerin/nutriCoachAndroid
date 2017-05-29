@@ -61,7 +61,9 @@ public class MainActivity extends Activity {
 
         setContentView(R.layout.activity_main);
         chatArrayAdapter = new ChatArrayAdapter(getApplicationContext(), R.layout.right);
+        updateMessages();
         getCurrentUser();
+
 
         this.es = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
@@ -232,9 +234,34 @@ public class MainActivity extends Activity {
                 for(DataSnapshot data : dataSnapshot.child("foodList").getChildren()){
                    foodHistory.add(data.getValue(FoodDatabase.class));
                 }
-                currentUser.setFoodHistory(foodHistory);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+
+            }
+        };
+        cDatabase.addValueEventListener(userListener);
+    }
+
+    private void updateMessages(){
+        System.out.println("get Current User");
+        FirebaseUser cUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference mDatabase;
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference cDatabase= mDatabase.child("users/"+cUser.getUid());
+
+
+        ValueEventListener userListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                System.out.println("here");
+
                 for(DataSnapshot data: dataSnapshot.child("messages").getChildren()){
-                        chatArrayAdapter.add(data.getValue(ChatMessage.class));
+                    chatArrayAdapter.add(data.getValue(ChatMessage.class));
                 }
 
             }

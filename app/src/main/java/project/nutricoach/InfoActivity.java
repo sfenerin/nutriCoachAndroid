@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -47,6 +48,12 @@ public class InfoActivity extends Activity {
         double height= Float.parseFloat(((EditText) findViewById(R.id.userHeight)).getText().toString());
         double weight= Float.parseFloat(((EditText) findViewById(R.id.userWeight)).getText().toString());
         boolean female= ((RadioButton) findViewById(R.id.radioFemale)).isChecked();
+        boolean vegan = ((CheckBox)findViewById(R.id.veganCB)).isSelected();
+        boolean vegetarian = ((CheckBox)findViewById(R.id.vegetarianCB)).isSelected();
+        boolean glutenFree= ((CheckBox)findViewById(R.id.glutenCB)).isSelected();
+        boolean lactoseFree= ((CheckBox)findViewById(R.id.lactoseCB)).isSelected();
+
+
         RadioGroup radioButtonGroup = (RadioGroup)findViewById(R.id.radioActivity);
         int radioButtonID = ((RadioGroup)findViewById(R.id.radioActivity)).getCheckedRadioButtonId();
         View radioButton = radioButtonGroup.findViewById(radioButtonID);
@@ -67,7 +74,7 @@ public class InfoActivity extends Activity {
          carbs = .55*calories / 4;
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        User newUser = new User(getIntent().getStringExtra("USER_EMAIL"), user.getUid(), age,  female, height, weight, bmr, calories,  protein, fat,  carbs, activity);
+        User newUser = new User(getIntent().getStringExtra("USER_EMAIL"), user.getUid(), age,  female, height, weight, bmr, calories,  protein, fat,  carbs, activity, vegan, vegetarian, glutenFree, lactoseFree);
         DatabaseReference mDatabase;
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("users").child(user.getUid()).setValue(newUser);

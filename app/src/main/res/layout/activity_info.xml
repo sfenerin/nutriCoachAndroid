@@ -113,6 +113,40 @@
                 android:text="5">
             </RadioButton>
         </RadioGroup>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dietary Restrictions"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <CheckBox
+            android:id="@+id/veganCB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vegan"/>
+
+        <CheckBox
+            android:id="@+id/vegetarianCB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vegetarian"/>
+
+        <CheckBox
+            android:id="@+id/glutenCB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gluten Free"/>
+
+            <CheckBox
+                android:id="@+id/lactoseCB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lactose Free"/>
+        </LinearLayout>
+
+
 
 
 
@@ -123,7 +157,7 @@
             android:layout_marginTop="80px"
             android:backgroundTint="#7d079100"
             android:fontFamily="monospace"
-            android:text="Login"
+            android:text="Submit"
             android:textColor="#fff"
             android:textSize="30px" />
 
