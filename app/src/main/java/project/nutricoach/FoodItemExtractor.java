@@ -12,7 +12,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
-import java.util.Arrays;
 /**
  * Created by Shawn on 5/18/2017.
  */

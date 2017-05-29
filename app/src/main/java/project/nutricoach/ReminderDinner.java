@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
-import project.nutricoach.ReminderLunchIS;
 
 public class ReminderDinner extends BroadcastReceiver {
 
