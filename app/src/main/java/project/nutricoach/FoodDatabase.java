@@ -1,6 +1,8 @@
 package project.nutricoach;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * Created by anacarolinamexia on 5/24/17.
@@ -12,7 +14,7 @@ public class FoodDatabase {
     private String name;
     private boolean sentiment;
     private int frequency;
-    private ArrayList<Object> timeStamps;
+    private HashMap<String, Object> timeStamps;
 
     public FoodDatabase (){
 
@@ -26,11 +28,11 @@ public class FoodDatabase {
         this.name = name;
     }
 
-    public ArrayList<Object> getTimeStamps() {
+    public HashMap<String,Object> getTimeStamps() {
         return timeStamps;
     }
 
-    public void setTimeStamps(ArrayList<Object> timeStamps) {
+    public void setTimeStamps(HashMap<String,Object> timeStamps) {
         this.timeStamps = timeStamps;
     }
 
@@ -58,12 +60,17 @@ public class FoodDatabase {
         this.frequency = frequency;
     }
 
-    public FoodDatabase(String name, String id, boolean sentiment, int frequency, ArrayList<Object>timeStamps){
+    public FoodDatabase(String name, String id, boolean sentiment, int frequency, HashMap<String,Object> timeStamps){
         this.name= name;
         this.id= id;
         this.sentiment= sentiment;
         this.frequency = frequency;
         this.timeStamps= timeStamps;
+    }
+    @Override
+    public String toString(){
+
+        return ("Name:" + name + " id: " + id + " sentiment: " + sentiment + " frequency"  + frequency );
     }
 
 }

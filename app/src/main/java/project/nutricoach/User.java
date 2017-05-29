@@ -24,6 +24,7 @@ import java.util.Objects;
 
 public class User {
 
+    private ArrayList<FoodDatabase> foodHistory;
     private double age;
     private double height;
     private double weight;
@@ -305,32 +306,29 @@ public class User {
 
 
 
-    private void addFoodToList(Food food, boolean sentiment){
+    private void addFoodToList(Food food, boolean sentiment) {
 
 
-
-        DatabaseReference highFoodReference= mDatabase.child("users/"+ id + "/foodList/");
+        DatabaseReference highFoodReference = mDatabase.child("users/" + id + "/foodList/");
 
         ValueEventListener foodListener = new ValueEventListener() {
-             boolean updated = false;
+            boolean updated = false;
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-               if(dataSnapshot.hasChild(food.getID()) && !updated){
+                if (dataSnapshot.hasChild(food.getID()) && !updated) {
+                    System.out.println("Item already exists update frequency");
+                    int frequency = Integer.parseInt(dataSnapshot.child(food.getID()).child("frequency").getValue().toString());
+                    mDatabase.child("users").child(id).child("foodList").child(food.getID()).child("frequency").setValue(frequency + 1);
+                    DatabaseReference newKey = mDatabase.child("users").child(id).child("foodList").child(food.getID()).child("timeStamps").push();
+                    newKey.setValue(System.currentTimeMillis());
+                    updated = true;
 
-                   System.out.println("Item already exists update frequency");
-                   int frequency = Integer.parseInt(dataSnapshot.child(food.getID()).child("frequency").getValue().toString());
-                   mDatabase.child("users").child(id).child("foodList").child(food.getID()).child("frequency").setValue(frequency + 1);
-                   DatabaseReference newKey= mDatabase.child("users").child(id).child("foodList").child(food.getID()).child("timeStamps").push();
-                   newKey.setValue(System.currentTimeMillis());
-                   updated= true;
-               }else if(!dataSnapshot.hasChild(food.getID())){
-                   System.out.println("Need to add item");
-                   FoodDatabase fdb = new FoodDatabase(food.getName(), food.getID(), sentiment, 1, null);
-                   mDatabase.child("users").child(id).child("foodList").child(food.getID()).setValue(fdb);
-//                   DatabaseReference singleFoodReference= mDatabase.child("users/"+ id + "/foodList/" + food.getID());
-                   // To Do: add action listener to specific values to update frequency
-
-               }
+                } else if (!dataSnapshot.hasChild(food.getID())) {
+                    System.out.println("Need to add item");
+                    FoodDatabase fdb = new FoodDatabase(food.getName(), food.getID(), sentiment, 0, null);
+                    mDatabase.child("users").child(id).child("foodList").child(food.getID()).setValue(fdb);
+                }
                 // ...
             }
 
@@ -341,18 +339,19 @@ public class User {
                 // ...
             }
         };
-
         highFoodReference.addValueEventListener(foodListener);
+    }
 
 
+    public ArrayList<FoodDatabase> getFoodHistory() {
 
-//
-//
-//
-//            mFoodReference.addListenerForSingleValueEvent(foodListener);
-        }
+        System.out.println("returning food history");
+        return foodHistory;
+    }
 
-
+    public void setFoodHistory(ArrayList<FoodDatabase> foodHistory) {
+        this.foodHistory = foodHistory;
+    }
 
     public void resetTodayValues(){
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -365,32 +364,4 @@ public class User {
 
 
 
-    private ArrayList<FoodDatabase> getFoodList(Food food) {
-
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-
-
-        DatabaseReference mFoodReference= mDatabase.child("users/"+ id + "/foodList");
-        ValueEventListener foodListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get Post object and use the values to update the UI
-                FoodDatabase food = dataSnapshot.getValue(FoodDatabase.class);
-                System.out.println("Added Food" + dataSnapshot.getValue());
-                // ...
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
-//                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-                // ...
-            }
-        };
-
-        mFoodReference.addValueEventListener(foodListener);
-//
-        return null;
-
-    }
 }

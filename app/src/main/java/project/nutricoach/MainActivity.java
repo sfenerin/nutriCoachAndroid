@@ -202,9 +202,10 @@ public class MainActivity extends Activity {
         FirebaseAuth.getInstance().signOut();
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
+
     }
     private void getCurrentUser(){
-        System.out.println("get Current USer");
+        System.out.println("get Current User");
         FirebaseUser cUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference mDatabase;
 
@@ -225,11 +226,11 @@ public class MainActivity extends Activity {
                     currentUser.setCarbsToday(Double.parseDouble(dataSnapshot.child("dataToday").child("carbsToday").getValue().toString()));
                     currentUser.setLastUpdate(Long.parseLong(dataSnapshot.child("dataToday").child("lastUpdate").getValue().toString()));
                 }
-//                if(dataSnapshot.child("foodList").getValue()!=null){
-//
-//                    System.out.println("foodList" + dataSnapshot.child("foodList").getValue());
-//                }
-
+                ArrayList<FoodDatabase> foodHistory= new ArrayList<FoodDatabase>();
+                for(DataSnapshot data : dataSnapshot.child("foodList").getChildren()){
+                   foodHistory.add(data.getValue(FoodDatabase.class));
+                }
+                currentUser.setFoodHistory(foodHistory);
             }
 
             @Override
