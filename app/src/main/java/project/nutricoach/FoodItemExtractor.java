@@ -92,7 +92,7 @@ public class FoodItemExtractor {
                 for (int i = 0; i < entities.getJSONArray("positive").length(); i++) {
                     String sentiment = entities.getJSONArray("positive").getJSONObject(i).getString("value");
                     if (food.contains(sentiment)) {
-                        foodQuery.setSentiment(sentiment);
+                        foodQuery.setSentiment("positive");
                     }
                 }
             }
@@ -101,7 +101,7 @@ public class FoodItemExtractor {
                 for (int i = 0; i < entities.getJSONArray("negative").length(); i++) {
                     String sentiment = entities.getJSONArray("negative").getJSONObject(i).getString("value");
                     if (food.contains(sentiment)) {
-                        foodQuery.setSentiment(sentiment);
+                        foodQuery.setSentiment("negative");
                     }
                 }
             }
