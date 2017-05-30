@@ -66,9 +66,9 @@ public class FoodItemExtractor {
             //set foodquery's serving count
             if (entities.has("item_count")) {
                 for (int i = 0; i < entities.getJSONArray("item_count").length(); i++) {
-                    double count = entities.getJSONArray("item_count").getJSONObject(i).getDouble("value");
-                    if (food.contains(Double.toString(count))) {
-                        foodQuery.setServingCount(count);
+                    int count = entities.getJSONArray("item_count").getJSONObject(i).getInt("value");
+                    if (food.contains(Integer.toString(count))) {
+                        foodQuery.setServingCount((double) count);
                         break;
                     }
                 }
