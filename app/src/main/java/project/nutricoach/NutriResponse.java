@@ -113,7 +113,7 @@ public class NutriResponse implements Callable<String> {
             JSONArray servingsArray = foodObj.getJSONObject("servings").getJSONArray("serving");
             boolean correctServingSize = false;
             for(int i = 0; i < servingsArray.length(); i++) {
-                JSONObject nutritionInfo = servingsArray.getJSONObject(0);
+                JSONObject nutritionInfo = servingsArray.getJSONObject(i);
                 if (correctServingSize(nutritionInfo, servingSize)) correctServingSize = true;
             }
             if(!correctServingSize) return getGenericFoodInfo(foodQuery);

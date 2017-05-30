@@ -268,7 +268,7 @@ public class MainActivity extends AppCompatActivity {
                 for(DataSnapshot data: dataSnapshot.child("messages").getChildren()){
                     chatArrayAdapter.add(data.getValue(ChatMessage.class));
                 }
-                chatArrayAdapter.add(new ChatMessage(right,"Hi " + name + " what have you eaten today?"));
+                chatArrayAdapter.add(new ChatMessage(right,"Hi " + name + ", what have you eaten today?"));
 
             }
 
