@@ -1,5 +1,7 @@
 package project.nutricoach;
 
+import android.text.format.DateUtils;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -220,15 +222,14 @@ public class User {
     }
 
     public static boolean isYesterday(long date) {
-        Calendar now = Calendar.getInstance();
-        Calendar cdate = Calendar.getInstance();
-        cdate.setTimeInMillis(date);
+        Calendar c1 = Calendar.getInstance(); // today
+        c1.add(Calendar.DAY_OF_YEAR, -1); // yesterday
 
-        now.add(Calendar.DATE, -1);
+        Calendar c2 = Calendar.getInstance();
+        c2.setTime(new Date(date)); // your date
 
-        return now.get(Calendar.YEAR) == cdate.get(Calendar.YEAR)
-                && now.get(Calendar.MONTH) == cdate.get(Calendar.MONTH)
-                && now.get(Calendar.DATE) == cdate.get(Calendar.DATE);
+        return(c1.get(Calendar.YEAR) == c2.get(Calendar.YEAR)
+                && c1.get(Calendar.DAY_OF_YEAR) == c2.get(Calendar.DAY_OF_YEAR)) ;
     }
 
     private void initialize(){
@@ -338,17 +339,29 @@ public class User {
 
     private void updateTodayValues(Food food) {
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        caloriesToday= caloriesToday - food.getCalories();
-        fatToday= fatToday- food.getFat();
-        proteinToday= proteinToday - food.getProtein();
-        carbsToday= carbs-food.getCarbs();
-        lastUpdate= System.currentTimeMillis();
+
+        if(DateUtils.isToday(lastUpdate)) {
+            System.out.println("Today");
+            caloriesToday = caloriesToday - food.getCalories();
+            fatToday = fatToday - food.getFat();
+            proteinToday = proteinToday - food.getProtein();
+            carbsToday = carbs - food.getCarbs();
+            lastUpdate = System.currentTimeMillis();
+        }
+        else{
+            System.out.println("Yesterday");
+            caloriesToday = calories - food.getCalories();
+            fatToday = fat - food.getFat();
+            proteinToday= protein - food.getProtein();
+            carbsToday= carbs - food.getCarbs();
+            lastUpdate= System.currentTimeMillis();
+        }
 
         mDatabase.child("users").child(id).child("dataToday").child("caloriesToday").setValue(caloriesToday);
         mDatabase.child("users").child(id).child("dataToday").child("fatToday").setValue(fatToday);
         mDatabase.child("users").child(id).child("dataToday").child("proteinToday").setValue(proteinToday);
         mDatabase.child("users").child(id).child("dataToday").child("carbsToday").setValue(carbsToday);
-        mDatabase.child("users").child(id).child("dataToday").child("lastUpdate").setValue(System.currentTimeMillis());
+        mDatabase.child("users").child(id).child("dataToday").child("lastUpdate").setValue(lastUpdate);
     }
 
 
