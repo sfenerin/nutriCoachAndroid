@@ -67,7 +67,6 @@ public class Food {
             nutritionInfo = servingsArray.getJSONObject(0);
         }
         double multiplier = count / nutritionInfo.getDouble("number_of_units");
-        System.out.println("Multiplier: " + multiplier);
         this.servingDescription = nutritionInfo.getString("serving_description");
         this.calories = multiplier * nutritionInfo.getDouble("calories");
         this.carbs = multiplier * nutritionInfo.getDouble("carbohydrate");
@@ -83,19 +82,22 @@ public class Food {
         this.name = foodObj.getString("food_name");
 
         JSONObject nutritionInfo = null;
-        if(foodObj.getJSONObject("servings").get("serving") instanceof JSONObject){
-            nutritionInfo = foodObj.getJSONObject("servings").getJSONObject("serving");
-        } else {
-            JSONArray servingsArray = foodObj.getJSONObject("servings").getJSONArray("serving");
-            nutritionInfo = servingsArray.getJSONObject(0);
-            for (int i = 0; i < servingsArray.length(); i++) {
-                if(correctServingSize(servingsArray.getJSONObject(i), serving)){
-                    nutritionInfo = servingsArray.getJSONObject(i);
-                    Log.d("nutritionInfo", nutritionInfo.toString(2));
-                    break;
+            if (foodObj.getJSONObject("servings").get("serving") instanceof JSONObject) {
+                nutritionInfo = foodObj.getJSONObject("servings").getJSONObject("serving");
+            } else {
+                JSONArray servingsArray = foodObj.getJSONObject("servings").getJSONArray("serving");
+                nutritionInfo = servingsArray.getJSONObject(0);
+                if (!serving.equals("")) {
+                    for (int i = 0; i < servingsArray.length(); i++) {
+                        if (correctServingSize(servingsArray.getJSONObject(i), serving)) {
+                            nutritionInfo = servingsArray.getJSONObject(i);
+                            Log.d("nutritionInfo", nutritionInfo.toString(2));
+                            break;
+                        }
+                    }
                 }
             }
-        }
+
         double multiplier = count / nutritionInfo.getDouble("number_of_units");
         this.servingDescription = nutritionInfo.getString("serving_description");
         this.calories = multiplier * nutritionInfo.getDouble("calories");

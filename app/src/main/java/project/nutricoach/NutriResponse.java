@@ -42,7 +42,11 @@ public class NutriResponse implements Callable<String> {
                 String servingSize = foodQuery.getServingSize(); //need actual serving size
                 double servingCount = foodQuery.getServingCount();
                 Food food = updateAndStoreInfo(foodQuery.getFoodItem(), servingSize, servingCount);
-                response += "You ate " + servingCount + " " + servingSize + " of " + foodQuery.getFoodItem() +". It contains " + (int)food.getCalories() + " calories and " + food.getProtein() + "g of protein.\n";
+                String servingInfo = "";
+                if (servingCount != 1) {
+                    servingInfo = servingCount + " " + servingSize + " of ";
+                }
+                response += "You ate " + servingInfo + foodQuery.getFoodItem() +". It contains " + (int)food.getCalories() + " calories and " + (int)food.getProtein() + "g of protein.\n";
             }
             if (user.getCaloriesToday() >= 0) {
                 response += "\nYou have " + (int)user.getCaloriesToday() + " calories left to eat today.";
@@ -113,7 +117,7 @@ public class NutriResponse implements Callable<String> {
         JSONObject parsedFood = foodInfo.getJSONObject("result").getJSONObject("food");
         Food food;
         if (serving.equals(""))
-            food = new Food((String)parsedFood.get("food_id"), servings, api);
+            food = new Food((String)parsedFood.get("food_id"), "", servings, api);
         else {
             food = new Food((String)parsedFood.get("food_id"), serving, servings, api);
         }
