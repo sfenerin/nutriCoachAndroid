@@ -6,6 +6,8 @@
     android:orientation="vertical"
     tools:context="project.nutricoach.InfoActivity">
 
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="744dp"
@@ -212,12 +214,12 @@
             android:id="@+id/SubmitButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20px"
+            android:layout_marginTop="30px"
             android:backgroundTint="#7d079100"
             android:fontFamily="monospace"
             android:text="Submit"
             android:textColor="#fff"
-            android:textSize="20px" />
+            android:textSize="50px" />
 
     </LinearLayout>
 </LinearLayout>

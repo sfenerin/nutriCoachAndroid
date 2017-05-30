@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<item-->
+        <!--android:id="@+id/action_favorite"-->
+        <!--android:icon="@drawable/nutrilogo"-->
+        <!--android:title="NutriCoach" />-->
+    <item
+        android:id="@+id/logout_button"
+        android:icon="@drawable/nutrilogo"
+        android:title="Logout" />
+
+    <!--&lt;!&ndash; Settings, should always be in the overflow &ndash;&gt;-->
+    <!--<item android:id="@+id/action_settings"-->
+        <!--android:title="@string/action_settings"-->
+        <!--app:showAsAction="never"/>-->
+</menu>

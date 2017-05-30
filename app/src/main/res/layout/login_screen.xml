@@ -35,7 +35,7 @@
             android:text="NutriCoach"
             android:textAlignment="center"
             android:textColor="#1f8f00"
-            android:textSize="50sp" />
+            android:textSize="30sp" />
 
         <EditText
             android:id="@+id/userText"
@@ -44,7 +44,7 @@
             android:layout_weight="0.23"
             android:fontFamily="monospace"
             android:hint="Email"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <EditText
             android:id="@+id/userPassword"
@@ -54,13 +54,13 @@
             android:fontFamily="monospace"
             android:hint="Password"
             android:inputType="textWebPassword"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/LoginButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80px"
+            android:layout_marginTop="260px"
             android:backgroundTint="#7d079100"
             android:fontFamily="monospace"
             android:text="Login"

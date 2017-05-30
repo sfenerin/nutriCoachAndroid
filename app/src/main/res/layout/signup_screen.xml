@@ -24,17 +24,18 @@
             android:layout_marginTop="50px"
             android:layout_marginBottom="50px"
             android:layout_weight="0.19"
-            android:src="@drawable/nutrilogo" />
+            android:src="@drawable/nutrilogo"/>
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
-            android:layout_height="103dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20px"
             android:fontFamily="monospace"
-            android:text="NutriCoach"
+            android:text="SignUp"
             android:textAlignment="center"
             android:textColor="#1f8f00"
-            android:textSize="50sp" />
+            android:textSize="30sp" />
 
         <EditText
             android:id="@+id/userTestEmail"

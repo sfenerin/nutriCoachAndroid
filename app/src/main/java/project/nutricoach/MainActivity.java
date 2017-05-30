@@ -10,6 +10,7 @@ package project.nutricoach;
         import android.database.DataSetObserver;
         import android.icu.text.SimpleDateFormat;
         import android.os.Bundle;
+        import android.support.v7.app.AppCompatActivity;
         import android.util.Log;
         import android.view.KeyEvent;
         import android.view.View;
@@ -17,6 +18,7 @@ package project.nutricoach;
         import android.widget.Button;
         import android.widget.EditText;
         import android.widget.ListView;
+        import android.widget.Toolbar;
 
         import com.google.firebase.auth.FirebaseAuth;
         import com.google.firebase.auth.FirebaseUser;
@@ -45,7 +47,7 @@ package project.nutricoach;
 
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
     private static final String TAG = "ChatActivity";
 
     private ChatArrayAdapter chatArrayAdapter;
@@ -60,6 +62,7 @@ public class MainActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+
 
         setContentView(R.layout.activity_main);
         chatArrayAdapter = new ChatArrayAdapter(getApplicationContext(), R.layout.right);
