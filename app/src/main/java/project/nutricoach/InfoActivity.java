@@ -48,10 +48,10 @@ public class InfoActivity extends Activity {
         double height= Float.parseFloat(((EditText) findViewById(R.id.userHeight)).getText().toString());
         double weight= Float.parseFloat(((EditText) findViewById(R.id.userWeight)).getText().toString());
         boolean female= ((RadioButton) findViewById(R.id.radioFemale)).isChecked();
-        boolean vegan = ((CheckBox)findViewById(R.id.veganCB)).isSelected();
-        boolean vegetarian = ((CheckBox)findViewById(R.id.vegetarianCB)).isSelected();
-        boolean glutenFree= ((CheckBox)findViewById(R.id.glutenCB)).isSelected();
-        boolean lactoseFree= ((CheckBox)findViewById(R.id.lactoseCB)).isSelected();
+        boolean vegan = ((CheckBox)findViewById(R.id.veganCB)).isChecked();
+        boolean vegetarian = ((CheckBox)findViewById(R.id.vegetarianCB)).isChecked();
+        boolean glutenFree= ((CheckBox)findViewById(R.id.glutenCB)).isChecked();
+        boolean lactoseFree= ((CheckBox)findViewById(R.id.lactoseCB)).isChecked();
 
 
         RadioGroup radioButtonGroup = (RadioGroup)findViewById(R.id.radioActivity);
