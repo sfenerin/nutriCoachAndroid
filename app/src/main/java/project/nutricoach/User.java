@@ -60,16 +60,15 @@ public class User {
         isGlutenFree = glutenFree;
     }
 
-    public boolean isLactoseFree() {
-        return isLactoseFree;
-    }
-
-    public void setLactoseFree(boolean islactoseFree) {
-        this.isLactoseFree = islactoseFree;
-    }
-
     private boolean isGlutenFree;
-    private boolean isLactoseFree;
+    private boolean isDairyFree;
+    private boolean isEggFree;
+    private boolean isPeanutFree;
+    private boolean isTreeNutFree;
+    private boolean isBooleanFree;
+    private boolean isSoyFree;
+    private boolean isFishFree;
+    private boolean isShellfishFree;
 
 
     private DatabaseReference mDatabase;
@@ -302,7 +301,7 @@ public class User {
         this.carbsToday = carbsToday;
     }
 
-    public User(String email, String id, double age, boolean female, double height, double weight, double bmr, double calories, double protein, double fat, double carbs, int activity, boolean isVegan, boolean isVegetarian, boolean isGlutenFree, boolean isLactoseFree ) {
+    public User(String email, String id, double age, boolean female, double height, double weight, double bmr, double calories, double protein, double fat, double carbs, int activity, boolean isVegan, boolean isVegetarian, boolean isGlutenFree, boolean isDairyFree, boolean isEggFree, boolean isPeanutFree, boolean isTreeNutFree, boolean isSoyFree, boolean isFishFree, boolean isShellfishFree) {
         this.email = email;
         this.id = id;
         this.age = age;
@@ -317,11 +316,81 @@ public class User {
         this.activity = activity;
         this.isVegan = isVegan;
         this.isVegeterian= isVegetarian;
-        this.isLactoseFree= isLactoseFree;
+        this.isDairyFree= isDairyFree;
         this.isGlutenFree = isGlutenFree;
+        this.isEggFree=isEggFree;
+        this.isPeanutFree= isPeanutFree;
+        this.isTreeNutFree = isTreeNutFree;
+        this.isSoyFree = isSoyFree;
+        this.isFishFree= isFishFree;
+        this.isShellfishFree= isShellfishFree;
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
 
+    }
+
+    public boolean isDairyFree() {
+        return isDairyFree;
+    }
+
+    public void setDairyFree(boolean dairyFree) {
+        isDairyFree = dairyFree;
+    }
+
+    public boolean isEggFree() {
+        return isEggFree;
+    }
+
+    public void setEggFree(boolean eggFree) {
+        isEggFree = eggFree;
+    }
+
+    public boolean isPeanutFree() {
+        return isPeanutFree;
+    }
+
+    public void setPeanutFree(boolean peanutFree) {
+        isPeanutFree = peanutFree;
+    }
+
+    public boolean isTreeNutFree() {
+        return isTreeNutFree;
+    }
+
+    public void setTreeNutFree(boolean treeNutFree) {
+        isTreeNutFree = treeNutFree;
+    }
+
+    public boolean isBooleanFree() {
+        return isBooleanFree;
+    }
+
+    public void setBooleanFree(boolean booleanFree) {
+        isBooleanFree = booleanFree;
+    }
+
+    public boolean isSoyFree() {
+        return isSoyFree;
+    }
+
+    public void setSoyFree(boolean soyFree) {
+        isSoyFree = soyFree;
+    }
+
+    public boolean isFishFree() {
+        return isFishFree;
+    }
+
+    public void setFishFree(boolean fishFree) {
+        isFishFree = fishFree;
+    }
+
+    public boolean isShellfishFree() {
+        return isShellfishFree;
+    }
+
+    public void setShellfishFree(boolean shellfishFree) {
+        isShellfishFree = shellfishFree;
     }
 
     public HashMap<String, ChatMessage> getMessages() {
