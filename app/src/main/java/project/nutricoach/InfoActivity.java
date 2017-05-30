@@ -51,7 +51,14 @@ public class InfoActivity extends Activity {
         boolean vegan = ((CheckBox)findViewById(R.id.veganCB)).isChecked();
         boolean vegetarian = ((CheckBox)findViewById(R.id.vegetarianCB)).isChecked();
         boolean glutenFree= ((CheckBox)findViewById(R.id.glutenCB)).isChecked();
-        boolean lactoseFree= ((CheckBox)findViewById(R.id.lactoseCB)).isChecked();
+        boolean dairyFree= ((CheckBox)findViewById(R.id.lactoseCB)).isChecked();
+        boolean eggFree= ((CheckBox)findViewById(R.id.eggCB)).isChecked();
+        boolean peanutFree= ((CheckBox)findViewById(R.id.peanutCB)).isChecked();
+        boolean treeNutFree= ((CheckBox)findViewById(R.id.treeCB)).isChecked();
+        boolean soyFree= ((CheckBox)findViewById(R.id.soyCB)).isChecked();
+        boolean fishFree= ((CheckBox)findViewById(R.id.fishCB)).isChecked();
+        boolean shellfishFree= ((CheckBox)findViewById(R.id.shellfishCB)).isChecked();
+
 
 
         RadioGroup radioButtonGroup = (RadioGroup)findViewById(R.id.radioActivity);
@@ -74,7 +81,7 @@ public class InfoActivity extends Activity {
          carbs = .55*calories / 4;
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        User newUser = new User(getIntent().getStringExtra("USER_EMAIL"), user.getUid(), age,  female, height, weight, bmr, calories,  protein, fat,  carbs, activity, vegan, vegetarian, glutenFree, lactoseFree);
+        User newUser = new User(getIntent().getStringExtra("USER_EMAIL"), user.getUid(), age,  female, height, weight, bmr, calories,  protein, fat,  carbs, activity, vegan, vegetarian, glutenFree, dairyFree, eggFree, peanutFree, treeNutFree, soyFree, fishFree, shellfishFree);
         DatabaseReference mDatabase;
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("users").child(user.getUid()).setValue(newUser);

@@ -146,12 +146,60 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Gluten Free" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
             <CheckBox
                 android:id="@+id/lactoseCB"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Lactose Free" />
+                android:text="Dairy Free" />
+                <CheckBox
+                    android:id="@+id/eggCB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Egg Free" />
+                <CheckBox
+                    android:id="@+id/treeCB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tree-Nut Free" />
+        </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/soyCB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Soy Free" />
+                <CheckBox
+                    android:id="@+id/fishCB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fish Free" />
+                <CheckBox
+                    android:id="@+id/shellfishCB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Shellfish Free" />
+            </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/peanutCB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Peanut Free" />
+
         </LinearLayout>
 
 

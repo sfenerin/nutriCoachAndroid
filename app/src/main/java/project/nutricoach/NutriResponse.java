@@ -38,10 +38,14 @@ public class NutriResponse implements Callable<String> {
         if (foodFinder.foundFoodItem(input)) {
             ArrayList<FoodQuery> foodQueries = foodFinder.getFoodQueries();
             for (FoodQuery foodQuery : foodQueries) {
-                String servingSize = foodQuery.getServingSize(); //need actual serving size
+                String servingSize = foodQuery.getServingSize();
                 double servingCount = foodQuery.getServingCount();
                 Food food = updateAndStoreInfo(foodQuery.getFoodItem(), servingSize, servingCount);
-                response += "You ate " + servingCount + " " + servingSize + " of " + foodQuery.getFoodItem() +". It contains " + (int)food.getCalories() + " calories and " + food.getProtein() + "g of protein.\n";
+                String servingInfo = "";
+                if (servingCount != 1) {
+                    servingInfo = servingCount + " " + servingSize + " of ";
+                }
+                response += "You ate " + servingInfo + foodQuery.getFoodItem() +". It contains " + (int)food.getCalories() + " calories and " + (int)food.getProtein() + "g of protein.\n";
             }
             if (user.getCaloriesToday() >= 0) {
                 response += "\nYou have " + (int)user.getCaloriesToday() + " calories left to eat today.";
@@ -99,29 +103,41 @@ public class NutriResponse implements Callable<String> {
 
     private JSONObject getSpecificFoodInfo(String foodQuery, String servingSize, double servingCount) throws UnsupportedEncodingException, JSONException {
         JSONArray responseArray = api.getFoodItems(foodQuery).getJSONObject("result").getJSONObject("foods").getJSONArray("food");
-//        for(int i = 0; i < responseArray.length(); i ++){
-//            String foodDescription = responseArray.getJSONObject(i).get("food_description").toString();
-//            if(correctServingSize(foodDescription, servingSize)){
-//                String food_id = responseArray.getJSONObject(i).get("food_id").toString().replaceAll("\\s","");
-//                Log.d("Specific food: ", api.getFoodItem(Long.parseLong(food_id)).toString(2));
-//                return api.getFoodItem(Long.parseLong(food_id));
-//            }
-//        }
         String food_id = responseArray.getJSONObject(0).get("food_id").toString().replaceAll("\\s","");
         Log.d("specific food info", api.getFoodItem(Long.parseLong(food_id)).toString(2));
+        JSONObject foodObj = api.getFoodItem(Long.parseLong(food_id)).getJSONObject("result").getJSONObject("food");
+        if(foodObj.getJSONObject("servings").get("serving") instanceof JSONObject){
+            JSONObject nutritionInfo = foodObj.getJSONObject("servings").getJSONObject("serving");
+            if (!correctServingSize(nutritionInfo, servingSize)) return getGenericFoodInfo(foodQuery);
+        } else {
+            JSONArray servingsArray = foodObj.getJSONObject("servings").getJSONArray("serving");
+            boolean correctServingSize = false;
+            for(int i = 0; i < servingsArray.length(); i++) {
+                JSONObject nutritionInfo = servingsArray.getJSONObject(0);
+                if (correctServingSize(nutritionInfo, servingSize)) correctServingSize = true;
+            }
+            if(!correctServingSize) return getGenericFoodInfo(foodQuery);
+        }
         return api.getFoodItem(Long.parseLong(food_id));
 //        return getGenericFoodInfo(foodQuery); //placeholder
 
     }
 
 
-
+    private boolean correctServingSize(JSONObject foodObj, String servingSize) throws JSONException {
+        String foodDescription = foodObj.getString("measurement_description");
+        if (foodDescription.contains(servingSize)) return true;
+        else if (servingSize.charAt(servingSize.length() - 1) == 's') {
+            if (foodDescription.contains(servingSize.substring(0, servingSize.length() - 1))) return true;
+        }
+        return false;
+    }
 
     private Food logFoodServing(JSONObject foodInfo, String serving, double servings) throws JSONException, UnsupportedEncodingException {
         JSONObject parsedFood = foodInfo.getJSONObject("result").getJSONObject("food");
         Food food;
         if (serving.equals(""))
-            food = new Food((String)parsedFood.get("food_id"), servings, api);
+            food = new Food((String)parsedFood.get("food_id"), "", servings, api);
         else {
             food = new Food((String)parsedFood.get("food_id"), serving, servings, api);
         }
