@@ -16,7 +16,9 @@ import java.util.StringTokenizer;
 
 public class RequestExtractor {
 
-    String recommendationRequest = "";
+
+    String recommendationRequest = null;
+    String macroRequest = null;
 
     public RequestExtractor() {
 
@@ -26,9 +28,12 @@ public class RequestExtractor {
 
         JSONObject responseObject = getResponse(input);
         JSONObject entities = responseObject.getJSONObject("entities");
-
+        System.out.println("Entities: " + entities);
         if (entities.has("recommendation")) {
             recommendationRequest = entities.getJSONArray("recommendation").getJSONObject(0).getString("value");
+            return true;
+        } else if (entities.has("macro_request")) {
+            macroRequest = entities.getJSONArray("macro_request").getJSONObject(0).getString("value");
             return true;
         }
         return false;
@@ -58,6 +63,10 @@ public class RequestExtractor {
 
     public String getRecommendationRequest() {
         return recommendationRequest;
+    }
+
+    public String getMacroRequest() {
+        return macroRequest;
     }
 
 }

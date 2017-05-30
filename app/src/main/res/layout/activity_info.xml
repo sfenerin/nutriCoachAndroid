@@ -7,9 +7,11 @@
     tools:context="project.nutricoach.InfoActivity">
 
     <LinearLayout
-        android:layout_width="509dp"
-        android:layout_height="752dp"
-        android:layout_marginLeft="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="60px"
+        android:layout_marginLeft="60px"
+        android:layout_marginRight="60px"
         android:orientation="vertical"
         android:weightSum="3">
 
@@ -18,20 +20,20 @@
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="137dp"
-            android:layout_marginTop="200px"
+            android:layout_marginTop="100px"
             android:layout_weight="0.19"
             android:src="@drawable/nutrilogo" />
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
-            android:layout_height="103dp"
+            android:layout_height="wrap_content"
             android:layout_weight="0.35"
             android:fontFamily="monospace"
             android:text="NutriCoach"
             android:textAlignment="center"
             android:textColor="#1f8f00"
-            android:textSize="100px" />
+            android:textSize="40dp" />
 
         <EditText
             android:id="@+id/userAge"
@@ -46,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.23"
             android:hint="Weight(lbs)"
-            android:inputType="numberDecimal"/>
+            android:inputType="numberDecimal" />
 
         <EditText
             android:id="@+id/userHeight"
@@ -54,100 +56,103 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.23"
             android:hint="Height (inches)"
-            android:inputType="numberDecimal"/>
+            android:inputType="numberDecimal" />
 
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_marginBottom="30px"
             android:layout_marginTop="30px"
-            android:layout_marginBottom="30px">
+            android:orientation="horizontal">
+
             <RadioButton
+                android:id="@+id/radioFemale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/radioFemale"
                 android:text="Female">
 
             </RadioButton>
+
             <RadioButton
+                android:id="@+id/radioMale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/radioMale"
-                android:text="Male">
-            </RadioButton>
+                android:text="Male"></RadioButton>
         </RadioGroup>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Activity Level"/>
+            android:text="Activity Level" />
+
         <RadioGroup
             android:id="@+id/radioActivity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_marginBottom="30px"
             android:layout_marginTop="30px"
-            android:layout_marginBottom="30px">
+            android:orientation="horizontal">
+
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1">
-            </RadioButton>
+                android:text="1"></RadioButton>
+
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2">
-            </RadioButton>
+                android:text="2"></RadioButton>
+
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="3">
-            </RadioButton>
+                android:text="3"></RadioButton>
+
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="4">
-            </RadioButton>
+                android:text="4"></RadioButton>
+
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="5">
-            </RadioButton>
+                android:text="5"></RadioButton>
         </RadioGroup>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dietary Restrictions"/>
+            android:text="Dietary Restrictions" />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-        <CheckBox
-            android:id="@+id/veganCB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Vegan"/>
 
-        <CheckBox
-            android:id="@+id/vegetarianCB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Vegetarian"/>
+            <CheckBox
+                android:id="@+id/veganCB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vegan" />
 
-        <CheckBox
-            android:id="@+id/glutenCB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Gluten Free"/>
+            <CheckBox
+                android:id="@+id/vegetarianCB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vegetarian" />
+
+            <CheckBox
+                android:id="@+id/glutenCB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gluten Free" />
 
             <CheckBox
                 android:id="@+id/lactoseCB"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Lactose Free"/>
+                android:text="Lactose Free" />
         </LinearLayout>
-
-
-
 
 
         <Button

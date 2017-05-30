@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginTop="50px"
+    android:layout_marginLeft="70px"
+    android:layout_marginRight="70px"
+    android:layout_marginBottom="30px"
+    android:orientation="vertical"
+    tools:context="project.nutricoach.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="3">
+
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="137dp"
+            android:layout_marginTop="50px"
+            android:layout_marginBottom="50px"
+            android:layout_weight="0.19"
+            android:src="@drawable/nutrilogo" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="103dp"
+            android:fontFamily="monospace"
+            android:text="NutriCoach"
+            android:textAlignment="center"
+            android:textColor="#1f8f00"
+            android:textSize="50sp" />
+
+        <EditText
+            android:id="@+id/userTestEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.23"
+            android:hint="Email" />
+
+        <EditText
+            android:id="@+id/userTestPassword"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.23"
+            android:hint="Password"
+            android:inputType="textWebPassword" />
+
+        <EditText
+            android:id="@+id/userTestPasswordConfirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.23"
+            android:hint="Confirm Password"
+            android:inputType="textWebPassword" />
+
+        <Button
+            android:id="@+id/SignUpButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#7d079100"
+            android:fontFamily="monospace"
+            android:text="Sign Up"
+            android:textColor="#fff"
+            android:textSize="15sp" />
+    </LinearLayout>
+</LinearLayout>

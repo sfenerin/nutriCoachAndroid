@@ -87,7 +87,9 @@ public class LoginActivity extends Activity {
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                signUp();
+                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                startActivity(intent);
+
             }
         });
     }
@@ -172,33 +174,33 @@ public class LoginActivity extends Activity {
                 });
     }
 
-    private void signUp(){
-
-        System.out.println("IN HERE ");
-
-        String email = userText.getText().toString();
-        String password= passText.getText().toString();
-
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Intent intent = new Intent(LoginActivity.this, InfoActivity.class);
-                            intent.putExtra("USER_EMAIL", email);
-                            startActivity(intent);
-                            FirebaseUser user = mAuth.getCurrentUser();
-                        } else {
-
-                            System.out.println(task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed."+ task.getException(),
-                                    Toast.LENGTH_SHORT).show();
-                        }
-
-                        // ...
-                    }
-                });
-    }
+//    private void signUp(){
+//
+//        System.out.println("IN HERE ");
+//
+//        String email = userText.getText().toString();
+//        String password= passText.getText().toString();
+//
+//        mAuth.createUserWithEmailAndPassword(email, password)
+//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<AuthResult> task) {
+//                        if (task.isSuccessful()) {
+//                            Intent intent = new Intent(LoginActivity.this, InfoActivity.class);
+//                            intent.putExtra("USER_EMAIL", email);
+//                            startActivity(intent);
+//                            FirebaseUser user = mAuth.getCurrentUser();
+//                        } else {
+//
+//                            System.out.println(task.getException());
+//                            Toast.makeText(LoginActivity.this, "Authentication failed."+ task.getException(),
+//                                    Toast.LENGTH_SHORT).show();
+//                        }
+//
+//                        // ...
+//                    }
+//                });
+//    }
 
 }
 

@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginLeft="70px"
+    android:layout_marginRight="70px"
+    android:layout_marginBottom="30px"
+    android:layout_marginTop="80px"
     android:orientation="vertical"
     tools:context="project.nutricoach.MainActivity">
 
     <LinearLayout
-        android:layout_width="509dp"
-        android:layout_height="752dp"
-        android:layout_marginLeft="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:weightSum="3">
 
@@ -18,7 +21,7 @@
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="137dp"
-            android:layout_marginTop="200px"
+            android:layout_marginTop="50px"
             android:layout_weight="0.19"
             android:src="@drawable/nutrilogo" />
 
@@ -26,27 +29,31 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="103dp"
-            android:layout_weight="0.35"
+            android:layout_marginTop="20px"
             android:fontFamily="monospace"
             android:text="NutriCoach"
             android:textAlignment="center"
             android:textColor="#1f8f00"
-            android:textSize="100px" />
+            android:textSize="50sp" />
 
         <EditText
             android:id="@+id/userText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.23"
-            android:hint="email" />
+            android:fontFamily="monospace"
+            android:hint="Email"
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/userPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.23"
+            android:fontFamily="monospace"
             android:hint="Password"
-            android:inputType="textWebPassword"/>
+            android:inputType="textWebPassword"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/LoginButton"
@@ -57,7 +64,7 @@
             android:fontFamily="monospace"
             android:text="Login"
             android:textColor="#fff"
-            android:textSize="30px" />
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/SignInButton"
@@ -67,6 +74,6 @@
             android:fontFamily="monospace"
             android:text="Sign Up"
             android:textColor="#fff"
-            android:textSize="30px" />
+            android:textSize="15sp" />
     </LinearLayout>
 </LinearLayout>

@@ -17,6 +17,7 @@ public class Food {
     double carbs;
     double fat;
     String servingDescription;
+    JSONObject JSONfood;
 
     public Food(String ID, String name, double calories, double protein, double carbs, double fat ) {
         this.ID = ID;
@@ -26,8 +27,33 @@ public class Food {
         this.carbs = carbs;
         this.fat = fat;
     }
+
+    public Food(String foodID, FatSecretAPI api) throws UnsupportedEncodingException, JSONException {
+        JSONObject foodObj = api.getFoodItem(Long.parseLong(foodID));
+        JSONfood = foodObj;
+        foodObj = foodObj.getJSONObject("result").getJSONObject("food");
+
+        this.ID = foodObj.getString("food_id");
+        this.name = foodObj.getString("food_name");
+
+        JSONObject nutritionInfo;
+        if(foodObj.getJSONObject("servings").get("serving") instanceof JSONObject){
+            nutritionInfo = foodObj.getJSONObject("servings").getJSONObject("serving");
+        } else {
+            JSONArray servingsArray = foodObj.getJSONObject("servings").getJSONArray("serving");
+            nutritionInfo = servingsArray.getJSONObject(0);
+        }
+        this.servingDescription = nutritionInfo.getString("serving_description");
+        this.calories = nutritionInfo.getDouble("calories");
+        this.carbs = nutritionInfo.getDouble("carbohydrate");
+        this.protein =  nutritionInfo.getDouble("protein");
+        this.fat = nutritionInfo.getDouble("fat");
+
+    }
+
     public Food(String foodID, double count, FatSecretAPI api) throws UnsupportedEncodingException, JSONException {
         JSONObject foodObj = api.getFoodItem(Long.parseLong(foodID));
+        JSONfood = foodObj;
         foodObj = foodObj.getJSONObject("result").getJSONObject("food");
 
         this.ID = foodObj.getString("food_id");
@@ -87,6 +113,10 @@ public class Food {
         return false;
     }
 
+
+    public JSONObject getJSONFood(){
+        return JSONfood;
+    }
 
     public String getID() { return ID;}
 
