@@ -343,10 +343,16 @@ public class User {
 
     private void updateTodayValues(Food food) {
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("users").child(id).child("dataToday").child("caloriesToday").setValue(caloriesToday - food.getCalories());
-        mDatabase.child("users").child(id).child("dataToday").child("fatToday").setValue(fatToday- food.getFat());
-        mDatabase.child("users").child(id).child("dataToday").child("proteinToday").setValue(proteinToday - food.getProtein());
-        mDatabase.child("users").child(id).child("dataToday").child("carbsToday").setValue(carbsToday - food.getProtein());
+        caloriesToday= caloriesToday - food.getCalories();
+        fatToday= fatToday- food.getFat();
+        proteinToday= proteinToday - food.getProtein();
+        carbsToday= carbs-food.getCarbs();
+        lastUpdate= System.currentTimeMillis();
+
+        mDatabase.child("users").child(id).child("dataToday").child("caloriesToday").setValue(caloriesToday);
+        mDatabase.child("users").child(id).child("dataToday").child("fatToday").setValue(fatToday);
+        mDatabase.child("users").child(id).child("dataToday").child("proteinToday").setValue(proteinToday);
+        mDatabase.child("users").child(id).child("dataToday").child("carbsToday").setValue(carbsToday);
         mDatabase.child("users").child(id).child("dataToday").child("lastUpdate").setValue(System.currentTimeMillis());
     }
 
