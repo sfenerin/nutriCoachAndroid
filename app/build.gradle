@@ -47,7 +47,6 @@ dependencies {
     compile 'com.loopj.android:android-async-http:1.4.9'
     compile 'com.google.firebase:firebase-auth:10.0.1'
     testCompile 'junit:junit:4.12'
-    compile files('libs/fatsecret-platform-2.0.jar')
 }
 
 apply plugin: 'com.google.gms.google-services'
