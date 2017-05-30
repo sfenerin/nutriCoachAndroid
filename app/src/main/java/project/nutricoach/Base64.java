@@ -17,7 +17,6 @@
 
 package project.nutricoach;
 
-import android.util.Base64OutputStream;
 
 import java.io.UnsupportedEncodingException;
 
