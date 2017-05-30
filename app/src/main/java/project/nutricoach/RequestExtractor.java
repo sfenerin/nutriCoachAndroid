@@ -16,7 +16,7 @@ import java.util.StringTokenizer;
 
 public class RequestExtractor {
 
-    String recommendationRequest = null;
+    String recommendationRequest = "";
 
     public RequestExtractor() {
 

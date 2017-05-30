@@ -24,6 +24,13 @@ public class FoodQuery {
         sentiment = "";
     }
 
+    public FoodQuery(String foodItem, String servingSize, double servingCount, String sentiment) {
+        this.foodItem = foodItem;
+        this.servingSize = servingSize;
+        this.servingCount = servingCount;
+        this.sentiment = sentiment;
+    }
+
 
     public void printFoodQueryInfo() {
         System.out.println("Item type: " + this.foodItem +
@@ -36,7 +43,7 @@ public class FoodQuery {
 
     public void setServingSize(String item_size) { this.servingSize = item_size; }
 
-    public void setServingCount(double item_count) { this.servingCount = (int) item_count; }
+    public void setServingCount(double item_count) { servingCount = item_count; }
 
     public void setSentiment(String sentiment_value) { this.sentiment = sentiment_value; }
 

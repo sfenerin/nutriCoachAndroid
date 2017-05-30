@@ -68,11 +68,11 @@ public class NutriResponse implements Callable<String> {
         Food food = null;
         if (serving.equals("")) {
             JSONObject foodInfo = getGenericFoodInfo(foodQuery);
-            food = logFoodServing(foodInfo, 1);
+            food = logFoodServing(foodInfo, serving, servingCount);
         } else {
 //            gets specific food info, with serving size
             JSONObject foodInfo = getSpecificFoodInfo(foodQuery, serving, servingCount);
-            food = logFoodServing(foodInfo, 1);
+            food = logFoodServing(foodInfo, serving, servingCount);
         }
 
         return food;
@@ -95,18 +95,17 @@ public class NutriResponse implements Callable<String> {
 
     }
 
-    private boolean correctServingSize(String foodDescription, String servingSize) {
-        if (foodDescription.contains(servingSize)) return true;
-        else if (servingSize.charAt(servingSize.length() - 1) == 's') {
-            if (foodDescription.contains(servingSize.substring(0, servingSize.length() - 1))) return true;
-        }
-        return false;
-    }
 
 
-    private Food logFoodServing(JSONObject foodInfo, int servings) throws JSONException, UnsupportedEncodingException {
+
+    private Food logFoodServing(JSONObject foodInfo, String serving, double servings) throws JSONException, UnsupportedEncodingException {
         JSONObject parsedFood = foodInfo.getJSONObject("result").getJSONObject("food");
-        Food food = new Food((String)parsedFood.get("food_id"), api);
+        Food food;
+        if (serving.equals(""))
+            food = new Food((String)parsedFood.get("food_id"), servings, api);
+        else {
+            food = new Food((String)parsedFood.get("food_id"), serving, servings, api);
+        }
         user.logFood(food, true);
         return food;
     }
