@@ -9,9 +9,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="744dp"
-        android:layout_marginBottom="60px"
+        android:layout_marginBottom="30px"
         android:layout_marginLeft="40px"
-        android:layout_marginRight="80px"
+        android:layout_marginRight="40px"
         android:layout_marginTop="60px"
         android:orientation="vertical"
         android:weightSum="3">
@@ -21,10 +21,10 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.35"
+            android:layout_weight="0.1"
             android:text="User Details"
             android:textColor="#1f8f00"
-            android:textSize="40dp" />
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/userName"
@@ -59,8 +59,8 @@
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30px"
-            android:layout_marginTop="30px"
+            android:layout_marginBottom="10px"
+            android:layout_marginTop="10px"
             android:orientation="horizontal">
 
             <RadioButton
@@ -87,8 +87,8 @@
             android:id="@+id/radioActivity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30px"
-            android:layout_marginTop="30px"
+            android:layout_marginBottom="10px"
+            android:layout_marginTop="10px"
             android:orientation="horizontal">
 
             <RadioButton
@@ -212,12 +212,12 @@
             android:id="@+id/SubmitButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80px"
+            android:layout_marginTop="20px"
             android:backgroundTint="#7d079100"
             android:fontFamily="monospace"
             android:text="Submit"
             android:textColor="#fff"
-            android:textSize="30px" />
+            android:textSize="20px" />
 
     </LinearLayout>
 </LinearLayout>
