@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.google.firebase.auth.EmailAuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -43,6 +44,8 @@ public class InfoActivity extends Activity {
 
     }
     private void getUserDetails(){
+
+        String name = ((EditText)findViewById(R.id.userName)).getText().toString();
 
         double age= Float.parseFloat(((EditText) findViewById(R.id.userAge)).getText().toString());
         double height= Float.parseFloat(((EditText) findViewById(R.id.userHeight)).getText().toString());
@@ -81,7 +84,7 @@ public class InfoActivity extends Activity {
          carbs = .55*calories / 4;
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        User newUser = new User(getIntent().getStringExtra("USER_EMAIL"), user.getUid(), age,  female, height, weight, bmr, calories,  protein, fat,  carbs, activity, vegan, vegetarian, glutenFree, dairyFree, eggFree, peanutFree, treeNutFree, soyFree, fishFree, shellfishFree);
+        User newUser = new User(name,getIntent().getStringExtra("USER_EMAIL"), user.getUid(), age,  female, height, weight, bmr, calories,  protein, fat,  carbs, activity, vegan, vegetarian, glutenFree, dairyFree, eggFree, peanutFree, treeNutFree, soyFree, fishFree, shellfishFree);
         DatabaseReference mDatabase;
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("users").child(user.getUid()).setValue(newUser);

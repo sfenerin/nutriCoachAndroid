@@ -23,6 +23,7 @@ public class User {
 
     private ArrayList<FoodDatabase> foodHistory;
     private HashMap<String,ChatMessage> messages;
+    private String name;
     private double age;
     private double height;
     private double weight;
@@ -301,10 +302,20 @@ public class User {
         this.carbsToday = carbsToday;
     }
 
-    public User(String email, String id, double age, boolean female, double height, double weight, double bmr, double calories, double protein, double fat, double carbs, int activity, boolean isVegan, boolean isVegetarian, boolean isGlutenFree, boolean isDairyFree, boolean isEggFree, boolean isPeanutFree, boolean isTreeNutFree, boolean isSoyFree, boolean isFishFree, boolean isShellfishFree) {
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public User(String name, String email, String id, double age, boolean female, double height, double weight, double bmr, double calories, double protein, double fat, double carbs, int activity, boolean isVegan, boolean isVegetarian, boolean isGlutenFree, boolean isDairyFree, boolean isEggFree, boolean isPeanutFree, boolean isTreeNutFree, boolean isSoyFree, boolean isFishFree, boolean isShellfishFree) {
+        this.name= name;
         this.email = email;
         this.id = id;
         this.age = age;
+
         this.female = female;
         this.height = height;
         this.weight = weight;

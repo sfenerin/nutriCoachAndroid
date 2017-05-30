@@ -260,11 +260,12 @@ public class MainActivity extends Activity {
         ValueEventListener userListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                String name= dataSnapshot.child("name").getValue().toString();
                 System.out.println("here");
-
                 for(DataSnapshot data: dataSnapshot.child("messages").getChildren()){
                     chatArrayAdapter.add(data.getValue(ChatMessage.class));
                 }
+                chatArrayAdapter.add(new ChatMessage(right,"Hi " + name + " what have you eaten today?"));
 
             }
 
