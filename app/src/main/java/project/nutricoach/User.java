@@ -31,6 +31,45 @@ public class User {
     private double carbs;
     private int activity;
     private boolean female;
+    private boolean isVegan;
+    private boolean isVegeterian;
+
+    public boolean isVegan() {
+        return isVegan;
+    }
+
+    public void setVegan(boolean vegan) {
+        isVegan = vegan;
+    }
+
+    public boolean isVegeterian() {
+        return isVegeterian;
+    }
+
+    public void setVegeterian(boolean vegeterian) {
+        isVegeterian = vegeterian;
+    }
+
+    public boolean isGlutenFree() {
+        return isGlutenFree;
+    }
+
+    public void setGlutenFree(boolean glutenFree) {
+        isGlutenFree = glutenFree;
+    }
+
+    public boolean isLactoseFree() {
+        return isLactoseFree;
+    }
+
+    public void setLactoseFree(boolean islactoseFree) {
+        this.isLactoseFree = islactoseFree;
+    }
+
+    private boolean isGlutenFree;
+    private boolean isLactoseFree;
+
+
     private DatabaseReference mDatabase;
 
     private double caloriesToday;
@@ -244,14 +283,8 @@ public class User {
 
     public void logFood(Food food, boolean sentiment) {
         initialize();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        carbsToday -= food.getCarbs();
-        fatToday -= food.getFat();
-        proteinToday -= food.getProtein();
-        caloriesToday -= food.getCalories();
-        System.out.println("calories in log food"+ caloriesToday);
-        lastUpdate = System.currentTimeMillis();
         updateTodayValues(food);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         addFoodToList(food, sentiment);
 
     }
@@ -268,7 +301,7 @@ public class User {
         this.carbsToday = carbsToday;
     }
 
-    public User(String email, String id, double age, boolean female, double height, double weight, double bmr, double calories, double protein, double fat, double carbs, int activity) {
+    public User(String email, String id, double age, boolean female, double height, double weight, double bmr, double calories, double protein, double fat, double carbs, int activity, boolean isVegan, boolean isVegetarian, boolean isGlutenFree, boolean isLactoseFree ) {
         this.email = email;
         this.id = id;
         this.age = age;
@@ -281,6 +314,10 @@ public class User {
         this.carbs = carbs;
         this.fat = fat;
         this.activity = activity;
+        this.isVegan = isVegan;
+        this.isVegeterian= isVegetarian;
+        this.isLactoseFree= isLactoseFree;
+        this.isGlutenFree = isGlutenFree;
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
 
@@ -301,10 +338,16 @@ public class User {
 
     private void updateTodayValues(Food food) {
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("users").child(id).child("dataToday").child("caloriesToday").setValue(caloriesToday - food.getCalories());
-        mDatabase.child("users").child(id).child("dataToday").child("fatToday").setValue(fatToday - food.getFat());
-        mDatabase.child("users").child(id).child("dataToday").child("proteinToday").setValue(proteinToday- food.getProtein());
-        mDatabase.child("users").child(id).child("dataToday").child("carbsToday").setValue(carbsToday-food.getCarbs());
+        caloriesToday= caloriesToday - food.getCalories();
+        fatToday= fatToday- food.getFat();
+        proteinToday= proteinToday - food.getProtein();
+        carbsToday= carbs-food.getCarbs();
+        lastUpdate= System.currentTimeMillis();
+
+        mDatabase.child("users").child(id).child("dataToday").child("caloriesToday").setValue(caloriesToday);
+        mDatabase.child("users").child(id).child("dataToday").child("fatToday").setValue(fatToday);
+        mDatabase.child("users").child(id).child("dataToday").child("proteinToday").setValue(proteinToday);
+        mDatabase.child("users").child(id).child("dataToday").child("carbsToday").setValue(carbsToday);
         mDatabase.child("users").child(id).child("dataToday").child("lastUpdate").setValue(System.currentTimeMillis());
     }
 
