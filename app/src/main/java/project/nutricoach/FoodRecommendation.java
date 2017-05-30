@@ -71,7 +71,9 @@ public class FoodRecommendation {
             return dietRestriction(url,"&health=gluten-free");
         }
 
-        return dietRestriction(url,"");
+
+        return dietRestriction(url, "");
+
     }
 
     private Food dietRestriction(String url, String filter) throws IOException, JSONException {

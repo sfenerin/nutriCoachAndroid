@@ -20,7 +20,6 @@ public class NutriResponse implements Callable<String> {
     String input;
     User user;
 
-
     public NutriResponse(String input){
         api = new FatSecretAPI(key, secret);
         this.input = input;
@@ -60,13 +59,17 @@ public class NutriResponse implements Callable<String> {
         } else if (requestFinder.foundRequest(input)) {
             if (requestFinder.getRecommendationRequest() != null) {
                 FoodRecommendation fr = new FoodRecommendation(user, api);
-                response = "How about a meal with " + fr.getFoodRecommendation() + "?";
-//                response = "Recommendation request: " + requestFinder.getRecommendationRequest();
+                Food rec = fr.getFoodRecommendationEDAMAN();
+                response = "How about " + rec.getName() + "?\n You can find the recipe here: " + rec.getRecipeUrl();
             } else if (requestFinder.getMacroRequest() != null) {
-                if (requestFinder.getMacroRequest().contains("cal"))
-                    System.out.println("Calorie information: " + user.getCalories() + " " + user.getCaloriesToday());
-                    response = "You've had " + (Math.round(user.getCalories() - user.getCaloriesToday())) + " calories today.";
-                if (requestFinder.getMacroRequest().contains("carb"))
+                if (requestFinder.getMacroRequest().contains("cal")) {
+                    long caloriesEaten = Math.round(user.getCalories() - user.getCaloriesToday());
+                    if (caloriesEaten >= 0) {
+                        response = "Looks like you're on track for your goal today! You've had " + caloriesEaten + " calories today.";
+                    } else {
+                        response = "Oops! Looks like you've had " + Math.abs(caloriesEaten) + " today. Try to eat less calories tomorrow!";
+                    }
+                } if (requestFinder.getMacroRequest().contains("carb"))
                     response = "You've eaten " + (Math.round(user.getCarbs() - user.getCarbsToday()))+ "g of carbohydrates today.";
                 if (requestFinder.getMacroRequest().contains("protein"))
                     response = "You've eaten " + (Math.round(user.getProtein() - user.getProteinToday())) + "g of protein today.";
