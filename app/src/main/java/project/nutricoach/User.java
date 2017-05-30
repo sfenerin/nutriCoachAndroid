@@ -1,8 +1,5 @@
 package project.nutricoach;
 
-import android.text.format.DateUtils;
-
-import com.google.firebase.auth.ActionCodeResult;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -15,8 +12,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Date;
 import 	java.text.DateFormat;
-import java.util.Map;
-import java.util.Objects;
 
 /**
  * Created by anacarolinamexia on 5/20/17.

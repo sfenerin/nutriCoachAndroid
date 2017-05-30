@@ -17,6 +17,7 @@ public class Food {
     double carbs;
     double fat;
     String servingDescription;
+    JSONObject JSONfood;
 
     public Food(String ID, String name, double calories, double protein, double carbs, double fat ) {
         this.ID = ID;
@@ -28,6 +29,7 @@ public class Food {
     }
     public Food(String foodID, FatSecretAPI api) throws UnsupportedEncodingException, JSONException {
         JSONObject foodObj = api.getFoodItem(Long.parseLong(foodID));
+        JSONfood = foodObj;
         foodObj = foodObj.getJSONObject("result").getJSONObject("food");
 
         this.ID = foodObj.getString("food_id");
@@ -46,6 +48,10 @@ public class Food {
         this.protein = nutritionInfo.getDouble("protein");
         this.fat = nutritionInfo.getDouble("fat");
 
+    }
+
+    public JSONObject getJSONFood(){
+        return JSONfood;
     }
 
     public String getID() { return ID;}

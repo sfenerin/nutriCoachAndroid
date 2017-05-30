@@ -1,10 +1,5 @@
 package project.nutricoach;
 import android.util.Log;
-
-import com.fatsecret.platform.services.FatsecretService;
-import com.fatsecret.platform.model.CompactFood;
-import com.fatsecret.platform.services.Response;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,7 +7,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.Callable;
 
 /**
@@ -48,17 +42,16 @@ public class NutriResponse implements Callable<String> {
                 String servingSize = foodQuery.getServingSize(); //need actual serving size
                 double servingCount = foodQuery.getServingCount();
                 Food food = updateAndStoreInfo(foodQuery.getFoodItem(), servingSize, servingCount);
-                response += "You ate " + food.getServingDescription() + " of " + foodQuery.getFoodItem() + ". It contains " + food.getCalories() + " calories and " + food.getProtein() + "g of protein.\n";
+                response += "You ate " + food.getServingDescription() + " of " + foodQuery.getFoodItem() +". It contains " + (int)food.getCalories() + " calories and " + food.getProtein() + "g of protein.\n";
             }
             if (user.getCaloriesToday() >= 0) {
-                response += "\nYou have " + user.getCaloriesToday() + " calories left to eat today.";
+                response += "\nYou have " + (int)user.getCaloriesToday() + " calories left to eat today.";
             } else {
-                response += "\nYou are " + Math.abs(user.getCaloriesToday()) + " calories over your daily goal.";
+                response += "\nYou are " + (int)Math.abs(user.getCaloriesToday()) + " calories over your daily goal.";
 
             }
 
             return response;
-
             //handles recommendation requests
         } else if (requestFinder.foundRequest(input)) {
             if (requestFinder.getRecommendationRequest() != null) {
@@ -73,6 +66,7 @@ public class NutriResponse implements Callable<String> {
             } else {
                 response = "Macro request: " + requestFinder.getMacroRequest();
             }
+        //handles recommendation requests
         } else {
             response = "Sorry, I didn't quite get that. Could you try rephrasing or being more specific?";
 
@@ -97,8 +91,27 @@ public class NutriResponse implements Callable<String> {
 
     private JSONObject getSpecificFoodInfo(String foodQuery, String servingSize, double servingCount) throws UnsupportedEncodingException, JSONException {
         JSONArray responseArray = api.getFoodItems(foodQuery).getJSONObject("result").getJSONObject("foods").getJSONArray("food");
-        return getGenericFoodInfo(foodQuery); //placeholder
+//        for(int i = 0; i < responseArray.length(); i ++){
+//            String foodDescription = responseArray.getJSONObject(i).get("food_description").toString();
+//            if(correctServingSize(foodDescription, servingSize)){
+//                String food_id = responseArray.getJSONObject(i).get("food_id").toString().replaceAll("\\s","");
+//                Log.d("Specific food: ", api.getFoodItem(Long.parseLong(food_id)).toString(2));
+//                return api.getFoodItem(Long.parseLong(food_id));
+//            }
+//        }
+        String food_id = responseArray.getJSONObject(0).get("food_id").toString().replaceAll("\\s","");
+        Log.d("specific food info", api.getFoodItem(Long.parseLong(food_id)).toString(2));
+        return api.getFoodItem(Long.parseLong(food_id));
+//        return getGenericFoodInfo(foodQuery); //placeholder
 
+    }
+
+    private boolean correctServingSize(String foodDescription, String servingSize) {
+        if (foodDescription.contains(servingSize)) return true;
+        else if (servingSize.charAt(servingSize.length() - 1) == 's') {
+            if (foodDescription.contains(servingSize.substring(0, servingSize.length() - 1))) return true;
+        }
+        return false;
     }
 
 
@@ -116,6 +129,7 @@ public class NutriResponse implements Callable<String> {
             String foodType = responseArray.getJSONObject(i).get("food_type").toString();
             if(notGeneric(foodType)){
                 String food_id = responseArray.getJSONObject(i).get("food_id").toString().replaceAll("\\s","");
+                Log.d("Generic food: ", api.getFoodItem(Long.parseLong(food_id)).toString(2));
                 return api.getFoodItem(Long.parseLong(food_id));
             }
         }
