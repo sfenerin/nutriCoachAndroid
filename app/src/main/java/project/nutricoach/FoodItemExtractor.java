@@ -103,9 +103,6 @@ public class FoodItemExtractor {
                     }
                 }
             }
-
-            foodQuery.printFoodQueryInfo();
-            //add foodquery object to arraylist
             foodQueries.add(foodQuery);
         }
 

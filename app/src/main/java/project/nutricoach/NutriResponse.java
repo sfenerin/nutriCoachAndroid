@@ -42,7 +42,11 @@ public class NutriResponse implements Callable<String> {
                 String servingSize = foodQuery.getServingSize(); //need actual serving size
                 double servingCount = foodQuery.getServingCount();
                 Food food = updateAndStoreInfo(foodQuery.getFoodItem(), servingSize, servingCount);
-                response += "You ate " + servingCount + " " + servingSize + " of " + foodQuery.getFoodItem() +". It contains " + (int)food.getCalories() + " calories and " + food.getProtein() + "g of protein.\n";
+                String servingInfo = "";
+                if (servingCount != 1) {
+                    servingInfo = servingCount + " " + servingSize + " of ";
+                }
+                response += "You ate " + servingInfo + foodQuery.getFoodItem() +". It contains " + (int)food.getCalories() + " calories and " + (int)food.getProtein() + "g of protein.\n";
             }
             if (user.getCaloriesToday() >= 0) {
                 response += "\nYou have " + (int)user.getCaloriesToday() + " calories left to eat today.";
@@ -55,14 +59,19 @@ public class NutriResponse implements Callable<String> {
             //handles recommendation requests
         } else if (requestFinder.foundRequest(input)) {
             if (requestFinder.getRecommendationRequest() != null) {
-                response = "Recommendation request: " + requestFinder.getRecommendationRequest();
+                FoodRecommendation fr = new FoodRecommendation(user, api);
+                response = "How about a meal with " + fr.getFoodRecommendation() + "?";
+//                response = "Recommendation request: " + requestFinder.getRecommendationRequest();
             } else if (requestFinder.getMacroRequest() != null) {
                 if (requestFinder.getMacroRequest().contains("cal"))
-                    response = "You've had " + (Math.round(user.getCalories())) + " calories today.";
+                    System.out.println("Calorie information: " + user.getCalories() + " " + user.getCaloriesToday());
+                    response = "You've had " + (Math.round(user.getCalories() - user.getCaloriesToday())) + " calories today.";
                 if (requestFinder.getMacroRequest().contains("carb"))
-                    response = "You've eaten " + (Math.round(user.getCarbs()))+ "g of carbohydrates today.";
+                    response = "You've eaten " + (Math.round(user.getCarbs() - user.getCarbsToday()))+ "g of carbohydrates today.";
                 if (requestFinder.getMacroRequest().contains("protein"))
-                    response = "You've eaten " + (Math.round(user.getProtein())) + "g of protein today.";
+                    response = "You've eaten " + (Math.round(user.getProtein() - user.getProteinToday())) + "g of protein today.";
+                if (requestFinder.getMacroRequest().contains("fat"))
+                    response = "You've eaten " + (Math.round(user.getFat() - user.getFatToday())) + "g of fat today";
             } else {
                 response = "Macro request: " + requestFinder.getMacroRequest();
             }
@@ -113,7 +122,7 @@ public class NutriResponse implements Callable<String> {
         JSONObject parsedFood = foodInfo.getJSONObject("result").getJSONObject("food");
         Food food;
         if (serving.equals(""))
-            food = new Food((String)parsedFood.get("food_id"), servings, api);
+            food = new Food((String)parsedFood.get("food_id"), "", servings, api);
         else {
             food = new Food((String)parsedFood.get("food_id"), serving, servings, api);
         }
