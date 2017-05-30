@@ -17,6 +17,7 @@ package project.nutricoach;
         import android.widget.AbsListView;
         import android.widget.Button;
         import android.widget.EditText;
+        import android.widget.ImageView;
         import android.widget.ListView;
         import android.widget.Toolbar;
 
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private ChatArrayAdapter chatArrayAdapter;
     private ListView listView;
     private EditText chatText;
-    private Button buttonSend;
+    private ImageView buttonSend;
     private Button  buttonLogout;
     private boolean left = true;
     private boolean right = false;
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
         this.es = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
-        buttonSend = (Button) findViewById(R.id.send);
+        buttonSend = (ImageView) findViewById(R.id.send);
         buttonLogout = (Button) findViewById(R.id.logout);
 
         listView = (ListView) findViewById(R.id.msgview);
