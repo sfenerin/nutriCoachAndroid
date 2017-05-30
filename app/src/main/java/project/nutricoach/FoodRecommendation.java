@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Random;
@@ -24,37 +25,113 @@ public class FoodRecommendation {
     private User user;
     private FatSecretAPI api;
 
-    private Double remainingCals;
-    private Double remainingFats;
-    private Double remainingCarbs;
+    private int remainingCals;
+    private int remainingFats;
+    private int remainingCarbs;
 
-    private Double remainingProtein;
+    private int remainingProtein;
 
     String[] fatFoods = {"avocado","cheese","Chocolate","eggs","fish","nutts","yogurt"};
     String[] proteinFoods = {"eggs","chicken breast","oats","beef","tuna","lentils","fish","peanuts"};
-    String[] calorieFoods = {"granola","cheese","peanut butter","dried fruit","avocado","cheese","dried fruit","bread"};
+    String[] calorieFoods = {"granola","cheese","peanut butter","dried fruit","avocado","cheese","dried fruit","bread","lentils"};
 
     public FoodRecommendation(double cals, double fats, double carbs, double protein,User user,FatSecretAPI api){
-        this.remainingCals = cals;
-        this.remainingCarbs = carbs;
-        this.remainingFats = fats;
-        this.remainingProtein = protein;
+        this.remainingCals = (int)cals;
+        this.remainingCarbs = (int)carbs;
+        this.remainingFats = (int)fats;
+        this.remainingProtein = (int)protein;
 
         this.user = user;
         this.api = api;
     }
 
     public FoodRecommendation(User user, FatSecretAPI api){
-        this.remainingCals = user.getCalories();
-        this.remainingCarbs = user.getCarbs();
-        this.remainingFats = user.getFat();
-        this.remainingProtein = user.getProtein();
+        this.remainingCals =(int) user.getCalories();
+        this.remainingCarbs = (int)user.getCarbs();
+        this.remainingFats = (int)user.getFat();
+        this.remainingProtein = (int)user.getProtein();
 
         this.user = user;
         this.api = api;
     }
 
-    public String getFoodRecommendation() throws IOException, JSONException {
+
+    public Food getFoodRecommendationEDAMAN() throws IOException, JSONException {
+        String url= "https://api.edamam.com/search?app_id=80e54b0e&app_key=636dfa8becce66d566a51a4219a79b65&from=0&to=3&calories=gte 0, lte "+ remainingCals;
+        Log.d("user work",""+ user.isVegeterian());
+        if(user.isVegan()){
+            return dietRestriction(url,"&health=vegan");
+        }
+
+        if(user.isVegeterian()) {
+            return dietRestriction(url,"&health=vegetarian");
+        }
+
+        if(user.isGlutenFree()){
+            return dietRestriction(url,"&health=gluten-free");
+        }
+
+
+        return dietRestriction(url, "");
+
+    }
+
+    private Food dietRestriction(String url, String filter) throws IOException, JSONException {
+        if( remainingProtein/user.getProtein() > remainingFats/user.getFat() && remainingProtein/user.getProtein() > remainingCals/user.getCalories() ){
+            return getFoodWithRestriction(url,filter,proteinFoods);
+        } else if ( remainingFats/user.getFat() > remainingProtein/user.getProtein() && remainingFats/user.getFat() > remainingCals/user.getCalories()){
+            return getFoodWithRestriction(url,filter,fatFoods);
+        } else {
+            return getFoodWithRestriction(url,filter,calorieFoods);
+        }
+    }
+
+
+    private Food getFoodWithRestriction(String url, String filter,String[] food) throws IOException, JSONException {
+        int rnd = new Random().nextInt(food.length);
+        String query = food[rnd];
+        url = url+"&q=" + query + filter;
+        JSONObject response = getResponse(url);
+        Log.d("EDAMAN",response.toString(2));
+        return processObject(response);
+    }
+
+    private Food processObject(JSONObject obj) throws JSONException {
+        int count = 0;
+
+        JSONArray recipes = obj.getJSONArray("hits");
+        Food food = null;
+        while(count < recipes.length()){
+            int rnd = new Random().nextInt(recipes.length());
+            JSONObject curFood = recipes.getJSONObject(rnd);
+            food = new Food(curFood);
+            if(fitsMacro(food)){
+                return food;
+            }
+            count ++;
+        }
+//        int count = obj.getInt("count");
+
+        return food;
+    }
+
+    private JSONObject getResponse(String urlString) throws IOException, JSONException {
+        String modString = urlString.replace(" ", "%20");
+        Log.d("modInput",modString);
+        URL url = new URL(modString);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        InputStream input = conn.getInputStream();
+                StringBuilder responseStrBuilder = new StringBuilder();
+                BufferedReader streamReader = new BufferedReader(new InputStreamReader(input, "UTF-8"));
+                String inputStr;
+                while ((inputStr = streamReader.readLine()) != null) {
+                    responseStrBuilder.append(inputStr);
+                }
+               JSONObject response = new JSONObject(responseStrBuilder.toString());
+        conn.disconnect();
+        return response;
+    }
+    public String getFoodRecommendationFatSecret() throws IOException, JSONException {
         String recommendation = "";
         if( remainingProtein/user.getProtein() > remainingFats/user.getFat() && remainingProtein/user.getProtein() > remainingCals/user.getCalories() ){
              recommendation = macroRecommendation(proteinFoods).getName();
