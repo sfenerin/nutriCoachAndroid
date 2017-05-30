@@ -40,6 +40,22 @@
             android:name=".ReminderLunchIS"
             android:exported="false" >
         </service>
+        <receiver
+            android:name=".ReminderDinner"
+            android:enabled="true" >
+        </receiver>
+        <service
+            android:name=".ReminderDinnerRecIS"
+            android:exported="false" >
+        </service>
+        <receiver
+            android:name=".ReminderNight"
+            android:enabled="true" >
+        </receiver>
+        <service
+            android:name=".ReminderNightIS"
+            android:exported="false" >
+        </service>
     </application>
 
 </manifest>
