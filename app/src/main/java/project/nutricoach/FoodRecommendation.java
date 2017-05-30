@@ -71,12 +71,25 @@ public class FoodRecommendation {
             return dietRestriction(url,"&health=gluten-free");
         }
 
+
         return dietRestriction(url, "");
+
     }
 
     private Food dietRestriction(String url, String filter) throws IOException, JSONException {
-        int rnd = new Random().nextInt(calorieFoods.length);
-        String query = calorieFoods[rnd];
+        if( remainingProtein/user.getProtein() > remainingFats/user.getFat() && remainingProtein/user.getProtein() > remainingCals/user.getCalories() ){
+            return getFoodWithRestriction(url,filter,proteinFoods);
+        } else if ( remainingFats/user.getFat() > remainingProtein/user.getProtein() && remainingFats/user.getFat() > remainingCals/user.getCalories()){
+            return getFoodWithRestriction(url,filter,fatFoods);
+        } else {
+            return getFoodWithRestriction(url,filter,calorieFoods);
+        }
+    }
+
+
+    private Food getFoodWithRestriction(String url, String filter,String[] food) throws IOException, JSONException {
+        int rnd = new Random().nextInt(food.length);
+        String query = food[rnd];
         url = url+"&q=" + query + filter;
         JSONObject response = getResponse(url);
         Log.d("EDAMAN",response.toString(2));
@@ -84,11 +97,21 @@ public class FoodRecommendation {
     }
 
     private Food processObject(JSONObject obj) throws JSONException {
-        int count = obj.getInt("count");
+        int count = 0;
+
         JSONArray recipes = obj.getJSONArray("hits");
-        int rnd = new Random().nextInt(recipes.length());
-        JSONObject curFood = recipes.getJSONObject(rnd);
-        Food food = new Food(curFood);
+        Food food = null;
+        while(count < recipes.length()){
+            int rnd = new Random().nextInt(recipes.length());
+            JSONObject curFood = recipes.getJSONObject(rnd);
+            food = new Food(curFood);
+            if(fitsMacro(food)){
+                return food;
+            }
+            count ++;
+        }
+//        int count = obj.getInt("count");
+
         return food;
     }
 
