@@ -26,7 +26,7 @@ public class FoodItemExtractor {
     String servingSize;
     double servingCount;
     String sentiment;
-    String recommendationRequest = null;
+
 
     ArrayList<String> item_types = new ArrayList<String>();
     ArrayList<Integer> item_counts = new ArrayList<Integer>();
@@ -46,11 +46,6 @@ public class FoodItemExtractor {
 //        Log.d("Response from wit.ai: ", responseObject.toString(2));
 
         JSONObject entities = responseObject.getJSONObject("entities");
-
-        if (entities.has("recommendation")) {
-            recommendationRequest = entities.getJSONArray("recommendation").getJSONObject(0).getString("value");
-            return false;
-        }
 
         if (!entities.has("item_type")) return false;
 
@@ -167,7 +162,4 @@ public class FoodItemExtractor {
         return foodQueries;
     }
 
-    public String getRecommendationRequest() {
-        return recommendationRequest;
-    }
 }

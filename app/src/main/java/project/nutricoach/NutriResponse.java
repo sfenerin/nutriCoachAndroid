@@ -34,6 +34,7 @@ public class NutriResponse implements Callable<String> {
     private String process(String input) throws IOException, JSONException {
         String response = "";
         FoodItemExtractor foodFinder = new FoodItemExtractor();
+        RequestExtractor requestFinder = new RequestExtractor();
 
         if(foodFinder.foundFoodItem(input)){
             ArrayList<FoodQuery> foodQueries = foodFinder.getFoodQueries();
@@ -53,8 +54,8 @@ public class NutriResponse implements Callable<String> {
             return response;
 
         //handles recommendation requests
-        } else if (foodFinder.getRecommendationRequest() != null){
-            response = "Wants recommendation: " + foodFinder.getRecommendationRequest();
+        } else if (requestFinder.getRecommendationRequest() != null){
+            response = "Recommendation input: " + requestFinder.getRecommendationRequest();
         } else {
             response = "Sorry, I didn't quite get that. Could you try rephrasing or being more specific?";
 
