@@ -29,8 +29,8 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="103dp"
-            android:fontFamily="monospace"
             android:layout_marginTop="20px"
+            android:fontFamily="monospace"
             android:text="NutriCoach"
             android:textAlignment="center"
             android:textColor="#1f8f00"
@@ -38,22 +38,22 @@
 
         <EditText
             android:id="@+id/userText"
-            android:fontFamily="monospace"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.23"
-            android:textSize="20sp"
-            android:hint="Email" />
+            android:fontFamily="monospace"
+            android:hint="Email"
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/userPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="monospace"
             android:layout_weight="0.23"
-            android:textSize="20sp"
+            android:fontFamily="monospace"
             android:hint="Password"
-            android:inputType="textWebPassword" />
+            android:inputType="textWebPassword"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/LoginButton"

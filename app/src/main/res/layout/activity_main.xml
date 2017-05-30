@@ -3,7 +3,6 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:orientation="vertical"
         tools:context="project.nutricoach.MainActivity">
 
@@ -14,30 +13,41 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.92"
         android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-
-            <Space
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.92" />
-            <Button
-        android:id="@+id/logout"
-        android:layout_width="161dp"
-        android:textColor="#fff"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#a4188e00"
-        android:text="Logout" />
-        </LinearLayout>
+                android:layout_height="75dp"
+                android:weightSum="3">
 
-        <ListView
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20px"
+                    android:layout_weight="2"
+                    android:fontFamily="monospace"
+                    android:text="NutriCoach"
+                    android:layout_marginTop="20px"
+                    android:textColor="#fff"
+                    android:textSize="50px" />
+
+                <Button
+                    android:id="@+id/logout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="#a4188e00"
+                    android:text="Logout"
+                    android:textColor="#fff" />
+
+            </LinearLayout>
+
+            <ListView
 
             android:id="@+id/msgview"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.92"
+            android:layout_weight="1.03"
             android:divider="@null"
             android:stackFromBottom="true"
             android:transcriptMode="alwaysScroll">
@@ -48,23 +58,25 @@
     </LinearLayout>
 
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="3">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3">
 
-            <EditText
-                android:id="@+id/msg"
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="2" />
+        <EditText
+            android:id="@+id/msg"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="2" />
 
-            <Button
-                android:id="@+id/send"
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:text="Send" />
+        <Button
+            android:id="@+id/send"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:backgroundTint="#a4188e00"
+            android:text="Send"
+            android:textColor="#fff" />
 
-        </LinearLayout>
     </LinearLayout>
+</LinearLayout>
