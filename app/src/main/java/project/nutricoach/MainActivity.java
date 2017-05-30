@@ -10,6 +10,7 @@ package project.nutricoach;
         import android.database.DataSetObserver;
         import android.icu.text.SimpleDateFormat;
         import android.os.Bundle;
+        import android.util.Log;
         import android.view.KeyEvent;
         import android.view.View;
         import android.widget.AbsListView;
@@ -149,13 +150,13 @@ public class MainActivity extends Activity {
         Calendar curCal = Calendar.getInstance();
         curCal.setTime(cur);
 
-        updateAlarm(cur,"20:00:00",ReminderNight.class);
-        updateAlarm(cur,"17:00:00",ReminderDinner.class);
-        updateAlarm(cur,"13:00:00",ReminderLunch.class);
-
+        updateAlarm(cur,"20:00:00",ReminderNight.class,2);
+        updateAlarm(cur,"17:00:00",ReminderDinner.class,1);
+        updateAlarm(cur,"13:00:00",ReminderLunch.class,0);
+        Log.d("Notifications","updatd Alarms");
     }
 
-    private void updateAlarm(Date cur,String alarmTime,Class reminder) {
+    private void updateAlarm(Date cur,String alarmTime,Class reminder,int requestCode) {
         AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
         Date time1 = null;
         try {
@@ -165,7 +166,7 @@ public class MainActivity extends Activity {
             cancelNotification(reminder,alarmManager);
         } else{
             int hour = time1.getHours();
-            initNotification(reminder,alarmManager,hour);
+            initNotification(reminder,alarmManager,hour,requestCode);
         }
     }
 
@@ -176,9 +177,9 @@ public class MainActivity extends Activity {
         alarmManager.cancel(sender);
     }
 
-    private void initNotification(Class reminder,AlarmManager alarmManager,int hour){
+    private void initNotification(Class reminder,AlarmManager alarmManager,int hour,int requestCode){
         Intent notifyIntent = new Intent(this,reminder);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), requestCode, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         android.icu.util.Calendar calendar = initCalendar(hour,0);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,  calendar.getTimeInMillis(),  AlarmManager.INTERVAL_DAY, pendingIntent);
     }

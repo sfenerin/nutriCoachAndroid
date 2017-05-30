@@ -110,19 +110,19 @@ public class LoginActivity extends Activity {
     private void setUpNotifications(){
         AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
 
-        initNotification(ReminderLunch.class,alarmManager, 13,0);
+        initNotification(ReminderLunch.class,alarmManager, 13,0,0);
 
-        initNotification(ReminderDinner.class,alarmManager, 17,0);
+        initNotification(ReminderDinner.class,alarmManager, 17,54,1);
 
-        initNotification(ReminderNight.class,alarmManager, 20,0);
+        initNotification(ReminderNight.class,alarmManager, 20,0,2);
 
         Log.d("NotifcationManager","set each notification");
     }
 
-    public void initNotification(Class reminder,AlarmManager alarmManager,int hour, int minute){
+    public void initNotification(Class reminder,AlarmManager alarmManager,int hour, int minute,int requestCode){
         Intent notifyIntent = new Intent(this,reminder);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        Calendar calendar = initCalendar(hour,0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), requestCode, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Calendar calendar = initCalendar(hour,minute);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,  calendar.getTimeInMillis(),  AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
