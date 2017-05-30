@@ -51,29 +51,6 @@ public class Food {
 
     }
 
-    public Food(String foodID, double count, FatSecretAPI api) throws UnsupportedEncodingException, JSONException {
-        JSONObject foodObj = api.getFoodItem(Long.parseLong(foodID));
-        JSONfood = foodObj;
-        foodObj = foodObj.getJSONObject("result").getJSONObject("food");
-
-        this.ID = foodObj.getString("food_id");
-        this.name = foodObj.getString("food_name");
-
-        JSONObject nutritionInfo;
-        if(foodObj.getJSONObject("servings").get("serving") instanceof JSONObject){
-            nutritionInfo = foodObj.getJSONObject("servings").getJSONObject("serving");
-        } else {
-            JSONArray servingsArray = foodObj.getJSONObject("servings").getJSONArray("serving");
-            nutritionInfo = servingsArray.getJSONObject(0);
-        }
-        double multiplier = count / nutritionInfo.getDouble("number_of_units");
-        this.servingDescription = nutritionInfo.getString("serving_description");
-        this.calories = multiplier * nutritionInfo.getDouble("calories");
-        this.carbs = multiplier * nutritionInfo.getDouble("carbohydrate");
-        this.protein = multiplier * nutritionInfo.getDouble("protein");
-        this.fat = multiplier * nutritionInfo.getDouble("fat");
-
-    }
     public Food(String foodID, String serving, double count, FatSecretAPI api) throws UnsupportedEncodingException, JSONException {
         JSONObject foodObj = api.getFoodItem(Long.parseLong(foodID));
         foodObj = foodObj.getJSONObject("result").getJSONObject("food");
