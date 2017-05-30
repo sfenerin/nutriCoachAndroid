@@ -59,8 +59,8 @@ public class NutriResponse implements Callable<String> {
         } else if (requestFinder.foundRequest(input)) {
             if (requestFinder.getRecommendationRequest() != null) {
                 FoodRecommendation fr = new FoodRecommendation(user, api);
-                response = "How about a meal with " + fr.getFoodRecommendation() + "?";
-//                response = "Recommendation request: " + requestFinder.getRecommendationRequest();
+                Food rec = fr.getFoodRecommendationEDAMAN();
+                response = "How about " + rec.getName() + "?\n You can find the recipe here: " + rec.getRecipeUrl();
             } else if (requestFinder.getMacroRequest() != null) {
                 if (requestFinder.getMacroRequest().contains("cal")) {
                     long caloriesEaten = Math.round(user.getCalories() - user.getCaloriesToday());
