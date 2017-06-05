@@ -141,6 +141,7 @@ public class NutriResponse implements Callable<String> {
         else {
             food = new Food((String)parsedFood.get("food_id"), serving, servings, api);
         }
+        //To-do : change sentiment
         user.logFood(food, true);
         return food;
     }

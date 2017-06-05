@@ -101,6 +101,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        ImageView icon= (ImageView) findViewById(R.id.icon);
+        icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
         buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
@@ -229,6 +238,7 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("here");
 
                 currentUser = dataSnapshot.getValue(User.class);
+
                 if(dataSnapshot.child("dataToday").child("caloriesToday").getValue()!= null) {
                     currentUser.setCaloriesToday(Double.parseDouble(dataSnapshot.child("dataToday").child("caloriesToday").getValue().toString()));
                     currentUser.setProteinToday(Double.parseDouble(dataSnapshot.child("dataToday").child("proteinToday").getValue().toString()));

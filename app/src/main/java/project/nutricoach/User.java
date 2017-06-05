@@ -41,7 +41,10 @@ public class User {
         return isVegan;
     }
 
-    public void setVegan(boolean vegan) {
+    public void setVegan(boolean vegan)
+    {
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("users").child(id).child("vegan").setValue(vegan);
         isVegan = vegan;
     }
 
@@ -50,6 +53,9 @@ public class User {
     }
 
     public void setVegeterian(boolean vegeterian) {
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("users").child(id).child("vegetarian").setValue(vegeterian);
+
         isVegeterian = vegeterian;
     }
 
@@ -58,6 +64,8 @@ public class User {
     }
 
     public void setGlutenFree(boolean glutenFree) {
+//        mDatabase = FirebaseDatabase.getInstance().getReference();
+//        mDatabase.child("users").child(id).child("glutenFree").setValue(glutenFree);
         isGlutenFree = glutenFree;
     }
 
@@ -99,6 +107,7 @@ public class User {
     }
 
     public void setAge(double age) {
+
         this.age = age;
     }
 
@@ -107,6 +116,7 @@ public class User {
     }
 
     public void setHeight(double height) {
+
         this.height = height;
     }
 
@@ -115,6 +125,8 @@ public class User {
     }
 
     public void setWeight(double weight) {
+
+
         this.weight = weight;
     }
 
@@ -123,6 +135,7 @@ public class User {
     }
 
     public void setBmr(double bmr) {
+
         this.bmr = bmr;
     }
 
@@ -131,6 +144,7 @@ public class User {
     }
 
     public void setCalories(double calories) {
+
         this.calories = calories;
     }
 
@@ -139,6 +153,7 @@ public class User {
     }
 
     public void setProtein(double protein) {
+
         this.protein = protein;
     }
 
@@ -171,6 +186,7 @@ public class User {
     }
 
     public void setFemale(boolean female) {
+
         this.female = female;
     }
 
@@ -506,6 +522,33 @@ public class User {
         mDatabase.child("users").child(id).child("dataToday").child("carbsToday").setValue(carbs);
         mDatabase.child("users").child(id).child("dataToday").child("lastUpdate").setValue(System.currentTimeMillis());
     }
+
+    public void updateAllFields(){
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("users").child(id).child("name").setValue(name);
+        mDatabase.child("users").child(id).child("height").setValue(height);
+        mDatabase.child("users").child(id).child("weight").setValue(weight);
+        mDatabase.child("users").child(id).child("age").setValue(age);
+        mDatabase.child("users").child(id).child("calories").setValue(calories);
+        mDatabase.child("users").child(id).child("protein").setValue(protein);
+        mDatabase.child("users").child(id).child("activity").setValue(activity);
+        mDatabase.child("users").child(id).child("bmr").setValue(bmr);
+        mDatabase.child("users").child(id).child("fat").setValue(fat);
+        mDatabase.child("users").child(id).child("carbs").setValue(carbs);
+        mDatabase.child("users").child(id).child("glutenFree").setValue(isGlutenFree);
+        mDatabase.child("users").child(id).child("glutenFree").setValue(isGlutenFree);
+        mDatabase.child("users").child(id).child("vegan").setValue(isVegan);
+        mDatabase.child("users").child(id).child("vegetarian").setValue(isVegeterian);
+        mDatabase.child("users").child(id).child("fishFree").setValue(isFishFree);
+        mDatabase.child("users").child(id).child("soyFree").setValue(isSoyFree);
+        mDatabase.child("users").child(id).child("shellfishFree").setValue(isShellfishFree);
+        mDatabase.child("users").child(id).child("dairyFree").setValue(isDairyFree);
+        mDatabase.child("users").child(id).child("treeNutFree").setValue(isTreeNutFree);
+
+
+
+    }
+
 
 
 
