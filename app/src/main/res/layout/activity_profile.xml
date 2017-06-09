@@ -6,26 +6,52 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="744dp"
-        android:layout_marginBottom="30px"
-        android:layout_marginLeft="40px"
-        android:layout_marginRight="40px"
-        android:layout_marginTop="60px"
         android:orientation="vertical"
         android:weightSum="3">
 
-
-        <TextView
-            android:text="Profile"
-            android:id="@+id/userNameView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.1"
-            android:textColor="#1f8f00"
-            android:textSize="20sp" />
+            android:layout_marginLeft="10px"
+            android:weightSum="3">
+
+            <Button
+                android:text="Home"
+                android:id="@+id/userHome"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="#1f8f00"
+                android:backgroundTint="#fff"
+                android:textSize="13sp" />
+
+            <Button
+                android:text="Profile"
+                android:id="@+id/userProfile"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#1f8f00"
+                android:textColor="#fff"
+                android:textSize="13sp" />
+
+            <Button
+                android:text="Progress"
+                android:id="@+id/progress"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textColor="#1f8f00"
+                android:backgroundTint="#fff"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginLeft="40px"
             android:weightSum="3">
 
             <TextView
@@ -46,6 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginLeft="40px"
             android:weightSum="3">
 
             <TextView
@@ -66,6 +93,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginLeft="40px"
             android:weightSum="3">
 
             <TextView
@@ -85,6 +113,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginLeft="40px"
+
             android:weightSum="3">
 
             <TextView
@@ -110,11 +140,14 @@
             android:layout_marginTop="10px"
             android:orientation="horizontal">
             <TextView
+                android:layout_marginLeft="40px"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Gender :" />
 
             <RadioButton
+                android:layout_marginLeft="40px"
                 android:id="@+id/radioFemaleProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -123,6 +156,7 @@
             </RadioButton>
 
             <RadioButton
+
                 android:id="@+id/radioMaleProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -130,11 +164,15 @@
         </RadioGroup>
 
         <TextView
+            android:layout_marginLeft="40px"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Activity Level" />
 
         <RadioGroup
+            android:layout_marginLeft="40px"
+
             android:id="@+id/radioActivityProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -169,11 +207,15 @@
         </RadioGroup>
 
         <TextView
+            android:layout_marginLeft="40px"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Dietary Restrictions" />
 
         <LinearLayout
+            android:layout_marginLeft="40px"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -198,6 +240,8 @@
         </LinearLayout>
 
         <LinearLayout
+            android:layout_marginLeft="40px"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -222,6 +266,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:layout_marginLeft="40px"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -246,6 +291,8 @@
         </LinearLayout>
 
         <LinearLayout
+            android:layout_marginLeft="40px"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">

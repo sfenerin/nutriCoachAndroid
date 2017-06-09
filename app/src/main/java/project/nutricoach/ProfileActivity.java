@@ -2,6 +2,7 @@ package project.nutricoach;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.IntegerRes;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -34,6 +35,23 @@ public class ProfileActivity  extends AppCompatActivity{
         setContentView(R.layout.activity_profile);
         getCurrentUser();
 
+        Button homeButton = (Button) findViewById(R.id.userHome);
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button progressButton = (Button) findViewById(R.id.progress);
+        progressButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent(ProfileActivity.this, ProgressActivity.class);
+                startActivity(intent);
+            }
+        });
         Button submitButton = (Button) findViewById(R.id.SubmitButtonProfile);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
