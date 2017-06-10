@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         getCurrentUser();
 
 
+
         this.es = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
         buttonSend = (ImageView) findViewById(R.id.send);

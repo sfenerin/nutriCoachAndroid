@@ -21,6 +21,7 @@ import 	java.text.DateFormat;
 
 public class User {
 
+
     private ArrayList<FoodDatabase> foodHistory;
     private HashMap<String,ChatMessage> messages;
     private String name;
@@ -36,9 +37,28 @@ public class User {
     private boolean female;
     private boolean isVegan;
     private boolean isVegeterian;
+    private Food goalFood;
+    private boolean hasGoal = false;
+    private int daysPast;
+    public Food getGoalFood() {
+        return goalFood;
+    }
+
+    public void setGoalFood(Food goalFood) {
+        this.goalFood = goalFood;
+    }
+
+    public boolean hasGoal() {
+        return hasGoal;
+    }
+
+    public void setHasGoal(boolean hasGoal) {
+        this.hasGoal = hasGoal;
+    }
 
     public boolean isVegan() {
         return isVegan;
+
     }
 
     public void setVegan(boolean vegan)
@@ -47,6 +67,7 @@ public class User {
         mDatabase.child("users").child(id).child("vegan").setValue(vegan);
         isVegan = vegan;
     }
+
 
     public boolean isVegeterian() {
         return isVegeterian;
@@ -434,30 +455,15 @@ public class User {
         return "User: " + email + ", age: " + age + ", height: " + height + ", calories left: " + caloriesToday + ", last update: " + getLastUpdateFormatted();
     }
 
-    private void setWeeklyGoal(){
-
-    }
 
     private void updateTodayValues(Food food) {
+        caloriesToday = caloriesToday - food.getCalories();
+        fatToday= fatToday - food.getFat();
+        proteinToday= proteinToday - food.getProtein();
+        carbsToday = carbsToday - food.getCarbs();
+        lastUpdate= System.currentTimeMillis();
+
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
-        if(DateUtils.isToday(lastUpdate)) {
-            System.out.println("Today");
-            caloriesToday = caloriesToday - food.getCalories();
-            fatToday = fatToday - food.getFat();
-            proteinToday = proteinToday - food.getProtein();
-            carbsToday = carbs - food.getCarbs();
-            lastUpdate = System.currentTimeMillis();
-        }
-        else{
-            System.out.println("Yesterday");
-            caloriesToday = calories - food.getCalories();
-            fatToday = fat - food.getFat();
-            proteinToday= protein - food.getProtein();
-            carbsToday= carbs - food.getCarbs();
-            lastUpdate= System.currentTimeMillis();
-        }
-
         mDatabase.child("users").child(id).child("dataToday").child("caloriesToday").setValue(caloriesToday);
         mDatabase.child("users").child(id).child("dataToday").child("fatToday").setValue(fatToday);
         mDatabase.child("users").child(id).child("dataToday").child("proteinToday").setValue(proteinToday);
@@ -521,11 +527,27 @@ public class User {
 
     public void resetTodayValues(){
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("users").child(id).child("dataToday").child("caloriesToday").setValue(calories);
-        mDatabase.child("users").child(id).child("dataToday").child("fatToday").setValue(fat);
-        mDatabase.child("users").child(id).child("dataToday").child("proteinToday").setValue(protein);
-        mDatabase.child("users").child(id).child("dataToday").child("carbsToday").setValue(carbs);
-        mDatabase.child("users").child(id).child("dataToday").child("lastUpdate").setValue(System.currentTimeMillis());
+
+        if(hasGoal && daysPast<7){
+            System.out.println("Setting goal");
+            mDatabase.child("users").child(id).child("dataToday").child("caloriesToday").setValue(calories - (goalFood.getCalories()/6));
+            mDatabase.child("users").child(id).child("dataToday").child("fatToday").setValue(fat - (goalFood.getCalories()/6));
+            mDatabase.child("users").child(id).child("dataToday").child("proteinToday").setValue(protein - (goalFood.getCalories()/6));
+            mDatabase.child("users").child(id).child("dataToday").child("carbsToday").setValue(carbs -(goalFood.getCarbs()/6));
+            mDatabase.child("users").child(id).child("dataToday").child("lastUpdate").setValue(System.currentTimeMillis());
+            this.daysPast ++;
+        }
+        else if(hasGoal && daysPast ==7){
+            System.out.println("You can eat");
+        }
+        else {
+
+            mDatabase.child("users").child(id).child("dataToday").child("caloriesToday").setValue(calories);
+            mDatabase.child("users").child(id).child("dataToday").child("fatToday").setValue(fat);
+            mDatabase.child("users").child(id).child("dataToday").child("proteinToday").setValue(protein);
+            mDatabase.child("users").child(id).child("dataToday").child("carbsToday").setValue(carbs);
+            mDatabase.child("users").child(id).child("dataToday").child("lastUpdate").setValue(System.currentTimeMillis());
+        }
     }
 
     public void updateAllFields(){
@@ -553,8 +575,16 @@ public class User {
 
 
     }
+    public void cancelGoal(){
+        this.hasGoal= false;
+    }
 
-
+    public void setWeeklyGoal(Food food){
+        this.goalFood = food;
+        this.hasGoal=true;
+        this.daysPast= 0;
+        resetTodayValues();
+    }
 
 
 }
