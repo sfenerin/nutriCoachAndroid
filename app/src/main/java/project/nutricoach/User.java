@@ -543,7 +543,9 @@ public class User {
             mDatabase.child("users").child(id).child("dataToday").child("proteinToday").setValue(protein - (goalFood.getCalories()/6));
             mDatabase.child("users").child(id).child("dataToday").child("carbsToday").setValue(carbs -(goalFood.getCarbs()/6));
             mDatabase.child("users").child(id).child("dataToday").child("lastUpdate").setValue(System.currentTimeMillis());
-            this.daysPast ++;
+            daysPast ++;
+            mDatabase.child("users").child(id).child("weekly").child("daysPast").setValue(daysPast);
+
         }
         else if(hasGoal && daysPast ==7){
             System.out.println("You can eat");
