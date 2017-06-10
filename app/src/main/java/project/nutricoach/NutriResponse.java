@@ -34,7 +34,9 @@ public class NutriResponse implements Callable<String> {
         String response = "";
         FoodItemExtractor foodFinder = new FoodItemExtractor();
         RequestExtractor requestFinder = new RequestExtractor();
+        GoalExtractor goalFinder = new GoalExtractor();
 
+        //handles food logging
         if (foodFinder.foundFoodItem(input)) {
             ArrayList<FoodQuery> foodQueries = foodFinder.getFoodQueries();
             for (FoodQuery foodQuery : foodQueries) {
@@ -55,13 +57,15 @@ public class NutriResponse implements Callable<String> {
             }
 
             return response;
-            //handles recommendation requests
+            //handles request
         } else if (requestFinder.foundRequest(input)) {
+            //Recommendation request
             if (requestFinder.getRecommendationRequest() != null) {
                 FoodRecommendation fr = new FoodRecommendation(user, api);
                 Food rec = fr.getFoodRecommendationEDAMAN();
                 response = "How about " + rec.getName() + "?\n You can find the recipe here: " + rec.getRecipeUrl();
-            } else if (requestFinder.getMacroRequest() != null) {
+                //Macro request
+            } else if (requestFinder.hasMacroRequest()) {
                 if (requestFinder.getMacroRequest().contains("cal")) {
                     long caloriesEaten = Math.round(user.getCalories() - user.getCaloriesToday());
                     if (caloriesEaten >= 0) {
@@ -69,16 +73,23 @@ public class NutriResponse implements Callable<String> {
                     } else {
                         response = "Oops! Looks like you've had " + Math.abs(caloriesEaten) + " today. Try to eat less calories tomorrow!";
                     }
-                } if (requestFinder.getMacroRequest().contains("carb"))
-                    response = "You've eaten " + (Math.round(user.getCarbs() - user.getCarbsToday()))+ "g of carbohydrates today.";
+                }
+                if (requestFinder.getMacroRequest().contains("carb"))
+                    response = "You've eaten " + (Math.round(user.getCarbs() - user.getCarbsToday())) + "g of carbohydrates today.";
                 if (requestFinder.getMacroRequest().contains("protein"))
                     response = "You've eaten " + (Math.round(user.getProtein() - user.getProteinToday())) + "g of protein today.";
                 if (requestFinder.getMacroRequest().contains("fat"))
-                    response = "You've eaten " + (Math.round(user.getFat() - user.getFatToday())) + "g of fat today";
+                    response = "You've eatinen " + (Math.round(user.getFat() - user.getFatToday())) + "g of fat today";
+                //Goal request
+            } else if (requestFinder.hasGoalRequest()) {
+                response = "Goal request: " + requestFinder.getGoalRequest();
             } else {
-                response = "Macro request: " + requestFinder.getMacroRequest();
+                response = "Unknown request";
             }
-        //handles recommendation requests
+        //handles goal setting
+        } else if (goalFinder.foundGoal(input)) {
+            response = "GOAL SET: " + goalFinder.getGoal() + " GOAL FOOD: " + goalFinder.getGoalFood();
+
         } else {
             response = "Sorry, I didn't quite get that. Could you try rephrasing or being more specific?";
 

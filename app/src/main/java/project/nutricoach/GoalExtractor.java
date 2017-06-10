@@ -8,41 +8,44 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.StringTokenizer;
 
 /**
- * Created by trinasarkar on 5/29/17.
+ * Created by trinasarkar on 6/10/17.
  */
 
-public class RequestExtractor {
+public class GoalExtractor {
 
+    public String goal = null;
+    public String goalFood = null;
 
-    String recommendationRequest = null;
-    String macroRequest = null;
-    String goalRequest = null;
-
-
-    public RequestExtractor() {
+    public GoalExtractor() {
 
     }
 
-    public boolean foundRequest(String input) throws IOException, JSONException {
+    public boolean foundGoal(String input) throws IOException, JSONException {
 
         JSONObject responseObject = getResponse(input);
         JSONObject entities = responseObject.getJSONObject("entities");
 
-        if (entities.has("recommendation")) {
-            recommendationRequest = entities.getJSONArray("recommendation").getJSONObject(0).getString("value");
-            return true;
-        } else if (entities.has("macro_request")) {
-            macroRequest = entities.getJSONArray("macro_request").getJSONObject(0).getString("value");
-            return true;
-        } else if (entities.has("goal_request")) {
-            goalRequest = entities.getJSONArray("goal_request").getJSONObject(0).getString("value");
-            return true;
+        if (entities.has("goal")) {
+            JSONObject userGoal = entities.getJSONArray("goal").getJSONObject(0);
+            goal = userGoal.getString("value");
+
+            if (userGoal.getJSONObject("entities").has("item_type")) {
+                goalFood = userGoal.getJSONObject("entities").getJSONArray("item_type").getJSONObject(0).getString("value");
+                return true;
+            }
         }
         return false;
     }
+
+    public String getGoal() { return goal; }
+
+    public String getGoalFood() { return goalFood; }
+
+    public boolean hasGoal() { return goal != null; }
+
+    public boolean hasGoalFood() { return goalFood != null; }
 
     public JSONObject getResponse(String input) throws IOException, JSONException {
         String modInput = input.replace(" ", "%20");
@@ -65,19 +68,5 @@ public class RequestExtractor {
         conn.disconnect();
         return json;
     }
-
-    public String getRecommendationRequest() {
-        return recommendationRequest;
-    }
-
-    public String getMacroRequest() {
-        return macroRequest;
-    }
-
-    public boolean hasMacroRequest() { return macroRequest != null; }
-
-    public String getGoalRequest() { return goalRequest; }
-
-    public boolean hasGoalRequest() { return goalRequest != null; }
 
 }
