@@ -11,6 +11,7 @@ package project.nutricoach;
         import android.icu.text.SimpleDateFormat;
         import android.os.Bundle;
         import android.support.v7.app.AppCompatActivity;
+        import android.text.BoringLayout;
         import android.text.format.DateUtils;
         import android.util.Log;
         import android.view.KeyEvent;
@@ -243,6 +244,12 @@ public class MainActivity extends AppCompatActivity {
                 long lastUpdate= Long.parseLong(dataSnapshot.child("dataToday").child("lastUpdate").getValue().toString());
                 if(!DateUtils.isToday(lastUpdate)){
                     currentUser.resetTodayValues();
+                }
+                if(dataSnapshot.child("weekly").getValue()!= null && Boolean.parseBoolean(dataSnapshot.child("weekly").child("hasGoal").getValue().toString()) == true){
+                    currentUser.setHasGoal(true);
+                    currentUser.setGoalFood(dataSnapshot.child("weekly").child("goalGood").getValue(Food.class));
+                    currentUser.setDaysPast(Integer.parseInt(dataSnapshot.child("weekly").child("daysPast").getValue().toString()));
+
                 }
 
                 if(dataSnapshot.child("dataToday").child("caloriesToday").getValue()!= null ) {

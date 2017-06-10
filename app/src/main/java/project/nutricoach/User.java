@@ -52,6 +52,14 @@ public class User {
         return hasGoal;
     }
 
+    public int getDaysPast() {
+        return daysPast;
+    }
+
+    public void setDaysPast(int daysPast) {
+        this.daysPast = daysPast;
+    }
+
     public void setHasGoal(boolean hasGoal) {
         this.hasGoal = hasGoal;
     }
@@ -353,10 +361,10 @@ public class User {
         this.email = email;
         this.id = id;
         this.age = age;
-
         this.female = female;
         this.height = height;
         this.weight = weight;
+        this.hasGoal =false;
         this.bmr = bmr;
         this.calories = calories;
         this.protein = protein;
@@ -575,8 +583,16 @@ public class User {
 
 
     }
+    private void updateWeeklyDatabase(Food food){
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("users").child(id).child("weekly").child("hasGoal").setValue(true);
+        mDatabase.child("users").child(id).child("weekly").child("goalFood").setValue(food);
+        mDatabase.child("users").child(id).child("weekly").child("daysPast").setValue(daysPast);
+    }
     public void cancelGoal(){
         this.hasGoal= false;
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("users").child(id).child("hasGoal").setValue(false);
     }
 
     public void setWeeklyGoal(Food food){
@@ -584,6 +600,7 @@ public class User {
         this.hasGoal=true;
         this.daysPast= 0;
         resetTodayValues();
+        updateWeeklyDatabase(food);
     }
 
 
