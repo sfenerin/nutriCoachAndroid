@@ -299,6 +299,7 @@ public class User {
 
 
     public void logFood(Food food, boolean sentiment) {
+
         initialize();
         updateTodayValues(food);
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -431,6 +432,10 @@ public class User {
     @Override
     public String toString() {
         return "User: " + email + ", age: " + age + ", height: " + height + ", calories left: " + caloriesToday + ", last update: " + getLastUpdateFormatted();
+    }
+
+    private void setWeeklyGoal(){
+
     }
 
     private void updateTodayValues(Food food) {
