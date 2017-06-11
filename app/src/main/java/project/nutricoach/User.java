@@ -25,6 +25,7 @@ public class User {
     private ArrayList<FoodDatabase> foodHistory;
     private HashMap<String,ChatMessage> messages;
     private String name;
+    private int streak;
     private double age;
     private double height;
     private double weight;
@@ -185,6 +186,10 @@ public class User {
 
         this.protein = protein;
     }
+
+    public int getStreak() {return streak;}
+
+    public void setStreak(int streak){this.streak = streak;}
 
     public double getFat() {
         return fat;
@@ -356,8 +361,9 @@ public class User {
         this.name = name;
     }
 
-    public User(String name, String email, String id, double age, boolean female, double height, double weight, double bmr, double calories, double protein, double fat, double carbs, int activity, boolean isVegan, boolean isVegetarian, boolean isGlutenFree, boolean isDairyFree, boolean isEggFree, boolean isPeanutFree, boolean isTreeNutFree, boolean isSoyFree, boolean isFishFree, boolean isShellfishFree) {
+    public User(String name, int streak, String email, String id, double age, boolean female, double height, double weight, double bmr, double calories, double protein, double fat, double carbs, int activity, boolean isVegan, boolean isVegetarian, boolean isGlutenFree, boolean isDairyFree, boolean isEggFree, boolean isPeanutFree, boolean isTreeNutFree, boolean isSoyFree, boolean isFishFree, boolean isShellfishFree) {
         this.name= name;
+        this.streak = streak;
         this.email = email;
         this.id = id;
         this.age = age;

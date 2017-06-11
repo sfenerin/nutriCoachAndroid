@@ -106,7 +106,7 @@ public class NutriResponse implements Callable<String> {
                 if (requestFinder.getMacroRequest().contains("protein"))
                     response = "You've eaten " + (Math.round(user.getProtein() - user.getProteinToday())) + "g of protein today.";
                 if (requestFinder.getMacroRequest().contains("fat"))
-                    response = "You've eatinen " + (Math.round(user.getFat() - user.getFatToday())) + "g of fat today";
+                    response = "You've eaten " + (Math.round(user.getFat() - user.getFatToday())) + "g of fat today";
                 //Goal request
             } else if (requestFinder.hasGoalRequest()) {
                 response = "Here is the goal you set for the week! " + user.getGoalFood().getName();

@@ -46,7 +46,7 @@ public class InfoActivity extends Activity {
     private void getUserDetails(){
 
         String name = ((EditText)findViewById(R.id.userName)).getText().toString();
-
+        double streak = 0;
         double age= Float.parseFloat(((EditText) findViewById(R.id.userAge)).getText().toString());
         double height= Float.parseFloat(((EditText) findViewById(R.id.userHeight)).getText().toString());
         double weight= Float.parseFloat(((EditText) findViewById(R.id.userWeight)).getText().toString());
@@ -84,7 +84,7 @@ public class InfoActivity extends Activity {
          carbs = .55*calories / 4;
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        User newUser = new User(name,getIntent().getStringExtra("USER_EMAIL"), user.getUid(), age,  female, height, weight, bmr, calories,  protein, fat,  carbs, activity, vegan, vegetarian, glutenFree, dairyFree, eggFree, peanutFree, treeNutFree, soyFree, fishFree, shellfishFree);
+        User newUser = new User(name,streak, getIntent().getStringExtra("USER_EMAIL"), user.getUid(), age,  female, height, weight, bmr, calories,  protein, fat,  carbs, activity, vegan, vegetarian, glutenFree, dairyFree, eggFree, peanutFree, treeNutFree, soyFree, fishFree, shellfishFree);
         DatabaseReference mDatabase;
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("users").child(user.getUid()).setValue(newUser);

@@ -69,8 +69,9 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         chatArrayAdapter = new ChatArrayAdapter(getApplicationContext(), R.layout.right);
-        updateMessages();
         getCurrentUser();
+        updateMessages();
+
 
 
 
@@ -298,7 +299,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 chatArrayAdapter.add(new ChatMessage(right,"Hi " + name + ", what have you eaten today?"));
-
+                Log.d("current user: ", currentUser.toString());
                 if(sunday && currentUser.hasGoal()){
                     Log.d("EAt ur goal","yolo");
                     chatArrayAdapter.add(new ChatMessage(right,"Today is the day! If you've been keeping with your nutrition goals, enjoy your " + currentUser.getGoalFood().getName()));
