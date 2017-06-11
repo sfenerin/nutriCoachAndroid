@@ -82,7 +82,7 @@ public class NutriResponse implements Callable<String> {
                 response += "\nYou are " + (int)Math.abs(user.getCaloriesToday()) + " calories over your daily goal.";
 
             }
-            response += "\n You have logged for " + 3 + " days straight!";
+            response += "\n You have logged for " + user.getStreak() + " days straight!";
 
 
             return response;

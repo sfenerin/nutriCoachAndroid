@@ -76,12 +76,20 @@ public class ProgressActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Food food= dataSnapshot.child("goalFood").getValue(Food.class);
-                foodView.setText(food.getName());
                 firstBar.setMax(7);
-                firstBar.setProgress(Integer.parseInt( dataSnapshot.child("daysPast").getValue().toString()));
+                if (food == null) {
+                    foodView.setText("You haven't set a goal yet!");
+                    firstBar.setProgress(7);
+                    daysLeftView.setText("Set your goal!");
+                }
+                else{
+                    foodView.setText(food.getName());
+                    firstBar.setProgress(Integer.parseInt( dataSnapshot.child("daysPast").getValue().toString()));
+                    int daysLeft = 7 - Integer.parseInt( dataSnapshot.child("daysPast").getValue().toString());
+                    daysLeftView.setText("You have " + daysLeft + " days left to complete your goal");
+                }
 
-                int daysLeft = 7 - Integer.parseInt( dataSnapshot.child("daysPast").getValue().toString());
-                daysLeftView.setText("You have " + daysLeft + " days left to complete your goal");
+
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

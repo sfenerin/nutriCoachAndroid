@@ -471,6 +471,7 @@ public class User {
 
 
     private void updateTodayValues(Food food) {
+        System.out.println("Last update: " + getLastUpdateFormatted());
         if (!DateUtils.isToday(lastUpdate)){
             streak++;
             mDatabase.child("users").child(id).child("streak").setValue(streak);
