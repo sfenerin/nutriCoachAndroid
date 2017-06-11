@@ -9,6 +9,8 @@ import java.io.UnsupportedEncodingException;
  * Created by Katy on 5/22/17.
  */
 
+
+
 public class Food {
     String ID;
     String name;
@@ -20,6 +22,9 @@ public class Food {
     JSONObject JSONfood;
     JSONArray ingredients;
     String url;
+    public Food(){
+
+    }
     public Food(String ID, String name, double calories, double protein, double carbs, double fat ) {
         this.ID = ID;
         this.name = name;

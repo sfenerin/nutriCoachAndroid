@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+    android:background="@drawable/nutribackground">
 
 
-
-            <LinearLayout
+        <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10px"
@@ -42,25 +43,63 @@
                     android:textSize="13sp" />
 
             </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="744dp"
-        android:layout_marginBottom="30px"
-        android:orientation="horizontal"
-        android:weightSum="3">
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="237dp"
-                android:layout_height="242dp"
-                android:background="@drawable/taco" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="243dp"
-            android:textSize="30sp"
-            android:text="3 Days"/>
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="320dp"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        card_view:cardCornerRadius="4dp">
 
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent">
 
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="Goal for the Week :"
+                android:textAlignment="center"
+                android:textColor="#1f8f00"
+                android:textSize="40sp"
+                android:textStyle="bold" />
 
-        </LinearLayout>
-    </LinearLayout>
+            <TextView
+                android:id="@+id/goalText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView"
+                android:textColor="#ff6464"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                android:layout_marginTop="10dp"
+                android:text="No goal Set for the Week" />
+
+            <TextView
+                android:id="@+id/daysLeftView"
+                android:layout_width="fill_parent"
+                android:textAlignment="center"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/goalText"
+                android:textSize="25sp"
+                android:layout_marginTop="10dp"
+                android:text="No goal Set for the Week" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="100dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="0dp"
+                android:layout_toEndOf="@+id/textView2" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>
+
