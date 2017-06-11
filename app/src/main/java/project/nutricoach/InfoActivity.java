@@ -46,7 +46,7 @@ public class InfoActivity extends Activity {
     private void getUserDetails(){
 
         String name = ((EditText)findViewById(R.id.userName)).getText().toString();
-        double streak = 0;
+        int streak = 0;
         double age= Float.parseFloat(((EditText) findViewById(R.id.userAge)).getText().toString());
         double height= Float.parseFloat(((EditText) findViewById(R.id.userHeight)).getText().toString());
         double weight= Float.parseFloat(((EditText) findViewById(R.id.userWeight)).getText().toString());

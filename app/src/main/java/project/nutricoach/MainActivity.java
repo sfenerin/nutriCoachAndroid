@@ -68,8 +68,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         setContentView(R.layout.activity_main);
-        chatArrayAdapter = new ChatArrayAdapter(getApplicationContext(), R.layout.right);
         getCurrentUser();
+        chatArrayAdapter = new ChatArrayAdapter(getApplicationContext(), R.layout.right);
+
         updateMessages();
 
 

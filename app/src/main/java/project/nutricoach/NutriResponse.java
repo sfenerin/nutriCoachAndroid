@@ -82,6 +82,8 @@ public class NutriResponse implements Callable<String> {
                 response += "\nYou are " + (int)Math.abs(user.getCaloriesToday()) + " calories over your daily goal.";
 
             }
+            response += "\n You have logged for " + 3 + " days straight!";
+
 
             return response;
             //handles request
@@ -107,7 +109,6 @@ public class NutriResponse implements Callable<String> {
                     response = "You've eaten " + (Math.round(user.getProtein() - user.getProteinToday())) + "g of protein today.";
                 if (requestFinder.getMacroRequest().contains("fat"))
                     response = "You've eaten " + (Math.round(user.getFat() - user.getFatToday())) + "g of fat today";
-                //Goal request
             } else if (requestFinder.hasGoalRequest()) {
                 response = "Here is the goal you set for the week! " + user.getGoalFood().getName();
             } else {

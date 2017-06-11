@@ -471,6 +471,10 @@ public class User {
 
 
     private void updateTodayValues(Food food) {
+        if (!DateUtils.isToday(lastUpdate)){
+            streak++;
+            mDatabase.child("users").child(id).child("streak").setValue(streak);
+        }
         caloriesToday = caloriesToday - food.getCalories();
         fatToday= fatToday - food.getFat();
         proteinToday= proteinToday - food.getProtein();
@@ -510,7 +514,6 @@ public class User {
                     FoodDatabase fdb = new FoodDatabase(food.getName(), food.getID(), sentiment, 0, null);
                     mDatabase.child("users").child(id).child("foodList").child(food.getID()).setValue(fdb);
                 }
-                // ...
             }
 
             @Override
@@ -569,6 +572,7 @@ public class User {
     public void updateAllFields(){
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("users").child(id).child("name").setValue(name);
+        mDatabase.child("users").child(id).child("streak").setValue(streak);
         mDatabase.child("users").child(id).child("height").setValue(height);
         mDatabase.child("users").child(id).child("weight").setValue(weight);
         mDatabase.child("users").child(id).child("age").setValue(age);
