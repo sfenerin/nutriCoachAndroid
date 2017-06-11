@@ -67,9 +67,12 @@ public class FoodRecommendation {
             return dietRestriction(url,"&health=vegetarian");
         }
 
-//        if(user.isGlutenFree()){
-//            return dietRestriction(url,"&health=gluten-free");
-//        }
+        if(user.isPeanutFree()){
+            return dietRestriction(url,"&health=peanut-free");
+        }
+        if(user.isTreeNutFree()){
+            return dietRestriction(url,"&health=tree-nut-free");
+        }
 
 
         return dietRestriction(url, "");

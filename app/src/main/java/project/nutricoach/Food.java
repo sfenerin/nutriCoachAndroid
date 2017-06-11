@@ -40,9 +40,10 @@ public class Food {
             this.url = food.getString("url");
 
             JSONObject nutrients = food.getJSONObject("totalNutrients");
+
+            this.carbs = food.getJSONObject("CHOCDF").getDouble("quantity");
+            this.fat = food.getJSONObject("FAT").getDouble("quantity");
             this.protein = food.getJSONObject("PROCNT").getDouble("quantity");
-            this.carbs = food.getJSONObject("CHOCDF").getDouble("quantity");;
-            this.fat = food.getJSONObject("FAT").getDouble("quantity");;
         } catch (JSONException e) {
             e.printStackTrace();
         }

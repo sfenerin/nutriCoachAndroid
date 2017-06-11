@@ -114,7 +114,7 @@ public class LoginActivity extends Activity {
 
         initNotification(ReminderLunch.class,alarmManager, 13,0,0);
 
-        initNotification(ReminderDinner.class,alarmManager, 17,54,1);
+        initNotification(ReminderDinner.class,alarmManager, 6,54,1);
 
         initNotification(ReminderNight.class,alarmManager, 20,0,2);
 

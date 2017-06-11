@@ -292,7 +292,24 @@ public class MainActivity extends AppCompatActivity {
                 for(DataSnapshot data: dataSnapshot.child("messages").getChildren()){
                     chatArrayAdapter.add(data.getValue(ChatMessage.class));
                 }
+                android.icu.util.Calendar cal = android.icu.util.Calendar.getInstance();
+                boolean monday = cal.get(android.icu.util.Calendar.DAY_OF_WEEK) == android.icu.util.Calendar.MONDAY;
+                boolean sunday = cal.get(android.icu.util.Calendar.DAY_OF_WEEK) == android.icu.util.Calendar.SUNDAY;
+
+
                 chatArrayAdapter.add(new ChatMessage(right,"Hi " + name + ", what have you eaten today?"));
+
+                if(sunday && currentUser.hasGoal()){
+                    Log.d("EAt ur goal","yolo");
+                    chatArrayAdapter.add(new ChatMessage(right,"Today is the day! If you've been keeping with your nutrition goals, enjoy your " + currentUser.getGoalFood().getName()));
+                }
+
+                if(monday && currentUser.hasGoal() && currentUser.isYesterday(currentUser.getLastUpdate())){
+                    Log.d("Time to set new goal","yolo");
+                    chatArrayAdapter.add(new ChatMessage(right,"Great job on working towards your goal, " + name + ". Don't forget to set another weekly goal today"));
+                } else if (monday){
+                    chatArrayAdapter.add(new ChatMessage(right,"Don't forget to set a weekly goal food today"));
+                }
 
             }
 

@@ -1,4 +1,5 @@
 package project.nutricoach;
+import android.icu.util.Calendar;
 import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,9 +36,35 @@ public class NutriResponse implements Callable<String> {
         FoodItemExtractor foodFinder = new FoodItemExtractor();
         RequestExtractor requestFinder = new RequestExtractor();
         GoalExtractor goalFinder = new GoalExtractor();
+        Calendar cal = Calendar.getInstance();
+        boolean monday = cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY;
+        if(user.hasGoal()){
+            Log.d("Goal Food", user.getGoalFood().getName());
+        } else {
+            Log.d("Goal Food", "fail");        }
 
         //handles food logging
-        if (foodFinder.foundFoodItem(input)) {
+        if (goalFinder.foundGoal(input)) {
+            Log.d("Goal input","found");
+            if(user.hasGoal()){
+                response = "You already have a goal this week! Let me know if you want to remove it";
+            } else if(monday) {
+                if (foodFinder.foundFoodItem(goalFinder.getGoalFood())) {
+                    ArrayList<FoodQuery> foodQueries = foodFinder.getFoodQueries();
+                    for (FoodQuery foodQuery : foodQueries) {
+                        String servingSize = foodQuery.getServingSize();
+                        double servingCount = foodQuery.getServingCount();
+                        Food food = updateAndStoreInfo(foodQuery.getFoodItem(), servingSize, servingCount);
+                        user.setGoalFood(food);
+                    }
+                    response = "Your goal of " + goalFinder.getGoalFood()+ " has been set! Your goals for the next six days have been updated and on the seventh day you get your goal food :)";
+                } else {
+                    response = "It looks like you're trying to set a goal but I don't quite understand the food you want!";
+                }
+            } else {
+                response= "try setting your goal on monday!";
+            }
+        } else if (foodFinder.foundFoodItem(input)) {
             ArrayList<FoodQuery> foodQueries = foodFinder.getFoodQueries();
             for (FoodQuery foodQuery : foodQueries) {
                 String servingSize = foodQuery.getServingSize();
@@ -82,15 +109,12 @@ public class NutriResponse implements Callable<String> {
                     response = "You've eatinen " + (Math.round(user.getFat() - user.getFatToday())) + "g of fat today";
                 //Goal request
             } else if (requestFinder.hasGoalRequest()) {
-                response = "Goal request: " + requestFinder.getGoalRequest();
+                response = "Here is the goal you set for the week! " + user.getGoalFood().getName();
             } else {
                 response = "Unknown request";
             }
         //handles goal setting
-        } else if (goalFinder.foundGoal(input)) {
-            response = "GOAL SET: " + goalFinder.getGoal() + " GOAL FOOD: " + goalFinder.getGoalFood();
-
-        } else {
+        }  else {
             response = "Sorry, I didn't quite get that. Could you try rephrasing or being more specific?";
 
         }
