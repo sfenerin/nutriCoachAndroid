@@ -247,9 +247,10 @@ public class MainActivity extends AppCompatActivity {
                 if(!DateUtils.isToday(lastUpdate)){
                     currentUser.resetTodayValues();
                 }
-                if(dataSnapshot.child("weekly").getValue()!= null && Boolean.parseBoolean(dataSnapshot.child("weekly").child("hasGoal").getValue().toString()) == true){
+                if(dataSnapshot.hasChild("weekly") && Boolean.parseBoolean(dataSnapshot.child("weekly").child("hasGoal").getValue().toString()) == true){
+                    System.out.println("User Setting info");
                     currentUser.setHasGoal(true);
-                    currentUser.setGoalFood(dataSnapshot.child("weekly").child("goalGood").getValue(Food.class));
+                    currentUser.setGoalFood(dataSnapshot.child("weekly").child("goalFood").getValue(Food.class));
                     currentUser.setDaysPast(Integer.parseInt(dataSnapshot.child("weekly").child("daysPast").getValue().toString()));
 
                 }
@@ -303,7 +304,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("current user: ", currentUser.toString());
                 if(sunday && currentUser.hasGoal()){
                     Log.d("EAt ur goal","yolo");
-                    chatArrayAdapter.add(new ChatMessage(right,"Today is the day! If you've been keeping with your nutrition goals, enjoy your " + currentUser.getGoalFood().getName()));
+                    chatArrayAdapter.add(new ChatMessage(right,"Today is the day! If you've been keeping with your nutrition goals, enjoy your " + (currentUser.getGoalFood()).getName()));
                 }
 
                 if(monday && currentUser.hasGoal() && currentUser.isYesterday(currentUser.getLastUpdate())){

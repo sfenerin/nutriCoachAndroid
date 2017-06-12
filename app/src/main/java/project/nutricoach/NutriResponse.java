@@ -37,7 +37,7 @@ public class NutriResponse implements Callable<String> {
         RequestExtractor requestFinder = new RequestExtractor();
         GoalExtractor goalFinder = new GoalExtractor();
         Calendar cal = Calendar.getInstance();
-        boolean monday = cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY;
+        boolean monday = cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY;
         if(user.hasGoal()){
             Log.d("Goal Food", user.getGoalFood().getName());
         } else {
@@ -55,7 +55,7 @@ public class NutriResponse implements Callable<String> {
                         String servingSize = foodQuery.getServingSize();
                         double servingCount = foodQuery.getServingCount();
                         Food food = updateAndStoreInfo(foodQuery.getFoodItem(), servingSize, servingCount);
-                        user.setGoalFood(food);
+                        user.setWeeklyGoal(food);
                     }
                     response = "Your goal of " + goalFinder.getGoalFood()+ " has been set! Your goals for the next six days have been updated and on the seventh day you get your goal food :)";
                 } else {

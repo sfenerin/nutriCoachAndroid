@@ -46,6 +46,7 @@ public class User {
     }
 
     public void setGoalFood(Food goalFood) {
+        System.out.println("setting goal food");
         this.goalFood = goalFood;
     }
 
