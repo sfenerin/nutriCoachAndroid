@@ -247,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
                 if(!DateUtils.isToday(lastUpdate)){
                     currentUser.resetTodayValues();
                 }
-                if(dataSnapshot.hasChild("weekly") && Boolean.parseBoolean(dataSnapshot.child("weekly").child("hasGoal").getValue().toString()) == true){
+                if(dataSnapshot.hasChild("weekly") &&  dataSnapshot.hasChild("weekly/hasGoal") && Boolean.parseBoolean((dataSnapshot.child("weekly").child("hasGoal").getValue()).toString()) == true){
                     System.out.println("User Setting info");
                     currentUser.setHasGoal(true);
                     currentUser.setGoalFood(dataSnapshot.child("weekly").child("goalFood").getValue(Food.class));
